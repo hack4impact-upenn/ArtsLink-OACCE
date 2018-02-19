@@ -65,6 +65,9 @@ def create_app(config_name):
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
+    from .org import org as org_blueprint
+    app.register_blueprint(org_blueprint)
+
     from .account import account as account_blueprint
     app.register_blueprint(account_blueprint, url_prefix='/account')
 
