@@ -11,6 +11,10 @@ class Permission:
     GENERAL = 0x01
     ADMINISTER = 0xff
 
+tags = db.Table('tags',
+    db.Column('tag_id', db.Integer, db.ForeignKey('tag.id'), primary_key=True),
+    db.Column('organizations_id', db.Integer, db.ForeignKey('organizations.id'), primary_key=True)
+)
 class Organization(db.Model):
     __tablename__ = 'organizations'
     id = db.Column(db.Integer, primary_key=True)
@@ -26,18 +30,18 @@ class Organization(db.Model):
     hours = db.Column(db.String(64))
     services_offered =  db.Column(db.String(500))
     description = db.Column(db.Text)
-    tags = db.relationship('Tag', backref='organizations', lazy=True)
+    tags = db.relationship('Tag', secondary=tags, lazy='subquery',
+        backref=db.backref('organizations', lazy=True))
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
 
 class Tag(db.Model):
-    __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     tag_name = db.Column(db.String(64), nullable=False)
 
 class Role(db.Model):
-    __tablename__ = 'roles'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Int
+    __tablename__ = 'roles'eger, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     index = db.Column(db.String(64))
     default = db.Column(db.Boolean, default=False, index=True)
