@@ -17,8 +17,3 @@ def about():
 @main.route('/list-orgs')
 def list_orgs():
     return render_template('main/list-orgs.html')
-
-@main.route('/<int:org_id>')
-def render_profile(org_id):
-    return render_template('main/render_profile.html',
-                           org_id=org_id)
