@@ -38,7 +38,7 @@ class TagAssociation(db.Model):
     organiztion_id = db.Column(db.Integer, db.ForeignKey('organizations.id', ondelete='CASCADE'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id', ondelete='CASCADE'))
     tag = db.relationship("Tag", back_populates="organizations")
-    vendor = db.relationship("Organization", back_populates="tags")
+    organization = db.relationship("Organization", back_populates="tags")
 
 class Role(db.Model):
     id = db.Column(db.Int
