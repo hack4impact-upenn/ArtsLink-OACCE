@@ -1,10 +1,13 @@
 from flask import render_template
 from flask_login import (login_required, current_user)
 from . import org
+from ..decorators import organization_required
+from .forms import OrganizationForm
 
 
 @org.route('/')
 def index():
+    print('hi')
     return render_template('org/welcome_page.html')
 
 
@@ -18,5 +21,7 @@ def view_org(org_id):
 # org_id of the current_user
 @org.route('/edit-profile')
 @login_required
+@organization_required
 def edit_profile():
-    return render_template('org/edit_profile.html', current_user=current_user)
+    form = OrganizationForm()
+    return render_template('org/edit_profile.html', form=form)

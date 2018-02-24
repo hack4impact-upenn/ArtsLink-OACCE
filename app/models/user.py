@@ -26,7 +26,7 @@ class Role(db.Model):
     def insert_roles():
         roles = {
             'Educator': (Permission.EDUCATOR, 'main', True),
-            'Organization': (Permission.ORGANIZATION, 'main', True),
+            'Organization': (Permission.ORGANIZATION, 'org', True),
             'Administrator': (
                 Permission.ADMINISTER,
                 'admin',
