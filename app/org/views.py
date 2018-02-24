@@ -8,11 +8,6 @@ def index():
     return render_template('org/welcome_page.html')
 
 
-@org.route('/login')
-def org_login():
-    return render_template('org/login.html')
-
-
 @org.route('/<int:org_id>')
 def view_org(org_id):
     return render_template('org/view_profile.html', org_id=org_id)

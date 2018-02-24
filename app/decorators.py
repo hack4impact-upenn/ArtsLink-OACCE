@@ -23,3 +23,11 @@ def permission_required(permission):
 
 def admin_required(f):
     return permission_required(Permission.ADMINISTER)(f)
+
+
+def organization_required(f):
+    return permission_required(Permission.ORGANIZATION)(f)
+
+
+def educator_required(f):
+    return permission_required(Permission.EDUCATOR)(f)

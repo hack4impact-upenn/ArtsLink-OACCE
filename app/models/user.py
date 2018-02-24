@@ -8,7 +8,8 @@ from .. import db, login_manager
 
 
 class Permission:
-    GENERAL = 0x01
+    EDUCATOR = 0x01
+    ORGANIZATION = 0x02
     ADMINISTER = 0xff
 
 
@@ -24,7 +25,8 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            'User': (Permission.GENERAL, 'main', True),
+            'Educator': (Permission.EDUCATOR, 'main', True),
+            'Organization': (Permission.ORGANIZATION, 'main', True),
             'Administrator': (
                 Permission.ADMINISTER,
                 'admin',
@@ -54,6 +56,7 @@ class User(UserMixin, db.Model):
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    organizations = db.relationship('Organization', backref='users')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)

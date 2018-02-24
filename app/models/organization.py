@@ -1,10 +1,4 @@
-from flask import current_app
-from flask_login import AnonymousUserMixin, UserMixin
-from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
-from itsdangerous import BadSignature, SignatureExpired
-from werkzeug.security import check_password_hash, generate_password_hash
-
-from .. import db, login_manager
+from .. import db
 
 
 class Organization(db.Model):
@@ -18,15 +12,16 @@ class Organization(db.Model):
     hours = db.Column(db.String(64))
     description = db.Column(db.Text)
     tags = db.relationship("TagAssociation", back_populates="organizations")
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
 class Tag(db.Model):
-    __tablename__ = 'tag'
+    __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     tag_name = db.Column(db.String(64), nullable=False)
-    tag_type_id = Column(Integer, ForeignKey('tag_type.id'))
-    tag_type = relationship("TagType", back_populates="tag")
-    organizations = db.relationship("TagAssociation", back_populates="tag")
+    tag_type_id = db.Column(db.Integer, db.ForeignKey('tag_type.id'))
+    tag_type = db.relationship("TagType", back_populates="tags")
+    organizations = db.relationship("TagAssociation", back_populates="tags")
 
 
 class TagAssociation(db.Model):
@@ -34,10 +29,10 @@ class TagAssociation(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     organiztion_id = db.Column(db.Integer,
                                db.ForeignKey(
-                                   'organizations.id', ondelete='CASCADE'))
-    tag_id = db.Column(db.Integer, db.ForeignKey('tag.id', ondelete='CASCADE'))
-    tag = db.relationship("Tag", back_populates="organizations")
-    organization = db.relationship("Organization", back_populates="tags")
+                                   'organizations.id'))
+    tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
+    tags = db.relationship("Tag", back_populates="organizations")
+    organizations = db.relationship("Organization", back_populates="tags")
 
 
 class TagType(db.Model):
