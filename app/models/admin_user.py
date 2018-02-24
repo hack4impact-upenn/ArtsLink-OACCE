@@ -11,10 +11,9 @@ class Permission:
     GENERAL = 0x01
     ADMINISTER = 0xff
 
-
 class Role(db.Model):
-    __tablename__ = 'roles'
-    id = db.Column(db.Integer, primary_key=True)
+    id = db.Column(db.Int
+    __tablename__ = 'roles'eger, primary_key=True)
     name = db.Column(db.String(64), unique=True)
     index = db.Column(db.String(64))
     default = db.Column(db.Boolean, default=False, index=True)
