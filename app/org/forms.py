@@ -20,8 +20,9 @@ class OrganizationForm(Form):
     address = StringField('Organization Address')
     website_link = URLField('Organization website address \
             (eg http://hack4impact.org)')
-    hours = StringField('Organization Hours of Operation')
+    hours = TextAreaField('Organization Hours of Operation')
     description = TextAreaField('Description of your organization')
+    # TODO: tag type separation based on a DB query
     tags = QuerySelectMultipleField(
         'Tags to describe your organization',
         get_label='tag_name',
