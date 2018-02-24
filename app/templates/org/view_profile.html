@@ -1,0 +1,66 @@
+{% extends 'layouts/base.html' %}
+{% block content %}
+    <div class="ui stackable centered grid container">
+        <div class="sixteen wide column">
+            <h1>{{ org.name }}</h1>
+        </div>
+        <div class="six wide column">
+          <div>
+              <h3>Email</h3> 
+              <hr/>
+              <p>{{ org.email }}</p>
+              <br>    
+          </div>
+          <div>
+              <h3>Phone</h3> 
+              <hr/>
+              <p>{{ org.phone }}</p>
+              <br>    
+          </div>
+          <div>
+              <h3>Address</h3> 
+              <hr/>
+              <p>{{ org.address }}</p>
+              <br>    
+          </div>
+          <div>
+              <h3>Website</h3> 
+              <hr/>
+              <p>{{ org.website_link }}</p>
+              <br>    
+          </div>
+          <div>
+              <h3>Hours</h3> 
+              <hr/>
+              <p>{{ org.hours }}</p>
+              <br>    
+          </div>
+          <div>
+              <h3>tags</h3> 
+              <hr/>
+              {% for t in tags %}
+              <p>{{ t.tag_name }}</p>
+              {% endfor %}
+              <br>    
+          </div>
+        </div>
+        <div class="ten wide column">
+          <div>
+              <h3>Images</h3> 
+              <hr/>
+              {% for p in pics %}
+                <img src="{{ p }}" width="200px">
+                <br>
+                Debug url: {{ p }}
+              {% endfor %}
+              <br>    
+          </div>
+          <div>
+              <h3>Description</h3> 
+              <hr/>
+              <p>{{ org.description }}</p>
+              <br>    
+          </div>
+        </div>
+    </div>
+{% endblock %}
