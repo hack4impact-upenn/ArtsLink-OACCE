@@ -6,6 +6,7 @@ from werkzeug.security import check_password_hash, generate_password_hash
 
 from .. import db, login_manager
 
+
 class Organization(db.Model):
     __tablename__ = 'organizations'
     id = db.Column(db.Integer, primary_key=True)
@@ -18,6 +19,7 @@ class Organization(db.Model):
     description = db.Column(db.Text)
     tags = db.relationship("TagAssociation", back_populates="organizations")
 
+
 class Tag(db.Model):
     __tablename__ = 'tag'
     id = db.Column(db.Integer, primary_key=True)
@@ -26,16 +28,20 @@ class Tag(db.Model):
     tag_type = relationship("TagType", back_populates="tag")
     organizations = db.relationship("TagAssociation", back_populates="tag")
 
+
 class TagAssociation(db.Model):
     __tablename__ = 'tag_association'
     id = db.Column(db.Integer, primary_key=True)
-    organiztion_id = db.Column(db.Integer, db.ForeignKey('organizations.id', ondelete='CASCADE'))
+    organiztion_id = db.Column(db.Integer,
+                               db.ForeignKey(
+                                   'organizations.id', ondelete='CASCADE'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tag.id', ondelete='CASCADE'))
     tag = db.relationship("Tag", back_populates="organizations")
     organization = db.relationship("Organization", back_populates="tags")
+
 
 class TagType(db.Model):
     __tablename__ = 'tag_type'
     id = db.Column(db.Integer, primary_key=True)
     tag_type_name = db.Column(db.String(120), nullable=False)
-    tags = db.relationship("Tag",  back_populates="tag_type")
+    tags = db.relationship("Tag", back_populates="tag_type")
