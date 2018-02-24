@@ -28,9 +28,7 @@ class Tag(db.Model):
 class TagAssociation(db.Model):
     __tablename__ = 'tag_association'
     id = db.Column(db.Integer, primary_key=True)
-    organiztion_id = db.Column(db.Integer,
-                               db.ForeignKey(
-                                   'organizations.id'))
+    organiztion_id = db.Column(db.Integer, db.ForeignKey('organizations.id'))
     tag_id = db.Column(db.Integer, db.ForeignKey('tags.id'))
     tags = db.relationship("Tag", back_populates="organizations")
     organizations = db.relationship("Organization", back_populates="tags")

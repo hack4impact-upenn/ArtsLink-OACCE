@@ -18,8 +18,8 @@ def view_org(org_id):
     pics = []
     if len(organization.picture_urls) > 0:
         pics = organization.picture_urls.split(",")
-    return render_template('org/view_profile.html', org=organization,
-                           pics=pics)
+    return render_template(
+        'org/view_profile.html', org=organization, pics=pics)
 
 
 # Organization edits its own profile

@@ -1,8 +1,8 @@
 from flask_wtf import Form
 from wtforms import ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
-from wtforms.fields import (StringField, SubmitField,
-                            TextAreaField, IntegerField)
+from wtforms.fields import (StringField, SubmitField, TextAreaField,
+                            IntegerField)
 from wtforms.fields.html5 import EmailField, URLField
 
 from .. import db
@@ -27,8 +27,7 @@ class OrganizationForm(Form):
         get_label='tag_name',
         query_factory=lambda: db.session.query(Tag).order_by('tag_name'))
 
-    picture_urls = MultipleFileUploadField(
-            'Upload Field')
+    picture_urls = MultipleFileUploadField('Upload Field')
     submit = SubmitField('Create')
 
     def validate_email(self, field):

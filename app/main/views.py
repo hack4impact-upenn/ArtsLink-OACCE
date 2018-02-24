@@ -43,20 +43,26 @@ def sign_s3():
 
     # Generate and return the presigned URL
     presigned_post = s3.generate_presigned_post(
-            Bucket=S3_BUCKET,
-            Key=TARGET_FOLDER + file_name,
-            Fields={"acl": "public-read", "Content-Type": file_type},
-            Conditions=[
-                {"acl": "public-read"},
-                {"Content-Type": file_type}
-                ],
-            ExpiresIn=60000
-            )
+        Bucket=S3_BUCKET,
+        Key=TARGET_FOLDER + file_name,
+        Fields={
+            "acl": "public-read",
+            "Content-Type": file_type
+        },
+        Conditions=[{
+            "acl": "public-read"
+        }, {
+            "Content-Type": file_type
+        }],
+        ExpiresIn=60000)
 
     # Return the data to the client
     return json.dumps({
-        'data': presigned_post,
-        'url_upload': 'https://%s.%s.amazonaws.com' % (S3_BUCKET, S3_REGION),
-        'url': 'https://%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
-                                                        file_name)
-        })
+        'data':
+        presigned_post,
+        'url_upload':
+        'https://%s.%s.amazonaws.com' % (S3_BUCKET, S3_REGION),
+        'url':
+        'https://%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
+                                                 file_name)
+    })
