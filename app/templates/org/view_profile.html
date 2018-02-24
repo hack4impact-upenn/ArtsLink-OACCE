@@ -3,7 +3,13 @@
     <div class="ui stackable centered grid container">
         <div class="sixteen wide column">
             <h1>{{ org.name }}</h1>
+            {% if current_user.organizations | length > 0 %}
+              {% if current_user.organizations[0].id == org.id %}
+              <a href="{{ url_for('org.edit_profile') }}" class="ui basic button">Edit Page</a>
+              {% endif %}
+            {% endif %}
         </div>
+
         <div class="six wide column">
           <div>
               <h3>Email</h3> 

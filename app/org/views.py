@@ -1,4 +1,4 @@
-from flask import render_template, flash
+from flask import render_template, flash, redirect, url_for
 from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
@@ -47,8 +47,10 @@ def edit_profile():
         organization.picture_urls = form.picture_urls.data
         db.session.add(organization)
         db.session.commit()
-        flash('Organization {} successfully updated'.format(organization.name),
+        flash('Organization {} successfully updated. Redirecting you to ' +
+              'profile page'.format(organization.name),
               'form-success')
+        return redirect(url_for('org.view_org', org_id=organization.id))
     if organization is not None:
         form.name.data = organization.name
         form.email.data = organization.email

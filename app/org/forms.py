@@ -27,7 +27,7 @@ class OrganizationForm(Form):
         get_label='tag_name',
         query_factory=lambda: db.session.query(Tag).order_by('tag_name'))
 
-    picture_urls = MultipleFileUploadField('Upload Field')
+    picture_urls = MultipleFileUploadField('Upload Photos')
     submit = SubmitField('Create')
 
     def validate_email(self, field):

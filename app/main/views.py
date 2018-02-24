@@ -25,6 +25,7 @@ def list_orgs():
     return render_template('main/list-orgs.html')
 
 
+# generates all signed URL for AWS upload
 @main.route('/sign-s3/')
 def sign_s3():
     # Load necessary information into the application
