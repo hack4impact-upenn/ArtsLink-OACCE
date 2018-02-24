@@ -1,0 +1,39 @@
+{% extends 'layouts/base.html' %}
+
+{% macro dashboard_option(title, endpoint, args={}, description=None, icon=None) %}
+    <a class="column" href="{{ url_for(endpoint, **args) }}">
+        <div class="ui padded segment">
+            <h3 class="ui header">
+                {% if icon is not none %}
+                    <i class="{{ icon }}"></i>
+                {% endif %}
+                <div class="content">
+                    {{ title }}
+                    {% if description is not none %}
+                        <div class="sub header">
+                            {{ description }}
+                        </div>
+                    {% endif %}
+                </div>
+            </h3>
+        </div>
+    </a>
+{% endmacro %}
+
+{% block content %}
+    <div class="ui stackable centered grid container">
+        <div class="twelve wide column">
+            <h2 class="ui header">
+                Organization Dashboard
+            </h2>
+            <div class="ui two column stackable grid">
+                {{ dashboard_option('Create/Edit Organization Details', 'org.edit_profile',
+                                    description='Edit and preview your organization information', icon='info icon') }}
+                                    {% if current_user.organizations | length > 0 %}
+                                      {{ dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organizations[0].id},
+                                      description='Edit and preview your organization information', icon='info icon') }}
+                                    {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
