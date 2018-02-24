@@ -12,6 +12,7 @@ class Organization(db.Model):
     hours = db.Column(db.String(64))
     description = db.Column(db.Text)
     tags = db.relationship("TagAssociation", back_populates="organizations")
+    picture_urls = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
 
