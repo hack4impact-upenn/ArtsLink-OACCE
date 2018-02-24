@@ -103,6 +103,22 @@
                 {{ field.label }}
             </div>
         {% endfor %}
+    {% elif field.type == 'MultipleFileUploadField' %}
+        {{ field.label }}
+        <label for="file" class="ui icon button">
+          <i class="plus icon"></i>
+          <i class="file icon"></i>
+          </label>
+          <input type="file" id="file" style="display:none"><br>
+        <div style="display:none">{{ field }}</div>
+        <div id="{{ field.id }}_list">
+          {% if field.data %}
+            {% set data = field.data.split(',') %}
+            {% for d in data %}
+            <div class="ui label"><i class="file icon"></i><a href="{{ d }}">{{ d }}</a><i class="delete icon" data-url="{{ d }}"></i></div><br><br>
+            {% endfor %}
+          {% endif %}
+        </div>
     {% elif field.type == 'SubmitField' %}
         {{ field(class='ui button') }}
     {% elif field.type == 'FormField' %}

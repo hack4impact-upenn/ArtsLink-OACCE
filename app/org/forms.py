@@ -27,7 +27,7 @@ class OrganizationForm(Form):
         get_label='tag_name',
         query_factory=lambda: db.session.query(Tag).order_by('tag_name'))
 
-    application_url = MultipleFileUploadField(
+    picture_urls = MultipleFileUploadField(
             'Upload Field')
     submit = SubmitField('Create')
 
