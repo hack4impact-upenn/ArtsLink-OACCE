@@ -4,6 +4,8 @@ from wtforms.ext.sqlalchemy.fields import QuerySelectMultipleField
 from wtforms.fields import (StringField, SubmitField, TextAreaField,
                             IntegerField)
 from wtforms.fields.html5 import EmailField, URLField
+from wtforms.validators import Email, InputRequired, Length
+
 
 from .. import db
 from ..models import Organization, Tag
