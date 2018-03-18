@@ -94,6 +94,24 @@ def unapproved_users():
         'admin/unapproved_users.html', users=users, roles=roles)
 
 
+@admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def approve_user(user_id):
+    """Confirm a user's profile."""
+    user = User.query.filter_by(id=user_id).first()
+    user.confirmed = True
+    db.session.add(user)
+    db.session.commit()
+    users = User.query.filter_by(confirmed=False)
+    roles = Role.query.all()
+    if user is None:
+        abort(404)
+    flash('Successfully approved user %s.' % user.full_name(), 'success')
+    return render_template(
+        'admin/unapproved_users.html', users=users, roles=roles)
+
+
 @admin.route('/user/<int:user_id>')
 @admin.route('/user/<int:user_id>/info')
 @login_required

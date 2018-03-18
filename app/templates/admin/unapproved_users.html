@@ -50,13 +50,12 @@
                     </thead>
                     <tbody>
                     {% for u in users | sort(attribute='last_name') %}
-                        <tr id="approve" onclick="window.location.href = '{{ url_for('admin.user_info', user_id=u.id) }}';">
-
+                        <tr>
                             <td>{{ u.first_name }}</td>
                             <td>{{ u.last_name }}</td>
                             <td>{{ u.email }}</td>
                             <td class="user role">{{ u.role.name }}</td>
-                            <td> <button onclick="u.confirmed = True" class="ui basic compact button"> Yes </button> </td>
+                            <td> <button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';" class="ui basic compact button"> Yes </button> </td>
                         </tr>
                     {% endfor %}
                     </tbody>
