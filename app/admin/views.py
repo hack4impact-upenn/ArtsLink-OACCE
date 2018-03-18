@@ -72,15 +72,26 @@ def invite_user():
     return render_template('admin/new_user.html', form=form)
 
 
-@admin.route('/users')
+@admin.route('/approved-users')
 @login_required
 @admin_required
-def registered_users():
-    """View all registered users."""
-    users = User.query.all()
+def approved_users():
+    """View all approved users."""
+    users = User.query.filter_by(confirmed=True)
     roles = Role.query.all()
     return render_template(
-        'admin/registered_users.html', users=users, roles=roles)
+        'admin/approved_users.html', users=users, roles=roles)
+
+
+@admin.route('/unapproved-users')
+@login_required
+@admin_required
+def unapproved_users():
+    """View all unapproved users."""
+    users = User.query.filter_by(confirmed=False)
+    roles = Role.query.all()
+    return render_template(
+        'admin/unapproved_users.html', users=users, roles=roles)
 
 
 @admin.route('/user/<int:user_id>')
