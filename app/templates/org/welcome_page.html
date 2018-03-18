@@ -29,8 +29,8 @@
             <div class="ui two column stackable grid">
                 {{ dashboard_option('Create/Edit Organization Details', 'org.edit_profile',
                                     description='Edit and preview your organization information', icon='info icon') }}
-                                    {% if current_user.organizations | length > 0 %}
-                                      {{ dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organizations[0].id},
+                                    {% if current_user.organization %}
+                                      {{ dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organization.id},
                                       description='Edit and preview your organization information', icon='info icon') }}
                                     {% endif %}
             </div>
