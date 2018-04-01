@@ -29,7 +29,7 @@
     </table>
 {% endmacro %}
 
-{% block content %}
+{% block content %} 
     <div class="ui stackable centered grid container">
         <div class="twelve wide column">
             {% if user.confirmed == true %}
@@ -39,7 +39,7 @@
                 </a>
                 <h2 class="ui header">
                     {{ user.full_name() }}
-                    <div class="sub header">Approved</div>
+                    <div class="ui green sub header">Approved</div>
                     <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
                 </h2>
             {% else %}
@@ -49,7 +49,7 @@
                 </a>
                 <h2 class="ui header">
                     {{ user.full_name() }}
-                    <div class="sub header">Unapproved</div>
+                    <div class="ui red sub header">Unapproved</div>
                     <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
                 </h2>
             {% endif %}
