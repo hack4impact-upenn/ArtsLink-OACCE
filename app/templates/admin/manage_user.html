@@ -32,18 +32,27 @@
 {% block content %}
     <div class="ui stackable centered grid container">
         <div class="twelve wide column">
-            <a class="ui basic compact button" href="{{ url_for('admin.approved_users') }}">
-                <i class="caret left icon"></i>
-                Back to all approved users
-            </a>
-            <a class="ui basic compact button" href="{{ url_for('admin.unapproved_users') }}">
-                <i class="caret left icon"></i>
-                Back to all unapproved users
-            </a>
-            <h2 class="ui header">
-                {{ user.full_name() }}
-                <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
-            </h2>
+            {% if user.confirmed == true %}
+                <a class="ui basic compact button" href="{{ url_for('admin.approved_users') }}">
+                    <i class="caret left icon"></i>
+                    Back to all approved users
+                </a>
+                <h2 class="ui header">
+                    {{ user.full_name() }}
+                    <div class="sub header">Approved</div>
+                    <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
+                </h2>
+            {% else %}
+                <a class="ui basic compact button" href="{{ url_for('admin.unapproved_users') }}">
+                    <i class="caret left icon"></i>
+                    Back to all unapproved users
+                </a>
+                <h2 class="ui header">
+                    {{ user.full_name() }}
+                    <div class="sub header">Unapproved</div>
+                    <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
+                </h2>
+            {% endif %}
         </div>
         <div class="stretched divided very relaxed row">
             <div class="four wide column">
