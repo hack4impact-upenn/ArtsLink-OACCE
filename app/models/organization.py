@@ -39,3 +39,27 @@ class TagType(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     tag_type_name = db.Column(db.String(120), nullable=False)
     tags = db.relationship("Tag", back_populates="tag_type")
+    @staticmethod
+    def generate_fake(count=20):
+        from sqlalchemy.exc import IntegrityError
+        from random import randint
+        from faker import Faker
+
+        fake = Faker()
+
+        num_tag_types = 5
+        num_tags = 3 # num tags per tag type
+        tag_types = []
+        tags = []
+        for i in range(num_tag_types):
+            currTagType = TagType(
+                tag_type_name=fake.word(),
+            )
+            for j in range(num_tags):
+                tag = Tag(tag_name = fake.word(), tag_type = currTagType, tag_type_id = currTagType.id)
+                db.session.add(tag)
+            db.session.add(currTagType)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback() 

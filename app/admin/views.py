@@ -3,12 +3,12 @@ from flask_login import current_user, login_required
 from flask_rq import get_queue
 
 from .forms import (ChangeAccountTypeForm, ChangeUserEmailForm, InviteUserForm,
-                    NewUserForm)
+                    NewUserForm, AddTagForm)
 from . import admin
 from .. import db
 from ..decorators import admin_required
 from ..email import send_email
-from ..models import Role, User, EditableHTML
+from ..models import Role, User, EditableHTML, Tag, TagType
 
 
 @admin.route('/')
@@ -81,6 +81,79 @@ def approved_users():
     roles = Role.query.all()
     return render_template(
         'admin/approved_users.html', users=users, roles=roles)
+
+
+@admin.route('/add-tag')
+@login_required
+@admin_required
+def add_tags():
+    """View and manage all tags."""
+    Tags = Tag.query.all()
+    form = AddTagForm()
+    age_group = TagType.query.filter_by(tag_type_name="Age Group").first()
+    service = TagType.query.filter_by(tag_type_name="Service").first()
+    disability_programming = TagType.query.filter_by(tag_type_name="Disability Programming").first()
+    return render_template(
+        'admin/add_tags.html',tags=Tags, form=form,age_group=age_group,service=service,
+        disability_programming=disability_programming)
+
+
+@admin.route('/add-tag', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def add_new_tag():
+    """View and manage all tags."""
+    form = AddTagForm()
+    if form.validate_on_submit():
+        age_group = TagType.query.filter_by(tag_type_name="Age Group").first()
+        service = TagType.query.filter_by(tag_type_name="Service").first()
+        disability_programming = TagType.query.filter_by(tag_type_name="Disability Programming").first()
+        if age_group is None:
+            age_group = TagType(
+            tag_type_name="Age Group"
+            )
+            db.session.add(age_group)
+        if service is None:
+            service = TagType(
+                tag_type_name="Service"
+                )
+            db.session.add(service)
+        if disability_programming is None:
+            disability_programming = TagType(
+                tag_type_name="Disability Programming"
+                )
+            db.session.add(disability_programming)
+        if form.tag_type.data == "age_group":
+            tag = Tag(
+                tag_name=form.tag_name.data,
+                tag_type=age_group,
+                tag_type_id=age_group.id
+            )
+            db.session.add(tag)
+        if form.tag_type.data == "service":
+            tag = Tag(
+                tag_name=form.tag_name.data,
+                tag_type=service,
+                tag_type_id=service.id
+            )
+            db.session.add(tag)
+        if form.tag_type.data == "disability_programming":
+            tag = Tag(
+                tag_name=form.tag_name.data,
+                tag_type=disability_programming,
+                tag_type_id=disability_programming.id
+            )
+            db.session.add(tag)
+        try:
+            db.session.commit()
+        except IntegrityError:
+            db.session.rollback() 
+        flash('Tag {} created successfully.'.format(
+            tag.tag_name), 'form-success')
+    Tags = Tag.query.all()
+    return render_template(
+        'admin/add_tags.html',tags=Tags, form=form,age_group=age_group,service=service,
+        disability_programming=disability_programming)
 
 
 @admin.route('/unapproved-users')
