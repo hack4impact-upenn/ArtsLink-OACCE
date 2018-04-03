@@ -1,0 +1,111 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="ui stackable grid container">
+        <div class="sixteen wide tablet twelve wide computer centered column">
+            <a class="ui basic compact button" href="{{ url_for('admin.index') }}">
+                <i class="caret left icon"></i>
+                Back to dashboard
+            </a>
+            <h2 class="ui header">
+                Tags
+                <div class="sub header">
+                    View and add new tags
+                </div>
+            </h2>
+
+            <div class="ui menu">
+                <div class="ui right search item">
+                    <div class="ui transparent icon input">
+                        <input id="search-users" type="text" placeholder="Search users…">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+
+            {# Use overflow-x: scroll so that mobile views don't freak out
+             # when the table is too wide #}
+           <!--  {% for t in tags %} -->
+                <div style="overflow-x: scroll;">
+                <h3 class="ui header">
+                    Age Group
+                </h3>
+                    <table class="ui searchable sortable unstackable selectable celled table">
+                        <thead>
+                            <tr>
+                                <th class="sorted ascending">Tag Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <!--  {% if t.tag_type == "Service" %}
+                                <tr>
+                                    <td>{{ t.tag_name }}</td>
+                                </tr>
+                            {% endif %} -->
+                                <!-- <tr> <button onclick="window.location.href = '{{ url_for('admin.add_new_tag', tag_type=age_group) }}';" class="ui basic compact button"> Yes </button> </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+          <!--   {% endfor %} -->
+                <div style="overflow-x: scroll;">
+                <h3 class="ui header">
+                    Service
+                </h3>
+                    <table class="ui searchable sortable unstackable selectable celled table">
+                        <thead>
+                            <tr>
+                                <th class="sorted ascending">Tag Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <!--  {% if t.tag_type == "Age Group" %}
+                                <tr>
+                                    <td>{{ t.tag_name }}</td>
+                                </tr>
+                            {% endif %} -->
+                                <!-- <tr> <button onclick="window.location.href = '{{ url_for('admin.add_new_tag', tag_type=service) }}';" class="ui basic compact button"> Yes </button> </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+
+                <div style="overflow-x: scroll;">
+                <h3 class="ui header">
+                    Disability Programming
+                </h3>
+                    <table class="ui searchable sortable unstackable selectable celled table">
+                        <thead>
+                            <tr>
+                                <th class="sorted ascending">Tag Name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                           <!--  {% if t.tag_type == "Disability Programming" %}
+                                <tr>
+                                    <td>{{ t.tag_name }}</td>
+                                </tr>
+                            {% endif %} -->
+                                <!-- <tr> <button onclick="window.location.href = '{{ url_for('admin.add_new_tag', tag_type=disability_programming) }}';" class="ui basic compact button"> Yes </button> </tr> -->
+                        </tbody>
+                    </table>
+                </div>
+           <!--  {% endfor %} -->
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-users').keyup(function () {
+                var searchText = $(this).val();
+                if (searchText.length > 0) {
+                    $('tbody td:icontains(' + searchText + ')').addClass('positive');
+                    $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
+                    $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
+                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+                } else {
+                    $('td.positive').removeClass('positive');
+                    $('tr.hidden').removeClass('hidden').show();
+                }
+            });
+        });
+    </script>
+{% endblock %}
