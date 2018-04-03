@@ -37,6 +37,17 @@ def search():
     return render_template(
         'main/search_orgs.html', orgs=orgs, tags=tags, assoc=assoc, classes=classes)
 
+
+@main.route('/search/<string:tags>')
+def search_tag(tags):
+    all_tags = tags.split("_")
+    send_orgs = []
+    for t in all_tags:
+        send_orgs.extend(Organization.query.join(Organization.tags).filter_by(tag_name=t).all())
+    return render_template(
+        'main/search_orgs.html', orgs=send_orgs, tags=tags, checked=all_tags)
+
+
 # generates all signed URL for AWS upload
 @main.route('/sign-s3/')
 def sign_s3():

@@ -1,9 +1,6 @@
 {% extends 'layouts/base.html' %}
 
 {% block content %}
-    {% for o in orgs %}
-    {% print o.tags %}
-    {% endfor %}
     <div class="ui stackable grid container">
         <div class="sixteen wide tablet twelve wide computer centered column">
             <a class="ui basic compact button" href="{{ url_for('main.index') }}">
@@ -16,22 +13,26 @@
                     Tag or Text Search
                 </div>
             </h2>
-            <div>
             <div class="ui menu">
-
+                 <div class="ui search item">
+                    <div class="ui transparent icon input">
+                        <input id="search-orgs" type="text" placeholder="Search orgs…">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="ui menu">
+                <div class="ui item">
                 <select id="chooseTags" class="ui fluid search dropdown" multiple="">
                     {% for t in tags %}
                         {%print(t)%}
                             <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
                     {% endfor %}
                 </select>
-            </div>
-             <div class="ui right search item">
-                    <div class="ui transparent icon input">
-                        <input id="search-orgs" type="text" placeholder="Search orgs…">
-                        <i class="search icon"></i>
-                    </div>
-             </div>
+                </div>
+                <div class ="ui right item">
+                    <button class="ui button" id="search">Filter by Tag</button>
+                </div>
             </div>
 
 
@@ -47,14 +48,12 @@
                     </thead>
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
-                                {{ set classSet = [] %}}
                                 <tr>
+                                {% for tag in  o.tags %}
+                                      <input type="hidden" name="country" value="Norway" class="{{ tags[tag.tag_id - 1].tag_name }}">
+                                {% endfor %}
                                 <td>{{ o.name }}</td>
                                 <td>{{ o.email }}</td>
-                                    {% for tag in o.tags %}
-                                        {% classSet.append(tag.tags.tag_name) %}
-                                    {% endfor %}
-                                    <td class="classes" style="display: none;">{{ " ".join(classSet) }}</td>
                                 </tr>
                             {% endfor %}
                     </tbody>
@@ -63,19 +62,6 @@
         </div>
     </div>
         <script type="text/javascript">
-        $(document).ready(function () {
-            $('#chooseTags').change(function() {
-               var tags = $(this).val();
-               console.log(assoc);
-               console.log(tags);
-               for (curr in assoc) {
-                   $('tbody td:icontains(' + searchText + ')').addClass('positive');
-                   $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
-                   console.log(tags[tag]);
-               }
-            })
-
-
             $('#search-orgs').keyup(function () {
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
@@ -88,6 +74,15 @@
                     $('tr.hidden').removeClass('hidden').show();
                 }
             });
-        });
-    </script>
+            $('#chooseTags').change(function () {
+                var searchText = $(this).val();
+                var currTag;
+                if(searchText.length > 0) {
+                    for(tag in searchText) {
+                        currTag = '.' + searchText[tag];
+                        $(currTag).closest('tr').addClass('positive');
+                    }
+                }
+            });
+        </script>
 {% endblock %}
