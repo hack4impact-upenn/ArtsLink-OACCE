@@ -11,18 +11,20 @@
 ] %}
 
 {% macro navigation(items) %}
-    <div class="ui vertical fluid secondary menu">
+<ul class="nav nav-pills flex-column">
         {% for route, name in items %}
             {% set href = url_for(route, user_id=user.id) %}
-            <a class="item {% if request.endpoint == route %}active{% endif %}" href="{{ href }}">
-                {{ name }}
-            </a>
+  <li class="nav-item">
+    <a class="nav-link {% if request.endpoint == route %}active{% endif %}" href="{{ href }}">
+      {{ name }}
+    </a>
+  </li>
         {% endfor %}
-    </div>
+</ul>
 {% endmacro %}
 
 {% macro user_info(user) %}
-    <table class="ui compact definition table">
+    <table class="table">
         <tr><td>Full name</td><td>{{ '%s %s' % (user.first_name, user.last_name) }}</td></tr>
         <tr><td>Email address</td><td>{{ user.email }}</td></tr>
         <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>
@@ -30,46 +32,47 @@
 {% endmacro %}
 
 {% block content %}
-    <div class="ui stackable centered grid container">
-        <div class="twelve wide column">
-            <a class="ui basic compact button" href="{{ url_for('admin.registered_users') }}">
-                <i class="caret left icon"></i>
-                Back to all users
-            </a>
-            <h2 class="ui header">
-                {{ user.full_name() }}
-                <div class="sub header">View and manage {{ user.first_name }}’s account.</div>
-            </h2>
-        </div>
-        <div class="stretched divided very relaxed row">
-            <div class="four wide column">
-                {{ navigation(endpoints) }}
-            </div>
-            <div class="eight wide column">
+<div class="container">
+  <div class="row">
+    <div class="col back-button">
+      <a class="btn btn-outline-primary" href="{{ url_for('admin.registered_users') }}">
+        Back to Registered Users
+      </a>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <h2>
+        Manage User
+      </h2>
+      <p class="sub header">
+        Manage user {{ user.full_name() }}'s account
+      </p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-4">
+      {{ navigation(endpoints) }}
+    </div>
+    <div class="col-md-8">
                 {% if request.endpoint == deletion_endpoint %}
-                    <h3 class="ui red block header">
+                    <h3 class="text-danger">
                         <i class="warning circle icon"></i>
-                        <div class="content">
-                            This action is permanent
-                            <div class="sub header">
-                                Deleting a user account is not a reversible change. Any information associated
-                                with this account will be removed, and cannot be recovered.
-                            </div>
-                        </div>
+                        This action is permanent
                     </h3>
+                    <p class="content">
+                        Deleting a user account is not a reversible change. Any information associated
+                        with this account will be removed, and cannot be recovered.
+                    </p>
 
-                    <div class="ui form">
-                        <div class="inline field">
-                            <div class="ui deletion checkbox">
-                                <input type="checkbox" tabindex="0" class="hidden">
-                                <label>I understand that this action cannot be undone.</label>
-                            </div>
+                        <div class="form-check">
+                          <input type="checkbox" class="form-check-input deletion checkbox" tabindex="0" class="hidden">
+                          <label>I understand that this action cannot be undone.</label>
                         </div>
-                        <a class="ui disabled negative deletion button">
+                        
+                        <a class="btn btn-danger text-white disabled">
                             Delete this user
                         </a>
-                    </div>
-                    </div>
                 {% elif form %}
                     {{ f.render_form(form) }}
                 {% else %}
@@ -80,13 +83,11 @@
     </div>
 
     <script type="text/javascript">
-        $('.deletion.checkbox').checkbox({
-            onChecked: function() {
-                $('.deletion.button').removeClass('disabled')
-                        .attr('href', '{{ url_for('admin.delete_user', user_id=user.id) }}');
-            },
-            onUnchecked: function() {
-                $('.deletion.button').addClass('disabled').removeAttr('href');
+$('.deletion.checkbox').change(function() {
+            if ($(this).is(':checked')) {
+                $('.btn-danger').removeClass('disabled').attr('href', '{{ url_for('admin.delete_user', user_id=user.id) }}');
+            } else {
+                $('.btn-danger').addClass('disabled').removeAttr('href');
             }
         });
     </script>
