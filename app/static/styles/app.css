@@ -75,33 +75,42 @@ table.selectable tr:hover {
   display: inline-block;
   font-size: 20px;
   padding: 15px 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: white;
   border: 2px solid white;
+  transition: all 200ms;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000379}}
+@media -sass-debug-info{filename{}line{font-family:\0000382}}
+.tag:hover {
+  background-color: #FFF;
+  color: blue;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000387}}
 h3 {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
   margin-top: 15px;
   padding-bottom: 10px;
   font-size: 24px;
   border-bottom: 4px solid #2F80ED;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000388}}
+@media -sass-debug-info{filename{}line{font-family:\0000396}}
 h4 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   font-family: 'Open Sans', sans-serif;
   margin-top: 15px;
   padding-bottom: 10px;
-  border-bottom: 4px solid #F2994A;
+  border-bottom: 1px solid #F2994A;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000397}}
+@media -sass-debug-info{filename{}line{font-family:\00003105}}
 .edit {
   background: url("/static/images/noun_70731_cc.png");
   background-size: cover;
@@ -114,7 +123,7 @@ h4 {
   right: 20px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003109}}
+@media -sass-debug-info{filename{}line{font-family:\00003117}}
 .edit > a {
   position: absolute;
   bottom: -40px;
@@ -125,7 +134,7 @@ h4 {
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003119}}
+@media -sass-debug-info{filename{}line{font-family:\00003127}}
 .frontpage-search {
   background-color: rgba(0, 0, 0, 0);
   border: none;
@@ -136,32 +145,32 @@ h4 {
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003129}}
+@media -sass-debug-info{filename{}line{font-family:\00003137}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003132}}
+@media -sass-debug-info{filename{}line{font-family:\00003140}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003136}}
+@media -sass-debug-info{filename{}line{font-family:\00003144}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003143}}
+@media -sass-debug-info{filename{}line{font-family:\00003151}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003145}}
+@media -sass-debug-info{filename{}line{font-family:\00003153}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003150}}
+@media -sass-debug-info{filename{}line{font-family:\00003158}}
 .overlay {
   color: #FFF;
   text-align: center;

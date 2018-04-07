@@ -11,7 +11,7 @@
   margin-top: -60px;
   width:100%;
   min-height:500px;
-  height: 50vh;
+  padding-bottom: 80px;
   background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%), 
     {% if pics | length > 0 %} url("{{ pics[0] }}") {% else %} url(http://creativephl.org/wp-content/uploads/2018/03/pytf-825x380.jpg) {% endif %};
   background-repeat: no-repeat;
@@ -29,7 +29,7 @@
         {% if org.description %}
         <p>{{ org.description.split('.')[0]}}...</p>
         {% endif %}
-        {% for t in tags %}
+        {% for t in org.tags %}
         <div class="tag">{{ t.tag_name }}</div>
         {% endfor %}
         {% if current_user.organizations | length > 0 %}
@@ -75,7 +75,7 @@
         </div>
         {% endif %}
         <div>
-          <h3>tags</h3> 
+          <h3>Tags</h3> 
           {% for tt in tag_types %}
             {% set tag_set = [] %}
             {% for t in org.tags %}
@@ -96,22 +96,24 @@
       </div>
 
       <div class="col-md-8">
+        {% if pics | length > 0 %}
         <h3>Gallery</h3>
         <p>Click on images to see  their full size. And scroll for more images.</p>
         <div class="row justify-content-center">
           <div class="col-md-12">
             <div class="row" style="height: 300px; overflow-y: scroll">
               {% for p in pics %}
-              <a href="{{ p }}" data-toggle="lightbox" style="padding:1px" 
-                data-gallery="example-gallery" class="col-6" >
+              <a href="{{ p }}" data-toggle="lightbox" 
+                data-gallery="example-gallery" class="col-6 text-center" >
                 <div style="max-height: 250px; overflow: hidden; ">
-                  <img src="{{ p }}" class="img-fluid">
+                  <img src="{{ p }}" class="img-fluid ">
                 </div>
               </a>
               {% endfor %}
             </div>
           </div>
         </div>
+        {% endif %}
         <h3>Description</h3>
         {% if org.description %}
         <p> {{ org.description.replace('\r\n', '<br/>') | safe }} </p>

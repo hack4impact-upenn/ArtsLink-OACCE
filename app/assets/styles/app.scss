@@ -70,15 +70,23 @@ table.selectable tr:hover {
   display:inline-block;
   font-size: 20px;
   padding: 15px 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   color: white;
   border: 2px solid white;
+  transition: all 200ms;
+}
+
+.tag:hover {
+  background-color: #FFF;
+  color: blue;
 }
 
 h3 {
-  font-family: 'Open Sans', sans-serif;
-  font-weight: 600;
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
   margin-top: 15px;
   padding-bottom: 10px;
   font-size: 24px;
@@ -86,12 +94,12 @@ h3 {
 }
 
 h4 {
-  font-size: 20px;
+  font-size: 18px;
   font-weight: 600;
   font-family: 'Open Sans', sans-serif;
   margin-top: 15px;
   padding-bottom: 10px;
-  border-bottom: 4px solid #F2994A 
+  border-bottom: 1px solid #F2994A 
 }
 
 .edit {
