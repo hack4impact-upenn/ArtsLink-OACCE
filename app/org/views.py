@@ -3,7 +3,8 @@ from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
-from ..models import Organization, TagType
+from wtforms.fields import SelectMultipleField
+from ..models import Organization, TagType, Tag
 from .. import db
 
 
@@ -31,7 +32,15 @@ def view_org(org_id):
 @login_required
 @organization_required
 def edit_profile():
-    form = OrganizationForm()
+    class moddedOrgForm(OrganizationForm):
+        pass
+    for tt in TagType.query.all():
+        tags = [(str(x.id), x.tag_name) for x in Tag.query.filter_by(tag_type_id=tt.id).all()]
+        setattr(moddedOrgForm, 'tag_{}'.format(tt.tag_type_name),
+                SelectMultipleField(
+                    'Select Tags from the category {} to describe your organization'.format(tt.tag_type_name),
+                    choices=tags))
+    form = moddedOrgForm()
     organization = Organization.query.filter_by(user_id=current_user.id)\
                                .first()
     if form.validate_on_submit():
@@ -45,8 +54,15 @@ def edit_profile():
         organization.website_link = form.website_link.data
         organization.hours = form.hours.data
         organization.description = form.description.data
-        organization.tags = form.tags.data
+        # organization.tags = form.tags.data
         organization.picture_urls = form.picture_urls.data
+        ts = []
+        for f in form:
+            if f.name.find('tag_') > -1:
+                for t in f.data:
+                    ts.append(Tag.query.get(t))
+        print(ts)
+        organization.tags = ts
         db.session.add(organization)
         db.session.commit()
         flash('Organization {} successfully updated. Redirecting you to ' +
@@ -61,6 +77,6 @@ def edit_profile():
         form.website_link.data = organization.website_link
         form.hours.data = organization.hours
         form.description.data = organization.description
-        form.tags.data = organization.tags
+        # form.tags.data = organization.tags
         form.picture_urls.data = organization.picture_urls
     return render_template('org/edit_profile.html', form=form)

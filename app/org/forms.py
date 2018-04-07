@@ -22,7 +22,7 @@ class OrganizationForm(Form):
         validators=[InputRequired(), Email()])
     # TODO(steven): see if there is a better validator.
     # Also, might want to change to a StringField.
-    phone = IntegerField('Phone number (eg 2108619271)',
+    phone = StringField('Phone number (eg 2108619271)',
         validators=[InputRequired()])
     address = StringField('Organization Address',
         validators=[InputRequired(), Length(1, 500)])
@@ -34,10 +34,6 @@ class OrganizationForm(Form):
     description = TextAreaField('Description of your organization',
         validators=[InputRequired()])
     # TODO: tag type separation based on a DB query
-    tags = QuerySelectMultipleField(
-        'Tags to describe your organization',
-        get_label='tag_name',
-        query_factory=lambda: db.session.query(Tag).order_by('tag_name'))
 
     picture_urls = MultipleFileUploadField('Upload Photos')
     submit = SubmitField('Create')
