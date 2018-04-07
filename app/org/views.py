@@ -17,12 +17,15 @@ def index():
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
     pics = []
-    if (organization.picture_urls is not None) and (len(organization.picture_urls) > 0):
+    if (organization.picture_urls is not None) and (len(
+            organization.picture_urls) > 0):
         pics = organization.picture_urls.split(",")
     tag_types = TagType.query.all()
     return render_template(
         'org/view_profile.html',
-        tag_types=tag_types, org=organization, pics=pics)
+        tag_types=tag_types,
+        org=organization,
+        pics=pics)
 
 
 # Organization edits its own profile
@@ -34,12 +37,16 @@ def view_org(org_id):
 def edit_profile():
     class moddedOrgForm(OrganizationForm):
         pass
+
     for tt in TagType.query.all():
-        tags = [(str(x.id), x.tag_name) for x in Tag.query.filter_by(tag_type_id=tt.id).all()]
-        setattr(moddedOrgForm, 'tag_{}'.format(tt.tag_type_name),
-                SelectMultipleField(
-                    'Select Tags from the category {} to describe your organization: '.format(tt.tag_type_name),
-                    choices=tags))
+        tags = [(str(x.id), x.tag_name)
+                for x in Tag.query.filter_by(tag_type_id=tt.id).all()]
+        setattr(
+            moddedOrgForm, 'tag_{}'.format(tt.tag_type_name),
+            SelectMultipleField(
+                'Select Tags from the category {} to describe your organization: '.
+                format(tt.tag_type_name),
+                choices=tags))
     form = moddedOrgForm()
     organization = Organization.query.filter_by(user_id=current_user.id)\
                                .first()
@@ -65,8 +72,7 @@ def edit_profile():
         db.session.add(organization)
         db.session.commit()
         flash('Organization {} successfully updated. Redirecting you to ' +
-              'profile page'.format(organization.name),
-              'form-success')
+              'profile page'.format(organization.name), 'form-success')
         return redirect(url_for('org.view_org', org_id=organization.id))
     if organization is not None:
         form.name.data = organization.name
@@ -77,10 +83,11 @@ def edit_profile():
         form.hours.data = organization.hours
         form.description.data = organization.description
         for tt in TagType.query.all():
-            matches = [str(x.id) for x in 
-                        Tag.query.filter(Tag.id.in_([x.id for x in organization.tags])) 
-                        .filter(Tag.tag_type_id == tt.id).all()
-                      ]
+            matches = [
+                str(x.id) for x in Tag.query.filter(
+                    Tag.id.in_([x.id for x in organization.tags]))
+                .filter(Tag.tag_type_id == tt.id).all()
+            ]
             print(matches)
             print('tag_{}'.format(tt.tag_type_name))
             form['tag_{}'.format(tt.tag_type_name)].data = matches

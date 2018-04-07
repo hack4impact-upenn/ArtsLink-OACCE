@@ -32,10 +32,10 @@
         {% for t in org.tags %}
         <div class="tag">{{ t.tag_name }}</div>
         {% endfor %}
-        {% if current_user.organizations | length > 0 %}
-        {% if current_user.organizations[0].id == org.id %}
+        {% if current_user.organization  %}
+        {% if current_user.organization.id == org.id %}
         <div class="edit">
-          <a href="{{ url_for('org.edit_profile') }}" class="ui basic button">Edit Page</a>
+          <a href="{{ url_for('org.edit_profile') }}" class="text-white">Edit Page</a>
         </div>
         {% endif %}
         {% endif %}
