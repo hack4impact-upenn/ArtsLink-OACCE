@@ -36,7 +36,7 @@
   <div class="row">
     <div class="col back-button">
       {% if user.confirmed == true %}
-      <a class="btn btn-outline-primary" href="{{ url_for('admin.registered_users') }}">
+      <a class="btn btn-outline-primary" href="{{ url_for('admin.approved_users') }}">
       {% else %}
       <a class="ui basic compact button" href="{{ url_for('admin.unapproved_users') }}">
       {% endif %}
