@@ -8,7 +8,7 @@ from . import admin
 from .. import db
 from ..decorators import admin_required
 from ..email import send_email
-from ..models import Role, User, EditableHTML
+from ..models import Role, User, EditableHTML, Tag, TagType
 
 
 @admin.route('/')
@@ -72,15 +72,89 @@ def invite_user():
     return render_template('admin/new_user.html', form=form)
 
 
-@admin.route('/users')
+@admin.route('/approved-users')
 @login_required
 @admin_required
-def registered_users():
-    """View all registered users."""
-    users = User.query.all()
+def approved_users():
+    """View all approved users."""
+    users = User.query.filter_by(confirmed=True)
     roles = Role.query.all()
     return render_template(
-        'admin/registered_users.html', users=users, roles=roles)
+        'admin/approved_users.html', users=users, roles=roles)
+
+
+@admin.route('/unapproved-users')
+@login_required
+@admin_required
+def unapproved_users():
+    """View all unapproved users."""
+    users = User.query.filter_by(confirmed=False)
+    roles = Role.query.all()
+    return render_template(
+        'admin/unapproved_users.html', users=users, roles=roles)
+
+@admin.route('/add-tags')
+@login_required
+@admin_required
+def add_tags():
+    """View all tags."""
+    age_group = TagType(
+        tag_type_name="Age Group"
+        )
+    service = TagType(
+        tag_type_name="Service"
+        )
+    disability_programming = TagType(
+        tag_type_name="Disability Programming"
+        )
+    db.session.add(age_group)
+    db.session.add(service)
+    db.session.add(disability_programming)
+    db.session.commit()
+    tags = Tag.query.all()
+    return render_template(
+        'admin/add_tags.html', tags=tags)
+
+# @admin.route('/add-tags', methods=['GET', 'POST'])
+# @login_required
+# @admin_required
+# def add_new_tags(tag_type):
+#     """View all tags."""
+#     age_group = TagType(
+#         tag_type_name="Age Group"
+#         )
+#     service = TagType(
+#         tag_type_name="Service"
+#         )
+#     disability_programming = TagType(
+#         tag_type_name="Disability Programming"
+#         )
+#     db.session.add(age_group)
+#     db.session.add(service)
+#     db.session.add(disability_programming)
+#     db.session.commit()
+#     tags = Tag.query.all()
+#     return render_template(
+#         'admin/add_tags.html', tags=tags, age_group=age_group, service=service, 
+#         disability_programming=disability_programming)
+
+
+@admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def approve_user(user_id):
+    """Confirm a user's profile."""
+    user = User.query.filter_by(id=user_id).first()
+    user.confirmed = True
+    db.session.add(user)
+    db.session.commit()
+    users = User.query.filter_by(confirmed=False)
+    roles = Role.query.all()
+    if user is None:
+        abort(404)
+    flash('Successfully approved user %s.' % user.full_name(), 'success')
+    return render_template(
+        'admin/unapproved_users.html', users=users, roles=roles)
 
 
 @admin.route('/user/<int:user_id>')

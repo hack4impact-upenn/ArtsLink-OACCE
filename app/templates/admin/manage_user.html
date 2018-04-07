@@ -35,8 +35,12 @@
 <div class="container">
   <div class="row">
     <div class="col back-button">
+      {% if user.confirmed == true %}
       <a class="btn btn-outline-primary" href="{{ url_for('admin.registered_users') }}">
-        Back to Registered Users
+      {% else %}
+      <a class="ui basic compact button" href="{{ url_for('admin.unapproved_users') }}">
+      {% endif %}
+      Back to {% if user.confirmed != true %}un{% endif %}approved users
       </a>
     </div>
   </div>
