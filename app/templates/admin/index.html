@@ -1,25 +1,5 @@
 {% extends 'layouts/base.html' %}
-
-{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
-<div class="card" onclick="location.href='{{ url_for(endpoint) }}'">
-  <div class="card-body">
-    <h5 class="card-title">
-      {% if icon is not none %}
-      <i class="{{ icon }}"></i>
-      {% endif %}
-      <a href='{{ url_for(endpoint) }}'>
-      {{ title }}
-      </a>
-    </h5>
-    {% if description is not none %}
-    <p class="card-text">
-    {{ description }}
-    </p>
-    {% endif %}
-  </div>
-</div>
-<br>
-{% endmacro %}
+{% import 'macros/dashboard_option.html' as d %}
 
 {% block content %}
 <div class="container">
@@ -28,13 +8,13 @@
   </h2>
   <div class="row">
     <div class="col-md-6">
-      {{ dashboard_option('Registered Users', 'admin.registered_users',
+      {{ d.dashboard_option('Registered Users', 'admin.registered_users',
       description='View and manage user accounts', icon='users icon') }}
-      {{ dashboard_option('Add New User', 'admin.new_user',
+      {{ d.dashboard_option('Add New User', 'admin.new_user',
       description='Create a new user account', icon='add user icon') }}
     </div>
     <div class="col-md-6">
-      {{ dashboard_option('Invite New User', 'admin.invite_user',
+      {{ d.dashboard_option('Invite New User', 'admin.invite_user',
       description='Invites a new user to create their own account', icon='add user icon') }}
     </div>
   </div>
