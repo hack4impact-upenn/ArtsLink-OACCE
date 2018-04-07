@@ -3,32 +3,39 @@ $mobile-breakpoint:        768px;
 $tablet-breakpoint:        992px;
 $small-monitor-breakpoint: 1200px;
 
-// General nav
-nav {
-    margin-bottom: 40px !important;
+h1, h2, h3, h4, h5, h6  {
+  font-family: 'Oswald'
+}
+
+p {
+  font-family: 'Open Sans';
+}
+.navbar.bg-dark {
+  background-color: rgba(0,0,0,0) !important;
+  z-index: 2000;
 }
 
 // Desktop nav
 .ui.fixed.main.menu .right.menu > .item:last-of-type {
-    border-right: 1px solid rgba(34, 36, 38, 0.0980392);
+  border-right: 1px solid rgba(34, 36, 38, 0.0980392);
 }
 
 // Mobile nav
 nav .mobile.only.row {
-    .ui.vertical.menu {
-        margin-top: 40px;
-        display: none;
-    }
+  .ui.vertical.menu {
+    margin-top: 40px;
+    display: none;
+  }
 }
 
 // Flashes
 .flashes > .ui.message:last-of-type {
-    margin-bottom: 2rem;
+  margin-bottom: 2rem;
 }
 
 // Tables
 table.selectable tr:hover {
-    cursor: pointer !important;
+  cursor: pointer !important;
 }
 
 .back-button {
@@ -37,4 +44,112 @@ table.selectable tr:hover {
 
 .positive {
   background-color: rgba(0,230,0, .3)
+}
+
+.container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+.bgimage h1 {
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color:white;
+}
+
+.bgimage p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  color: white;
+  padding-top: 20px;
+}
+.tag {
+  font-family: 'Oswald', sans-serif;
+  display:inline-block;
+  font-size: 20px;
+  padding: 15px 30px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: white;
+  border: 2px solid white;
+}
+
+h3 {
+  font-family: 'Open Sans', sans-serif;
+  font-weight: 600;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  font-size: 24px;
+  border-bottom: 4px solid #2F80ED 
+}
+
+h4 {
+  font-size: 20px;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  border-bottom: 4px solid #F2994A 
+}
+
+.edit {
+  background: url("/static/images/noun_70731_cc.png");
+  background-size: cover;
+  width: 100px;
+  height:100px;
+  border: 5px solid white;
+  float: right;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+}
+
+.edit > a {
+  position: absolute;
+  bottom: -40px;
+  color: white;
+  font-size: 20px;
+  width: 100%;
+  text-align: center;
+  display: inline-block;
+}
+
+.frontpage-search  {
+  background-color: rgba(0,0,0,0);
+  border: none;
+  border-bottom: 1px solid #FFF;
+  border-radius: 0px;
+  box-shadow: none;
+  color: #FFF;
+  font-size: 24px;
+}
+
+.img-contain {
+  position: relative
+}
+.img {
+  height: 500px !important;
+}
+.col-md-6 {
+  padding-left: 0px;
+  padding-right: 0px
+}
+
+.content-tile {
+  padding-top: 10%;
+  p {
+    line-height: 36px
+  }
+}
+
+.overlay {
+  color: #FFF;
+  text-align: center;
+  height: 100%;
+  position: absolute;
+  padding-top: 20%;
+  top: 0;
+  width: 100%
 }

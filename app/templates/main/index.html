@@ -1,16 +1,107 @@
 {% extends 'layouts/base.html' %}
-
+{% block custom_scripts %}
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Oswald:300,400,500,700" rel="stylesheet">
+{% endblock %}
 {% block content %}
-    <div class="container">
-      <h1>Hello {% if not (current_user.is_authenticated) %} world {% else %} {{ current_user.full_name() }} {% endif %},</h1>
-        <p>This is <a href="http://hack4impact.org">Hack4Impact</a>'s web application template. We'll use this as a
-        foundation for each of our <a href="http://flask.pocoo.org">Flask</a> projects. The goal is to reduce the work
-        necessary to get a new project off the ground, by providing boilerplate code (such as account management
-        facilities), as well as uncontroversial and extensible defaults. We have integrated an
-        <a href="http://sass-lang.com">SCSS</a>-based asset pipeline based around a (fantastic!) framework
-        called <a href="http://semantic-ui.com">Semantic UI</a>. Much of this code is appropriated from the examples
-        in Miguel Grinberg's book, <a href="http://flaskbook.com"><em>Flask Web Development</em></a>.</p>
+<style>
 
-        <p>{{ lipsum(6) }}</p>
+.bgimage {
+  margin-top: -60px;
+  width:100%;
+  min-height:500px;
+  height: 50vh;
+  background: linear-gradient(105.95deg, #F2994A 1.82%, rgba(242, 153, 74, 0.86) 1.83%, rgba(32, 123, 245, 0.75) 100.19%), 
+     url(http://creativephl.org/wp-content/uploads/2018/03/pytf-825x380.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+}
+
+</style>
+<section class="bgimage">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12 " style="height: 100%">
+        <h1>ART CONNECT</h1>
+        <p>Connecting arts-focused nonprofits and schools to create educational opportunities for students.</p>
+        <div class="form-group">
+          <input type="text" class="form-control frontpage-search" value="SEARCH FOR NONPROFITS">
+        </div>
+        <p style="font-size: 16px" class="text-white">Are you a nonprofit in the artistic space? <a class="text-white" style="border-bottom: 1px dashed #FFF" href="{{ url_for('account.register') }}">Sign Up</a></p>
+      </div>
     </div>
+  </div>
+</section>
+
+<section>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="img-contain">
+          <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(https://www.philaculture.org/sites/default/files/page/oldcityatnight-2-032-bkrist_0_0.jpg);">
+          </div>
+          <div class="overlay">
+            
+            <h1>90%</h1>
+            <p>of high schoolers dont have arts education</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 content-tile">
+        <div class="row">
+          <div class="col-md-8 offset-md-1">
+            <h1>ABOUT</h1>
+
+            <p>Art Connect  is a tool to help art teachers and nonprofits connect to foster educational experiences for students. In philadelphia alone ... other text here.<p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6 content-tile">
+        <div class="row">
+          <div class="col-md-8 offset-md-1">
+            <h1>ABOUT</h1>
+
+            <p>Art Connect  is a tool to help art teachers and nonprofits connect to foster educational experiences for students. In philadelphia alone ... other text here.<p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="img-contain">
+          <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(https://www.philaculture.org/sites/default/files/page/oldcityatnight-2-032-bkrist_0_0.jpg);">
+          </div>
+          <div class="overlay">
+            
+            <h1>90%</h1>
+            <p>of high schoolers dont have arts education</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="img-contain">
+          <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(https://www.philaculture.org/sites/default/files/page/oldcityatnight-2-032-bkrist_0_0.jpg);">
+          </div>
+          <div class="overlay">
+            
+            <h1>90%</h1>
+            <p>of high schoolers dont have arts education</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 content-tile">
+        <div class="row">
+          <div class="col-md-8 offset-md-1">
+            <h1>ABOUT</h1>
+
+            <p>Art Connect  is a tool to help art teachers and nonprofits connect to foster educational experiences for students. In philadelphia alone ... other text here.<p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 {% endblock %}
