@@ -8,7 +8,7 @@ vendor_css = Bundle('vendor/bootstrap.min.css', output='styles/vendor.css')
 
 vendor_js = Bundle(
     'vendor/jquery.min.js',
-    'vendor/bootstrap.min.js',
+    'vendor/bootstrap.js',
     'vendor/tablesort.min.js',
     'vendor/zxcvbn.js',
     filters='jsmin',
