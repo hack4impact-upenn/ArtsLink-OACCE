@@ -3,7 +3,7 @@ from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
-from ..models import Organization
+from ..models import Organization, TagType
 from .. import db
 
 
@@ -16,10 +16,12 @@ def index():
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
     pics = []
-    if len(organization.picture_urls) > 0:
+    if (organization.picture_urls is not None) and (len(organization.picture_urls) > 0):
         pics = organization.picture_urls.split(",")
+    tag_types = TagType.query.all()
     return render_template(
-        'org/view_profile.html', org=organization, pics=pics)
+        'org/view_profile.html',
+        tag_types=tag_types, org=organization, pics=pics)
 
 
 # Organization edits its own profile
