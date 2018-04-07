@@ -16,7 +16,6 @@
         'info':    get_flashed_messages(category_filter=['form-info']),
         'success': get_flashed_messages(category_filter=['form-success'])
     } %}
-
     {{ begin_form(form, flashes, method=method, extra_classes=extra_classes, enctype=enctype) }}
         {% for field in form if not (is_hidden_field(field) or field.type == 'SubmitField') %}
             {{ render_form_field(field) }}
@@ -43,7 +42,7 @@
         {% set enctype = '' %}
     {% endif %}
 
-    <form action="" method="{{ method }}" enctype="{{ enctype }}" class="ui form {{ extra_classes }}
+    <form action="" method="{{ method }}" enctype="{{ enctype }}" class="{{ extra_classes }}
         {% if form.errors or flashes['error'] %} error
         {% elif flashes['warning'] %} warning
         {% elif flashes['info'] %} info
@@ -60,7 +59,8 @@
 {# Render a message for the form #}
 {% macro form_message(messages, header=none, class='') %}
     {% if messages %}
-        <div class="ui {{ class }} message">
+        <div class="alert alert-{% if class != 'error' %}{{ class }}{% else %}danger{% endif %}">
+          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
             {% if header is not none %}
                 <div class="header">{{ header }}</div>
             {% endif %}
@@ -80,47 +80,45 @@
     {% if field.type == 'Radio Field' %}
         {% set extra_classes = extra_classes + ' grouped fields' %}
     {% endif %}
-    <div class="field {% if field.errors %}error{% endif %} {{ extra_classes }}">
+    <div class="form-{% if field.widget.input_type == 'checkbox' %}check{% else %}group{% endif %}
+      {% if field.errors %}is-invalid{% endif %} {{ extra_classes }}">
         {{ render_form_input(field) }}
         {% if field.errors %}
-            <div class="ui red pointing label">
+            <span class="invalid-feedback">
                 {{ field.errors[0] | safe }}
-            </div>
+            </span>
         {% endif %}
     </div>
 {% endmacro %}
 
 {% macro render_form_input(field) %}
     {% if field.widget.input_type == 'checkbox' %}
-        <div class="ui checkbox">
-            {{ field }}
-            {{ field.label }}
-        </div>
+        {{ field(class_="form-check-input") }}
+        {{ field.label }}
     {% elif field.type == 'RadioField' %}
         {% for item in field %}
             <div class="ui radio checkbox">
-                {{ field }}
+                {{ field(class_="form-control") }}
                 {{ field.label }}
             </div>
         {% endfor %}
     {% elif field.type == 'MultipleFileUploadField' %}
-        {{ field.label }}
-        <label for="file" class="ui icon button">
-          <i class="plus icon"></i>
-          <i class="file icon"></i>
-          </label>
-          <input type="file" id="file" style="display:none"><br>
+        <label for="file" class="btn btn-secondary">
+          Add Image
+        </label>
+        <input type="file" id="file" style="display:none"><br>
         <div style="display:none">{{ field }}</div>
+        <strong>Image List: </strong>
         <div id="{{ field.id }}_list">
           {% if field.data %}
             {% set data = field.data.split(',') %}
             {% for d in data %}
-            <div class="ui label"><i class="file icon"></i><a href="{{ d }}">{{ d }}</a><i class="delete icon" data-url="{{ d }}"></i></div><br><br>
+            <span class="badge badge-light"><a href="{{ d }}">{{ d }}</a> <span class="delete badge badge-danger" data-url="{{ d }}">Delete Image</span></span><br/>
             {% endfor %}
           {% endif %}
         </div>
     {% elif field.type == 'SubmitField' %}
-        {{ field(class='ui button') }}
+        {{ field(class='btn btn-primary') }}
     {% elif field.type == 'FormField' %}
         {{ render_form(field) }}
     {% else %}
@@ -130,6 +128,10 @@
                     {{ field.description }}
                 </div>
             {% endif %}
-        {{ field(placeholder=field.label.text) }}
+        {% set error = '' %}
+        {% if field.errors %}
+          {% set error = 'is-invalid' %}
+        {% endif %}
+        {{ field(placeholder=field.label.text, class_="form-control " + error) }}
     {% endif %}
 {% endmacro %}
