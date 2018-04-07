@@ -4,9 +4,12 @@
 
 {% block content %}
     <div class="container">
+      <h2>Create your password</h2>
+
         <div class="row">
-            <h2>Create your password</h2>
+          <div class="col">
             {{ f.render_form(form) }}
+          </div>
         </div>
     </div>
     {{ check.password_check('password', 0) }}
