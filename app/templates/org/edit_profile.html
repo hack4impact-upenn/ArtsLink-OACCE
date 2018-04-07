@@ -17,4 +17,9 @@
         </div>
     </div>
     {{ upload.file_upload('picture_urls') }}
+    <script>
+    $(document).ready(function() {
+      $('#tags').multiselect();
+    });
+  </script>
 {% endblock %}
