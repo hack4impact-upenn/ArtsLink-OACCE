@@ -38,7 +38,7 @@ def edit_profile():
         tags = [(str(x.id), x.tag_name) for x in Tag.query.filter_by(tag_type_id=tt.id).all()]
         setattr(moddedOrgForm, 'tag_{}'.format(tt.tag_type_name),
                 SelectMultipleField(
-                    'Select Tags from the category {} to describe your organization'.format(tt.tag_type_name),
+                    'Select Tags from the category {} to describe your organization: '.format(tt.tag_type_name),
                     choices=tags))
     form = moddedOrgForm()
     organization = Organization.query.filter_by(user_id=current_user.id)\
@@ -54,7 +54,6 @@ def edit_profile():
         organization.website_link = form.website_link.data
         organization.hours = form.hours.data
         organization.description = form.description.data
-        # organization.tags = form.tags.data
         organization.picture_urls = form.picture_urls.data
         ts = []
         for f in form:
@@ -77,6 +76,13 @@ def edit_profile():
         form.website_link.data = organization.website_link
         form.hours.data = organization.hours
         form.description.data = organization.description
-        # form.tags.data = organization.tags
+        for tt in TagType.query.all():
+            matches = [str(x.id) for x in 
+                        Tag.query.filter(Tag.id.in_([x.id for x in organization.tags])) 
+                        .filter(Tag.tag_type_id == tt.id).all()
+                      ]
+            print(matches)
+            print('tag_{}'.format(tt.tag_type_name))
+            form['tag_{}'.format(tt.tag_type_name)].data = matches
         form.picture_urls.data = organization.picture_urls
     return render_template('org/edit_profile.html', form=form)

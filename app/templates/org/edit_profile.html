@@ -19,7 +19,10 @@
     {{ upload.file_upload('picture_urls') }}
     <script>
     $(document).ready(function() {
-      $('#tags').multiselect();
+      $('select[name^="tag_"]').each(function() {
+        console.log('hi')
+        $(this).multiselect();
+      })
     });
   </script>
 {% endblock %}
