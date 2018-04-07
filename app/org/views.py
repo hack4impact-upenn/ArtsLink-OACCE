@@ -43,7 +43,7 @@ def edit_profile():
         organization.website_link = form.website_link.data
         organization.hours = form.hours.data
         organization.description = form.description.data
-        # organization.tags = form.tags.data
+        organization.tags = form.tags.data
         organization.picture_urls = form.picture_urls.data
         db.session.add(organization)
         db.session.commit()
