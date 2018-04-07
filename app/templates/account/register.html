@@ -4,7 +4,7 @@
 
 {% block content %}
 <div class="container">
-  <h2 class="ui dividing header">Create an account</h2>
+  <h2>Create an account</h2>
   {% set flashes = {
   'error':   get_flashed_messages(category_filter=['form-error']),
   'warning': get_flashed_messages(category_filter=['form-check-email']),
@@ -12,7 +12,7 @@
   'success': get_flashed_messages(category_filter=['form-success'])
   } %}
     {{ f.begin_form(form, flashes) }}
-    <div class="form-row col-md-12">
+    <div class="form-row">
     <div class="col-md-6">
       {{ f.render_form_field(form.first_name) }}
     </div>
@@ -24,7 +24,7 @@
     {{ f.render_form_field(form.email) }}
     </div>
 
-    <div class="form-group col-md-6">
+    <div class="col-md-6">
       {{ f.render_form_field(form.password) }}
     </div>
     <div class="col-md-6">
