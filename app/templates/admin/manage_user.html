@@ -4,31 +4,31 @@
 {% set deletion_endpoint = 'admin.delete_user_request' %}
 
 {% set endpoints = [
-    ('admin.user_info', 'User information'),
-    ('admin.change_user_email', 'Change email address'),
-    ('admin.change_account_type', 'Change account type'),
-    (deletion_endpoint, 'Delete user')
+('admin.user_info', 'User information'),
+('admin.change_user_email', 'Change email address'),
+('admin.change_account_type', 'Change account type'),
+(deletion_endpoint, 'Delete user')
 ] %}
 
 {% macro navigation(items) %}
 <ul class="nav nav-pills flex-column">
-        {% for route, name in items %}
-            {% set href = url_for(route, user_id=user.id) %}
+  {% for route, name in items %}
+  {% set href = url_for(route, user_id=user.id) %}
   <li class="nav-item">
     <a class="nav-link {% if request.endpoint == route %}active{% endif %}" href="{{ href }}">
       {{ name }}
     </a>
   </li>
-        {% endfor %}
+  {% endfor %}
 </ul>
 {% endmacro %}
 
 {% macro user_info(user) %}
-    <table class="table">
-        <tr><td>Full name</td><td>{{ '%s %s' % (user.first_name, user.last_name) }}</td></tr>
-        <tr><td>Email address</td><td>{{ user.email }}</td></tr>
-        <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>
-    </table>
+<table class="table">
+  <tr><td>Full name</td><td>{{ '%s %s' % (user.first_name, user.last_name) }}</td></tr>
+  <tr><td>Email address</td><td>{{ user.email }}</td></tr>
+  <tr><td>Account type</td><td>{{ user.role.name }}</td></tr>
+</table>
 {% endmacro %}
 
 {% block content %}
@@ -46,7 +46,7 @@
         Manage User
       </h2>
       <p class="sub header">
-        Manage user {{ user.full_name() }}'s account
+      Manage user {{ user.full_name() }}'s account
       </p>
     </div>
   </div>
@@ -55,40 +55,40 @@
       {{ navigation(endpoints) }}
     </div>
     <div class="col-md-8">
-                {% if request.endpoint == deletion_endpoint %}
-                    <h3 class="text-danger">
-                        <i class="warning circle icon"></i>
-                        This action is permanent
-                    </h3>
-                    <p class="content">
-                        Deleting a user account is not a reversible change. Any information associated
-                        with this account will be removed, and cannot be recovered.
-                    </p>
+      {% if request.endpoint == deletion_endpoint %}
+      <h3 class="text-danger">
+        <i class="warning circle icon"></i>
+        This action is permanent
+      </h3>
+      <p class="content">
+      Deleting a user account is not a reversible change. Any information associated
+      with this account will be removed, and cannot be recovered.
+      </p>
 
-                        <div class="form-check">
-                          <input type="checkbox" class="form-check-input deletion checkbox" tabindex="0" class="hidden">
-                          <label>I understand that this action cannot be undone.</label>
-                        </div>
-                        
-                        <a class="btn btn-danger text-white disabled">
-                            Delete this user
-                        </a>
-                {% elif form %}
-                    {{ f.render_form(form) }}
-                {% else %}
-                    {{ user_info(user) }}
-                {% endif %}
-            </div>
-        </div>
+      <div class="form-check">
+        <input type="checkbox" class="form-check-input deletion checkbox" tabindex="0" class="hidden">
+        <label>I understand that this action cannot be undone.</label>
+      </div>
+
+      <a class="btn btn-danger text-white disabled">
+        Delete this user
+      </a>
+      {% elif form %}
+      {{ f.render_form(form) }}
+      {% else %}
+      {{ user_info(user) }}
+      {% endif %}
     </div>
+  </div>
+</div>
 
-    <script type="text/javascript">
+<script type="text/javascript">
 $('.deletion.checkbox').change(function() {
-            if ($(this).is(':checked')) {
-                $('.btn-danger').removeClass('disabled').attr('href', '{{ url_for('admin.delete_user', user_id=user.id) }}');
-            } else {
-                $('.btn-danger').addClass('disabled').removeAttr('href');
-            }
-        });
-    </script>
+  if ($(this).is(':checked')) {
+  $('.btn-danger').removeClass('disabled').attr('href', '{{ url_for('admin.delete_user', user_id=user.id) }}');
+} else {
+  $('.btn-danger').addClass('disabled').removeAttr('href');
+}
+});
+</script>
 {% endblock %}

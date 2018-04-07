@@ -23,31 +23,31 @@
       <p>Create a new user account</p>
     </div>
   </div>
-            {% set flashes = {
-                'error':   get_flashed_messages(category_filter=['form-error']),
-                'warning': get_flashed_messages(category_filter=['form-check-email']),
-                'info':    get_flashed_messages(category_filter=['form-info']),
-                'success': get_flashed_messages(category_filter=['form-success'])
-            } %}
+  {% set flashes = {
+  'error':   get_flashed_messages(category_filter=['form-error']),
+  'warning': get_flashed_messages(category_filter=['form-check-email']),
+  'info':    get_flashed_messages(category_filter=['form-info']),
+  'success': get_flashed_messages(category_filter=['form-success'])
+  } %}
 
-            {{ f.begin_form(form, flashes) }}
+  {{ f.begin_form(form, flashes) }}
 
-    <div class="form-row">
+  <div class="form-row">
     <div class="col-md-12">
-                {{ f.render_form_field(form.role) }}
+      {{ f.render_form_field(form.role) }}
     </div>
     <div class="col-md-6">
-                    {{ f.render_form_field(form.first_name) }}
+      {{ f.render_form_field(form.first_name) }}
     </div>
     <div class="col-md-6">
-                    {{ f.render_form_field(form.last_name) }}
-                </div>
-
-    <div class="col-md-12">
-    {{ f.render_form_field(form.email) }}
+      {{ f.render_form_field(form.last_name) }}
     </div>
 
-                {% if form.password %}
+    <div class="col-md-12">
+      {{ f.render_form_field(form.email) }}
+    </div>
+
+    {% if form.password %}
 
     <div class="col-md-6">
       {{ f.render_form_field(form.password) }}
@@ -56,21 +56,21 @@
       {{ f.render_form_field(form.password2) }}
     </div>
 
-                {% endif %}
+    {% endif %}
 
-                {{ f.form_message(flashes['error'], header='Something went wrong.', class='error') }}
-                {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
-                {{ f.form_message(flashes['info'], header='Information', class='info') }}
-                {{ f.form_message(flashes['success'], header='Success!', class='success') }}
+    {{ f.form_message(flashes['error'], header='Something went wrong.', class='error') }}
+    {{ f.form_message(flashes['warning'], header='Check your email.', class='warning') }}
+    {{ f.form_message(flashes['info'], header='Information', class='info') }}
+    {{ f.form_message(flashes['success'], header='Success!', class='success') }}
 
-                {% for field in form | selectattr('type', 'equalto', 'SubmitField') %}
-                    {{ f.render_form_field(field) }}
-                {% endfor %}
+    {% for field in form | selectattr('type', 'equalto', 'SubmitField') %}
+    {{ f.render_form_field(field) }}
+    {% endfor %}
 
-            {{ f.end_form() }}
-            {% if form.password %} 
-              {{ check.password_check('password', 0) }} 
-            {% endif %}
-        </div>
-    </div>
+    {{ f.end_form() }}
+    {% if form.password %} 
+    {{ check.password_check('password', 0) }} 
+    {% endif %}
+  </div>
+</div>
 {% endblock %}
