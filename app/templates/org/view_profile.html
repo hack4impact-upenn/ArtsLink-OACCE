@@ -1,72 +1,203 @@
-{% extends 'layouts/base.html' %}
-{% block content %}
-    <div class="ui stackable centered grid container">
-        <div class="sixteen wide column">
-            <h1>{{ org.name }}</h1>
-            {% if current_user.organizations | length > 0 %}
-              {% if current_user.organizations[0].id == org.id %}
-              <a href="{{ url_for('org.edit_profile') }}" class="ui basic button">Edit Page</a>
-              {% endif %}
-            {% endif %}
-        </div>
+<html>
+    <head>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+      <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+      <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Oswald:300,400,500,700" rel="stylesheet">
+      <link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
 
-        <div class="six wide column">
-          <div>
-              <h3>Email</h3> 
-              <hr/>
-              <p>{{ org.email }}</p>
-              <br>    
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+<style>
+
+.bgimage {
+  width:100%;
+  min-height:500px;
+  height: 50vh;
+  background: linear-gradient(105.95deg, #F2994A 1.82%, rgba(242, 153, 74, 0.86) 1.83%, rgba(32, 123, 245, 0.75) 100.19%), 
+    {% if pics | length > 0 %} url("{{ pics[0] }}") {% else %} url(http://creativephl.org/wp-content/uploads/2018/03/pytf-825x380.jpg) {% endif %};
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+}
+
+body {
+       width: 100%;
+       margin: 0%;    
+}
+.container { 
+  margin: 0% 10%;
+}
+.bgimage h1 {
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color:white;
+}
+
+              .container {
+                max-width: 80%
+              }
+              .bgimage p {
+                font-family: 'Open Sans', sans-serif;
+                font-size: 24px;
+                color: white;
+                padding-top: 20px;
+                font-style: italic;
+              }
+              .tag {
+                font-family: 'Oswald', sans-serif;
+                display:inline-block;
+                font-size: 20px;
+                padding: 15px 30px;
+                text-transform: uppercase;
+                letter-spacing: 0.15em;
+                color: white;
+                border: 2px solid white;
+              }
+
+              h3 {
+                font-family: 'Open Sans', sans-serif;
+                font-weight: 600;
+                  margin-top: 15px;
+                padding-bottom: 10px;
+                  font-size: 24px;
+                border-bottom: 4px solid #2F80ED 
+              }
+
+              h4 {
+                font-size: 20px;
+                font-weight: 600;
+                  font-family: 'Open Sans', sans-serif;
+                margin-top: 15px;
+                padding-bottom: 10px;
+                border-bottom: 4px solid #F2994A 
+              }
+
+              .edit {
+                background: url("/static/images/noun_70731_cc.png");
+                  background-size: cover;
+                    width: 100px;
+                      height:100px;
+                border: 5px solid white;
+                float: right;
+                position: absolute;
+                top: 20px;
+                right: 20px;
+              }
+
+              .edit > a {
+                position: absolute;
+                bottom: -40px;
+                  color: white;
+                    font-size: 20px;
+                      width: 100%;
+                        text-align: center;
+                          display: inline-block;
+              }
+</style>
+    </head>
+    <body>
+        <section class="bgimage">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-12 " style="height: 100%">
+                <h1>{{ org.name }}</h1>
+                <p>{{ org.description.split('.')[0]}}...</p>
+                <div class="tag">Ayy lmao </div>
+                {% for t in tags %}
+                <div class="tag">{{ t.tag_name }}</div>
+                {% endfor %}
+                {% if current_user.organizations | length > 0 %}
+                {% if current_user.organizations[0].id == org.id %}
+                <div class="edit">
+                <a href="{{ url_for('org.edit_profile') }}" class="ui basic button">Edit Page</a>
+                </div>
+                {% endif %}
+                {% endif %}
+              </div>
+            </div>
           </div>
-          <div>
-              <h3>Phone</h3> 
-              <hr/>
-              <p>{{ org.phone }}</p>
-              <br>    
+        </section>
+        <section>
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4">
+                <h3>General Information</h3>
+            <div>
+                <h4>Email</h4> 
+                
+                <p>{{ org.email }}</p>
+                <br>    
+            </div>
+            <div>
+                <h4>Phone</h4> 
+                
+                <p>{{ org.phone }}</p>
+                <br>    
+            </div>
+            <div>
+                <h4>Address</h4> 
+                
+                <p>{{ org.address }}</p>
+                <br>    
+            </div>
+            <div>
+                <h4>Website</h4> 
+                
+                <p>{{ org.website_link }}</p>
+                <br>    
+            </div>
+            <div>
+                <h4>Hours</h4> 
+                
+                <p>{{ org.hours }}</p>
+                <br>    
+            </div>
+            <div>
+                <h3>tags</h3> 
+                <br>    
+            </div>
+              </div>
+                
+              <div class="col-md-8">
+                <h3>Description</h3>
+          <div class="row justify-content-center">
+            <div class="col-md-12">
+              <div class="row" style="height: 400px; overflow-y: scroll">
+                {% for p in pics %}
+                <a href="{{ p }}" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" >
+                  <div style="height: 250px; overflow: hidden; margin: 20px;">
+                    <img src="{{ p }}" class="img-fluid">
+                  </div>
+                  </a>
+                  <a href="{{ p }}" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" >
+                  <div style="height: 250px; overflow: hidden; margin: 20px">
+                    <img src="{{ p }}" class="img-fluid">
+                  </div>
+                  </a>
+                  <a href="{{ p }}" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4" >
+                  <div style="height: 250px; overflow: hidden; margin: 20px">
+                    <img src="{{ p }}" class="img-fluid">
+                  </div>
+                </a>
+                {% endfor %}
+              </div>
+            </div>
           </div>
-          <div>
-              <h3>Address</h3> 
-              <hr/>
-              <p>{{ org.address }}</p>
-              <br>    
+                <p> {{ org.description }} {{lipsum(6)}} </p>
+              </div>
+            </div>
           </div>
-          <div>
-              <h3>Website</h3> 
-              <hr/>
-              <p>{{ org.website_link }}</p>
-              <br>    
-          </div>
-          <div>
-              <h3>Hours</h3> 
-              <hr/>
-              <p>{{ org.hours }}</p>
-              <br>    
-          </div>
-          <div>
-              <h3>tags</h3> 
-              <hr/>
-              {% for t in tags %}
-              <p>{{ t.tag_name }}</p>
-              {% endfor %}
-              <br>    
-          </div>
-        </div>
-        <div class="ten wide column">
-          <div>
-              <h3>Images</h3> 
-              <hr/>
-              {% for p in pics %}
-                <img src="{{ p }}" width="200px">
-                <br>
-                Debug url: {{ p }}
-              {% endfor %}
-              <br>    
-          </div>
-          <div>
-              <h3>Description</h3> 
-              <hr/>
-              <p>{{ org.description }}</p>
-              <br>    
-          </div>
-        </div>
-    </div>
-{% endblock %}
+        </section>
+    </body>
+  <script>
+$(document).on('click', '[data-toggle="lightbox"]', function(event) {
+                event.preventDefault();
+                $(this).ekkoLightbox();
+            });
+  </script>
+</html>
