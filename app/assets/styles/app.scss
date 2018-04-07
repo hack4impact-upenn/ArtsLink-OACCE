@@ -11,7 +11,7 @@ p {
   font-family: 'Open Sans';
 }
 .navbar.bg-dark {
-  background-color: rgba(0,0,0,0) !important;
+  background-color: rgba(255, 255, 255, 1) !important;
   z-index: 2000;
 }
 
@@ -132,9 +132,12 @@ h4 {
 .img {
   height: 500px !important;
 }
-.col-md-6 {
+section {
+ .col-md-6 {
   padding-left: 0px;
   padding-right: 0px
+  }
+
 }
 
 .content-tile {

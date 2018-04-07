@@ -10,7 +10,7 @@ p {
 
 @media -sass-debug-info{filename{}line{font-family:\0000313}}
 .navbar.bg-dark {
-  background-color: rgba(0, 0, 0, 0) !important;
+  background-color: white !important;
   z-index: 2000;
 }
 
@@ -146,22 +146,22 @@ h4 {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003135}}
-.col-md-6 {
+@media -sass-debug-info{filename{}line{font-family:\00003136}}
+section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003140}}
+@media -sass-debug-info{filename{}line{font-family:\00003143}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003142}}
+@media -sass-debug-info{filename{}line{font-family:\00003145}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003147}}
+@media -sass-debug-info{filename{}line{font-family:\00003150}}
 .overlay {
   color: #FFF;
   text-align: center;
