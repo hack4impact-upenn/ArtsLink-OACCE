@@ -6,6 +6,9 @@ tag_association = db.Table('tag_association', db.Model.metadata,
                            db.Column('organization_id', db.Integer,
                                      db.ForeignKey('organizations.id')))
 
+from .user import User
+import random
+
 
 class Organization(db.Model):
     __tablename__ = 'organizations'
@@ -21,6 +24,59 @@ class Organization(db.Model):
         "Tag", secondary=tag_association, back_populates="organizations")
     picture_urls = db.Column(db.Text)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    def generate_fake(count=20):
+        from sqlalchemy.exc import IntegrityError
+        from random import randint
+        from faker import Faker
+        users = User.query.filter_by(role_id=1)
+        usr_id = 0
+        fake = Faker()
+
+        num_tag_types = 5
+        num_tags = 3  # num tags per tag type
+        tag_types = []
+        tags = []
+        for i in range(num_tag_types):
+            currTagType = TagType(tag_type_name=fake.word(), )
+            for j in range(num_tags):
+                tag = Tag(
+                    tag_name=fake.word(),
+                    tag_type=currTagType,
+                    tag_type_id=currTagType.id)
+                db.session.add(tag)
+            db.session.add(currTagType)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+        for i in range(1, count):
+            # Connect to a User ID
+            curr_user_id = users[usr_id].id
+            #choose what tag values to append to the org, make TagAssociations for each
+            org = Organization(
+                name=fake.name(),
+                email=fake.email(),
+                phone=fake.phone_number(),
+                address=fake.address(),
+                user_id=curr_user_id)
+            db.session.add(org)
+            try:
+                db.session.commit()
+            except IntegrityError:
+                db.session.rollback()
+            tag_list = Tag.query.all()
+            tags = random.sample(
+                tag_list,
+                7)  #make an association bt this resource and these tags
+            for tag in tags:
+                tag_assoc = TagAssociation(organization_id=i, tag_id=tag.id)
+                db.session.add(tag_assoc)
+                try:
+                    db.session.commit()
+                except IntegrityError:
+                    db.session.rollback()
+            usr_id += 1
 
 
 class Tag(db.Model):
