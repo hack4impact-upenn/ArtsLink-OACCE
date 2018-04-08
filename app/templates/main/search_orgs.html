@@ -21,7 +21,6 @@
                     </div>
                 </div>
             </div>
-            <div class="ui menu">
                 <div class="ui item">
                 <select id="chooseTags" class="ui fluid search dropdown" multiple="">
                     {% for t in tags %}
@@ -33,7 +32,6 @@
                 <div class ="ui right item">
                     <button class="ui button" id="search">Filter by Tag</button>
                 </div>
-            </div>
 
 
             {# Use overflow-x: scroll so that mobile views don't freak out
@@ -48,7 +46,7 @@
                     </thead>
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
-                                <tr>
+                                <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
                                 {% for tag in  o.tags %}
                                       <input type="hidden" name="country" value="Norway" class="{{ tags[tag.tag_id - 1].tag_name }}">
                                 {% endfor %}
@@ -61,28 +59,69 @@
             </div>
         </div>
     </div>
+    <style>
+        .hidden {
+            display:none;
+        }
+
+    </style>
         <script type="text/javascript">
+            $('tr').each(function() {
+                $(this).attr('data-search-match', true);
+                $(this).attr('data-tag-match', true);
+            })
+
             $('#search-orgs').keyup(function () {
+{#                var searchText = $(this).val();#}
+{#                if (searchText.length > 0) {#}
+{#                    $('tbody tr:icontains(' + searchText + ')').removeClass('positive').addClass('positive');#}
+{#                    $('tr.positive').not(':icontains(' + searchText + ')').removeClass('positive');#}
+{#                    $('tbody tr').not(':icontains(' + searchText + ')').closest('tr').removeClass('hidden').addClass('hidden')#}
+{#                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden')#}
+{#                } else {#}
+{#                    if (!$('#chooseTags').val()) {#}
+{#                        $('tr.positive').removeClass('positive');#}
+{#                        $('tr.hidden').removeClass('hidden')#}
+{#                    }#}
+{#                }#}
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
-                    $('tbody td:icontains(' + searchText + ')').addClass('positive');
-                    $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
-                    $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
-                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+                    $('tbody tr:icontains(' + searchText + ')').attr('data-search-match', true);
+                    $('tbody tr').not(':icontains(' + searchText + ')').closest('tr').attr('data-search-match', false);
                 } else {
-                    $('td.positive').removeClass('positive');
-                    $('tr.hidden').removeClass('hidden').show();
+                    $('tbody tr').attr('data-search-match', true);
                 }
             });
             $('#chooseTags').change(function () {
                 var searchText = $(this).val();
                 var currTag;
-                if(searchText.length > 0) {
+                console.log(searchText);
+                if(searchText) {
+
+                    $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
+
                     for(tag in searchText) {
                         currTag = '.' + searchText[tag];
-                        $(currTag).closest('tr').addClass('positive');
+                        $(currTag).closest('tr').attr('data-tag-match', true);
                     }
+                } else {
+                    $('tr').each(function() {
+                        $(this).attr('data-tag-match', true);
+                    })
                 }
             });
+
+            setTimeout(function resolver() {
+                $('tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    console.log(tag, search);
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                    } else {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                    }
+                })
+            }, 1000);
         </script>
 {% endblock %}
