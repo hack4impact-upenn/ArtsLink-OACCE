@@ -58,7 +58,24 @@ table.selectable tr:hover {
   font-family: 'Oswald', sans-serif;
   color:white;
 }
+.bgimage-footer {
+  h1 {
 
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color:white;
+  }
+  p {
+
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  color: white;
+  padding-top: 20px;
+  }
+}
 .bgimage p {
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;

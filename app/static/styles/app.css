@@ -62,6 +62,23 @@ table.selectable tr:hover {
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000362}}
+.bgimage-footer h1 {
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000371}}
+.bgimage-footer p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  color: white;
+  padding-top: 20px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000379}}
 .bgimage p {
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
@@ -69,7 +86,7 @@ table.selectable tr:hover {
   padding-top: 20px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000368}}
+@media -sass-debug-info{filename{}line{font-family:\0000385}}
 .tag {
   font-family: 'Oswald', sans-serif;
   display: inline-block;
@@ -84,13 +101,13 @@ table.selectable tr:hover {
   transition: all 200ms;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000382}}
+@media -sass-debug-info{filename{}line{font-family:\0000399}}
 .tag:hover {
   background-color: #FFF;
   color: blue;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000387}}
+@media -sass-debug-info{filename{}line{font-family:\00003104}}
 h3 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
@@ -100,7 +117,7 @@ h3 {
   border-bottom: 4px solid #2F80ED;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000396}}
+@media -sass-debug-info{filename{}line{font-family:\00003113}}
 h4 {
   font-size: 18px;
   font-weight: 600;
@@ -110,12 +127,12 @@ h4 {
   border-bottom: 1px solid #F2994A;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003105}}
+@media -sass-debug-info{filename{}line{font-family:\00003122}}
 .edit {
   float: right;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003108}}
+@media -sass-debug-info{filename{}line{font-family:\00003125}}
 .edit > a {
   margin-top: 10vh;
   color: white;
@@ -124,7 +141,7 @@ h4 {
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003116}}
+@media -sass-debug-info{filename{}line{font-family:\00003133}}
 .frontpage-search {
   background-color: transparent !important;
   border: none;
@@ -136,32 +153,32 @@ h4 {
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003128}}
+@media -sass-debug-info{filename{}line{font-family:\00003145}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003131}}
+@media -sass-debug-info{filename{}line{font-family:\00003148}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003135}}
+@media -sass-debug-info{filename{}line{font-family:\00003152}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003142}}
+@media -sass-debug-info{filename{}line{font-family:\00003159}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003144}}
+@media -sass-debug-info{filename{}line{font-family:\00003161}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003149}}
+@media -sass-debug-info{filename{}line{font-family:\00003166}}
 .overlay {
   color: #FFF;
   text-align: center;
