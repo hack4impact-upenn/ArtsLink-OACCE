@@ -88,8 +88,6 @@ def edit_profile():
                     Tag.id.in_([x.id for x in organization.tags]))
                 .filter(Tag.tag_type_id == tt.id).all()
             ]
-            print(matches)
-            print('tag_{}'.format(tt.tag_type_name))
             form['tag_{}'.format(tt.tag_type_name)].data = matches
         form.picture_urls.data = organization.picture_urls
     return render_template('org/edit_profile.html', form=form)

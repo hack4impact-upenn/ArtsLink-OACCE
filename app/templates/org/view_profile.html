@@ -26,19 +26,24 @@
     <div class="row">
       <div class="col-md-12 " style="height: 100%">
         <h1>{{ org.name }}</h1>
+        {% if current_user.organization  %}
+          {% if current_user.organization.id == org.id %}
+            <div class="edit">
+              <a href="{{ url_for('org.edit_profile') }}" class="btn btn-outline-light">Edit Page</a>
+            </div>
+          {% endif %}
+        {% endif %}
+      </div>
+     </div>
+     <div class="row">
+       <div class="col-md-12">
         {% if org.description %}
         <p>{{ org.description.split('.')[0]}}...</p>
         {% endif %}
         {% for t in org.tags %}
         <div class="tag">{{ t.tag_name }}</div>
         {% endfor %}
-        {% if current_user.organization  %}
-        {% if current_user.organization.id == org.id %}
-        <div class="edit">
-          <a href="{{ url_for('org.edit_profile') }}" class="text-white">Edit Page</a>
-        </div>
-        {% endif %}
-        {% endif %}
+       </div>
       </div>
     </div>
   </div>

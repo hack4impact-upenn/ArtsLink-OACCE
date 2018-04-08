@@ -112,65 +112,56 @@ h4 {
 
 @media -sass-debug-info{filename{}line{font-family:\00003105}}
 .edit {
-  background: url("/static/images/noun_70731_cc.png");
-  background-size: cover;
-  width: 100px;
-  height: 100px;
-  border: 5px solid white;
   float: right;
-  position: absolute;
-  top: 20px;
-  right: 20px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003117}}
+@media -sass-debug-info{filename{}line{font-family:\00003108}}
 .edit > a {
-  position: absolute;
-  bottom: -40px;
+  margin-top: 10vh;
   color: white;
   font-size: 20px;
-  width: 100%;
   text-align: center;
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003127}}
+@media -sass-debug-info{filename{}line{font-family:\00003116}}
 .frontpage-search {
-  background-color: rgba(0, 0, 0, 0);
+  background-color: transparent !important;
   border: none;
   border-bottom: 1px solid #FFF;
   border-radius: 0px;
   box-shadow: none;
-  color: #FFF;
+  color: #FFF !important;
+  font-family: 'Open Sans';
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003137}}
+@media -sass-debug-info{filename{}line{font-family:\00003128}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003140}}
+@media -sass-debug-info{filename{}line{font-family:\00003131}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003144}}
+@media -sass-debug-info{filename{}line{font-family:\00003135}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003151}}
+@media -sass-debug-info{filename{}line{font-family:\00003142}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003153}}
+@media -sass-debug-info{filename{}line{font-family:\00003144}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003158}}
+@media -sass-debug-info{filename{}line{font-family:\00003149}}
 .overlay {
   color: #FFF;
   text-align: center;
