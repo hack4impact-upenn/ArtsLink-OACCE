@@ -211,7 +211,7 @@ def delete_user(user_id):
         db.session.delete(user)
         db.session.commit()
         flash('Successfully deleted user %s.' % user.full_name(), 'success')
-    return redirect(url_for('admin.registered_users'))
+    return redirect(url_for('admin.approved_users'))
 
 
 @admin.route('/_update_editor_contents', methods=['POST'])
