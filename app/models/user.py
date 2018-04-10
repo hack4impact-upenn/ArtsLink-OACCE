@@ -8,7 +8,6 @@ from .. import db, login_manager
 
 
 class Permission:
-    #EDUCATOR = 0x01
     ORGANIZATION = 0x02
     ADMINISTER = 0xff
 
@@ -25,7 +24,6 @@ class Role(db.Model):
     @staticmethod
     def insert_roles():
         roles = {
-            #'Educator': (Permission.EDUCATOR, 'main', True),
             'Organization': (Permission.ORGANIZATION, 'org', True),
             'Administrator': (
                 Permission.ADMINISTER,
@@ -51,6 +49,7 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     confirmed = db.Column(db.Boolean, default=False)
+    approved = db.Column(db.Boolean, default=False)
     first_name = db.Column(db.String(64), index=True)
     last_name = db.Column(db.String(64), index=True)
     email = db.Column(db.String(64), unique=True, index=True)
