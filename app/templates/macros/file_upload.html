@@ -33,7 +33,7 @@ function uploadFile(file, s3Data, url, urlUpload, fieldName) {
   }
   postData.append('file', file);
   console.log(file);
-  $('.ui.basic.modal')
+  $('.modal')
     .modal('show');
   function updateProgress (e) {
     if (e.lengthComputable) {
@@ -58,7 +58,7 @@ function handleFunc(url, file) {
   var curr = $("#{{ fieldname }}").val()
   $("div > input#{{ fieldname }}").val(curr + ( curr ? ',': '' ) + url);
   $("#{{ fieldname }}_list").append(
-    '<div class="ui label"><i class="file icon"></i><a href="' + url + '">' + file.name + '</a><i class="delete icon" data-url="' + url + '"></div>')
+    '<div class="badge badge-light"><i class="file icon"></i><a href="' + url + '">' + url + '</a><span class="delete badge badge-danger" data-url="' + url + '">Delete Image</span></span>')
 };
 $('body').on('click', '.delete', function() {
   var url = $(this).data('url');
@@ -76,19 +76,23 @@ $('body').on('click', '.delete', function() {
   $(this).remove();
 })
 </script>
-<div class="ui basic modal">
-  <div class="ui icon header">
-    <i class="upload icon"></i>
-    Upload Progress
-  </div>
-  <div class="content">
-    <h2><span id="progress"></span>%</h2>
-    <p>We are uploading your file!</p>
-  </div>
-  <div class="actions">
-    <div class="ui green ok inverted button">
-      <i class="checkmark icon"></i>
-      Dismiss
+
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="filemodal" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="filemodal">Upload Progress</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <h2><span id="progress"></span>%</h2>
+        <p>We are uploading your file!</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
     </div>
   </div>
 </div>

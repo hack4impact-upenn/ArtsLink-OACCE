@@ -12,7 +12,6 @@
                 'info':    get_flashed_messages(category_filter=['form-info']),
                 'success': get_flashed_messages(category_filter=['form-success'])
             } %}
-
             {{ f.begin_form(form, flashes) }}
                 {{ f.render_form_field(form.email) }}
                 {{ f.render_form_field(form.password) }}

@@ -9,7 +9,7 @@ from redis import Redis
 from rq import Connection, Queue, Worker
 
 from app import create_app, db
-from app.models import Role, User, TagType
+from app.models import Role, User, Organization
 
 app = create_app(os.getenv('FLASK_CONFIG') or 'default')
 manager = Manager(app)
@@ -55,7 +55,8 @@ def add_fake_data(number_users):
     """
     Adds fake data to the database.
     """
-    TagType.generate_fake()
+    User.generate_fake()
+    Organization.generate_fake()
 
 
 @manager.command
