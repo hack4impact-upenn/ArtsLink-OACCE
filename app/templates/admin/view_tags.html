@@ -15,7 +15,7 @@
           <div class="row">
             <div class="col-md-4">
               <select class="custom-select" id="select-role">
-                <option  class="item" value="">All account types</option>
+                <option  class="item" value="">All tag types</option>
                 {% for r in tag_types %}
                 <option  class="item" value="{{ r.tag_type_name }}">{{ r.tag_type_name }}</option>
                 {% endfor %}
@@ -30,7 +30,7 @@
 
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
-             <button onclick="window.location.href = '{{ url_for('admin.add_new_tag') }}';" 
+            <button style="margin-bottom:20px;" onclick="window.location.href = '{{ url_for('admin.add_new_tag') }}';" 
                                 class="btn btn-primary"> Add a new Tag </button>
              <div style="overflow-x: scroll;">
                 <table class="ui searchable sortable unstackable selectable celled table">

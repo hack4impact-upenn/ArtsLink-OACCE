@@ -122,7 +122,7 @@ def add_new_tag():
                     except IntegrityError:
                         db.session.rollback()
                 else:
-                    flash('The tag of this type alreadly exists', 'error')   
+                    flash('The tag of this type already exists', 'error')   
     return render_template(
         'admin/add_tag.html',form=form)
 
