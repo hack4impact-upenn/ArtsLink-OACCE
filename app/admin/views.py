@@ -83,77 +83,57 @@ def approved_users():
         'admin/approved_users.html', users=users, roles=roles)
 
 
-@admin.route('/add-tag')
+@admin.route('/view-tags')
 @login_required
 @admin_required
-def add_tags():
+def view_tags():
     """View and manage all tags."""
     Tags = Tag.query.all()
+    tag_types = TagType.query.all()
     form = AddTagForm()
-    age_group = TagType.query.filter_by(tag_type_name="Age Group").first()
-    service = TagType.query.filter_by(tag_type_name="Service").first()
-    disability_programming = TagType.query.filter_by(tag_type_name="Disability Programming").first()
+    if Tags is None: 
+        print("tags is none in add new tags")
+    if tag_types is None:
+        print("tags types is none in add new tags")
     return render_template(
-        'admin/add_tags.html',tags=Tags, form=form,age_group=age_group,service=service,
-        disability_programming=disability_programming)
+        'admin/add_tags.html',tags=Tags, form=form,tag_types=tag_types)
 
 
-@admin.route('/add-tag', methods=['GET', 'POST'])
+@admin.route('/add-new-tag', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def add_new_tag():
     """View and manage all tags."""
     form = AddTagForm()
+    form.tag_type.choices = [(t.id, t.name) for t in TagType.query.all()]
     if form.validate_on_submit():
-        age_group = TagType.query.filter_by(tag_type_name="Age Group").first()
-        service = TagType.query.filter_by(tag_type_name="Service").first()
-        disability_programming = TagType.query.filter_by(tag_type_name="Disability Programming").first()
-        if age_group is None:
-            age_group = TagType(
-            tag_type_name="Age Group"
-            )
-            db.session.add(age_group)
-        if service is None:
-            service = TagType(
-                tag_type_name="Service"
-                )
-            db.session.add(service)
-        if disability_programming is None:
-            disability_programming = TagType(
-                tag_type_name="Disability Programming"
-                )
-            db.session.add(disability_programming)
-        if form.tag_type.data == "age_group":
-            tag = Tag(
-                tag_name=form.tag_name.data,
-                tag_type=age_group,
-                tag_type_id=age_group.id
-            )
-            db.session.add(tag)
-        if form.tag_type.data == "service":
-            tag = Tag(
-                tag_name=form.tag_name.data,
-                tag_type=service,
-                tag_type_id=service.id
-            )
-            db.session.add(tag)
-        if form.tag_type.data == "disability_programming":
-            tag = Tag(
-                tag_name=form.tag_name.data,
-                tag_type=disability_programming,
-                tag_type_id=disability_programming.id
-            )
-            db.session.add(tag)
-        try:
-            db.session.commit()
-        except IntegrityError:
-            db.session.rollback() 
-        flash('Tag {} created successfully.'.format(
-            tag.tag_name), 'form-success')
+        for t in TagType.query.all():
+            if form.tag_type.data == t.tag_type_name:
+                tag = Tag.query.filter_by(tag_name=form.tag_name.data,
+                    tag_type_id=t.id).first()
+                if tag is None:
+                    tag = Tag(
+                    tag_name=form.tag_name.data,
+                    tag_type=t.tag_type_name,
+                    tag_type_id=t.id
+                    )
+                    db.session.add(tag)
+                    try:
+                        db.session.commit()
+                        flash('Tag {} created successfully.'.format(
+                        tag.tag_name), 'form-success')
+                    except IntegrityError:
+                        db.session.rollback() 
+                else:
+                    flash('This tag of this type alreadly exists', 'error')   
     Tags = Tag.query.all()
+    tag_types = TagType.query.all()
+    if Tags is None: 
+        print("tags is none in add new tags")
+    if tag_types is None:
+        print("tags types is none in add new tags")
     return render_template(
-        'admin/add_tags.html',tags=Tags, form=form,age_group=age_group,service=service,
-        disability_programming=disability_programming)
+        'admin/add_tags.html',tags=Tags, form=form,tag_types=tag_types)
 
 
 @admin.route('/unapproved-users')
@@ -165,51 +145,6 @@ def unapproved_users():
     roles = Role.query.all()
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
-
-@admin.route('/add-tags')
-@login_required
-@admin_required
-def add_tags():
-    """View all tags."""
-    age_group = TagType(
-        tag_type_name="Age Group"
-        )
-    service = TagType(
-        tag_type_name="Service"
-        )
-    disability_programming = TagType(
-        tag_type_name="Disability Programming"
-        )
-    db.session.add(age_group)
-    db.session.add(service)
-    db.session.add(disability_programming)
-    db.session.commit()
-    tags = Tag.query.all()
-    return render_template(
-        'admin/add_tags.html', tags=tags)
-
-# @admin.route('/add-tags', methods=['GET', 'POST'])
-# @login_required
-# @admin_required
-# def add_new_tags(tag_type):
-#     """View all tags."""
-#     age_group = TagType(
-#         tag_type_name="Age Group"
-#         )
-#     service = TagType(
-#         tag_type_name="Service"
-#         )
-#     disability_programming = TagType(
-#         tag_type_name="Disability Programming"
-#         )
-#     db.session.add(age_group)
-#     db.session.add(service)
-#     db.session.add(disability_programming)
-#     db.session.commit()
-#     tags = Tag.query.all()
-#     return render_template(
-#         'admin/add_tags.html', tags=tags, age_group=age_group, service=service, 
-#         disability_programming=disability_programming)
 
 
 @admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])

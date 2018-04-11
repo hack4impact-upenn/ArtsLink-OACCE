@@ -23,9 +23,9 @@
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <div class="item" data-value="">All tag types</div>
-                            <div class="item" data-value="{{ age_group.tag_type_name }}">{{ age_group.tag_type_name }}</div>
-                            <div class="item" data-value="{{ service.tag_type_name }}">{{ service.tag_type_name }}</div>
-                            <div class="item" data-value="{{ disability_programming.tag_type_name }}">{{ disability_programming.tag_type_name }}</div>
+                            {% for r in tag_types %}
+                            <div class="item" data-value="{{ r.tag_type_name }}">{{ r.tag_type_name }}</div>
+                            {% endfor %}
                     </div>
                 </div>
                 <div class="ui right search item">
@@ -51,13 +51,7 @@
                     {% for t in tags %}
                         <tr>
                             <td>{{ t.tag_name }}</td>
-                            {% if t.tag_type == age_group %}
-                                <td class="user role">Age Group</td>
-                            {% elif t.tag_type == service %}
-                                <td class="user role">Service</td>
-                            {% elif t.tag_type == disability_programming %}
-                                 <td class="user role">Disability Programming</td>
-                            {% endif %}
+                            <td class="user role">{{t.tag_type.tag_type_name}}</td>
                         </tr>
                     {% endfor %}
                     </tbody>

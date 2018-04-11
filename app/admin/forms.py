@@ -25,11 +25,7 @@ class AddTagForm(Form):
     tag_name = StringField(
         'Tag name', validators=[InputRequired(),
                                   Length(1, 64)])
-    tag_type =  SelectField(
-        'Tag Type',
-        choices=[('age_group', 'Age Group'), ('service', 'Service'), ('disability_programming', 
-            'Disability Programming')]
-    )
+    tag_type = SelectField(u'Tag Type', coerce=int)
     submit = SubmitField('Add Tag')
 
 
