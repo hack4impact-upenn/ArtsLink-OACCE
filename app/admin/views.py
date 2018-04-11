@@ -77,7 +77,7 @@ def invite_user():
 @admin_required
 def approved_users():
     """View all approved users."""
-    users = User.query.filter_by(confirmed=True)
+    users = User.query.filter_by(approved=True)
     roles = Role.query.all()
     return render_template(
         'admin/approved_users.html', users=users, roles=roles)
@@ -141,22 +141,21 @@ def add_new_tag():
 @admin_required
 def unapproved_users():
     """View all unapproved users."""
-    users = User.query.filter_by(confirmed=False)
+    users = User.query.filter_by(approved=False)
     roles = Role.query.all()
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
-
 
 @admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def approve_user(user_id):
-    """Confirm a user's profile."""
+    """Approve a user's profile."""
     user = User.query.filter_by(id=user_id).first()
-    user.confirmed = True
+    user.approved = True
     db.session.add(user)
     db.session.commit()
-    users = User.query.filter_by(confirmed=False)
+    users = User.query.filter_by(approved=False)
     roles = Role.query.all()
     if user is None:
         abort(404)
@@ -243,7 +242,7 @@ def delete_user(user_id):
         db.session.delete(user)
         db.session.commit()
         flash('Successfully deleted user %s.' % user.full_name(), 'success')
-    return redirect(url_for('admin.registered_users'))
+    return redirect(url_for('admin.approved_users'))
 
 
 @admin.route('/_update_editor_contents', methods=['POST'])
