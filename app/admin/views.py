@@ -83,7 +83,7 @@ def approved_users():
         'admin/approved_users.html', users=users, roles=roles)
 
 
-@admin.route('/view-tags')
+@admin.route('/view-tags', methods=['GET'])
 @login_required
 @admin_required
 def view_tags():
@@ -91,49 +91,40 @@ def view_tags():
     Tags = Tag.query.all()
     tag_types = TagType.query.all()
     form = AddTagForm()
-    if Tags is None: 
-        print("tags is none in add new tags")
-    if tag_types is None:
-        print("tags types is none in add new tags")
+    form.tag_type.choices = [(t.id, t.tag_type_name) for t in TagType.query.all()]
     return render_template(
-        'admin/add_tags.html',tags=Tags, form=form,tag_types=tag_types)
+        'admin/view_tags.html',tags=Tags, form=form, tag_types=tag_types)
 
 
 @admin.route('/add-new-tag', methods=['GET', 'POST'])
 @login_required
 @admin_required
 def add_new_tag():
-    """View and manage all tags."""
+    """Add a new tag."""
     form = AddTagForm()
-    form.tag_type.choices = [(t.id, t.name) for t in TagType.query.all()]
+    form.tag_type.choices = [(t.id, t.tag_type_name) for t in TagType.query.all()]
     if form.validate_on_submit():
         for t in TagType.query.all():
-            if form.tag_type.data == t.tag_type_name:
-                tag = Tag.query.filter_by(tag_name=form.tag_name.data,
-                    tag_type_id=t.id).first()
+            if form.tag_type.data == t.id:
+                tag = Tag.query.filter_by(tag_name=form.tag_name.data, 
+                    tag_type=t).first()
                 if tag is None:
                     tag = Tag(
                     tag_name=form.tag_name.data,
-                    tag_type=t.tag_type_name,
+                    tag_type=t,
                     tag_type_id=t.id
                     )
                     db.session.add(tag)
                     try:
                         db.session.commit()
                         flash('Tag {} created successfully.'.format(
-                        tag.tag_name), 'form-success')
+                        tag.tag_name), 'form-success') 
                     except IntegrityError:
-                        db.session.rollback() 
+                        db.session.rollback()
                 else:
-                    flash('This tag of this type alreadly exists', 'error')   
-    Tags = Tag.query.all()
-    tag_types = TagType.query.all()
-    if Tags is None: 
-        print("tags is none in add new tags")
-    if tag_types is None:
-        print("tags types is none in add new tags")
+                    flash('The tag of this type alreadly exists', 'error')   
     return render_template(
-        'admin/add_tags.html',tags=Tags, form=form,tag_types=tag_types)
+        'admin/add_tag.html',form=form)
 
 
 @admin.route('/unapproved-users')
