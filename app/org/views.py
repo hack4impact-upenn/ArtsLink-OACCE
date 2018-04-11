@@ -3,7 +3,7 @@ from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
-from ..models import Organization
+from ..models import Organization, User
 from .. import db
 
 
@@ -15,6 +15,7 @@ def index():
 @org.route('/<int:org_id>')
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
+    user = User.query.filter_by(id=organization.user_id).first()  
     pics = []
     if len(organization.picture_urls) > 0:
         pics = organization.picture_urls.split(",")
