@@ -3,7 +3,12 @@ from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
+<<<<<<< HEAD
 from ..models import Organization, User
+=======
+from wtforms.fields import SelectMultipleField
+from ..models import Organization, TagType, Tag
+>>>>>>> e2db6862077bef92282d0be4805d61dfc4d0360e
 from .. import db
 
 
@@ -17,10 +22,15 @@ def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
     user = User.query.filter_by(id=organization.user_id).first()  
     pics = []
-    if len(organization.picture_urls) > 0:
+    if (organization.picture_urls is not None) and (len(
+            organization.picture_urls) > 0):
         pics = organization.picture_urls.split(",")
+    tag_types = TagType.query.all()
     return render_template(
-        'org/view_profile.html', org=organization, pics=pics)
+        'org/view_profile.html',
+        tag_types=tag_types,
+        org=organization,
+        pics=pics)
 
 
 # Organization edits its own profile
@@ -30,7 +40,19 @@ def view_org(org_id):
 @login_required
 @organization_required
 def edit_profile():
-    form = OrganizationForm()
+    class moddedOrgForm(OrganizationForm):
+        pass
+
+    for tt in TagType.query.all():
+        tags = [(str(x.id), x.tag_name)
+                for x in Tag.query.filter_by(tag_type_id=tt.id).all()]
+        setattr(
+            moddedOrgForm, 'tag_{}'.format(tt.tag_type_name),
+            SelectMultipleField(
+                'Select Tags from the category {} to describe your organization: '.
+                format(tt.tag_type_name),
+                choices=tags))
+    form = moddedOrgForm()
     organization = Organization.query.filter_by(user_id=current_user.id)\
                                .first()
     if form.validate_on_submit():
@@ -44,13 +66,18 @@ def edit_profile():
         organization.website_link = form.website_link.data
         organization.hours = form.hours.data
         organization.description = form.description.data
-        # organization.tags = form.tags.data
         organization.picture_urls = form.picture_urls.data
+        ts = []
+        for f in form:
+            if f.name.find('tag_') > -1:
+                for t in f.data:
+                    ts.append(Tag.query.get(t))
+        print(ts)
+        organization.tags = ts
         db.session.add(organization)
         db.session.commit()
         flash('Organization {} successfully updated. Redirecting you to ' +
-              'profile page'.format(organization.name),
-              'form-success')
+              'profile page'.format(organization.name), 'form-success')
         return redirect(url_for('org.view_org', org_id=organization.id))
     if organization is not None:
         form.name.data = organization.name
@@ -60,6 +87,12 @@ def edit_profile():
         form.website_link.data = organization.website_link
         form.hours.data = organization.hours
         form.description.data = organization.description
-        form.tags.data = organization.tags
+        for tt in TagType.query.all():
+            matches = [
+                str(x.id) for x in Tag.query.filter(
+                    Tag.id.in_([x.id for x in organization.tags]))
+                .filter(Tag.tag_type_id == tt.id).all()
+            ]
+            form['tag_{}'.format(tt.tag_type_name)].data = matches
         form.picture_urls.data = organization.picture_urls
     return render_template('org/edit_profile.html', form=form)

@@ -38,8 +38,7 @@ def register():
             last_name=form.last_name.data,
             email=form.email.data,
             password=form.password.data,
-            role_id=default_role,
-            confirmed=True)
+            role_id=default_role)
         db.session.add(user)
         db.session.commit()
         token = user.generate_confirmation_token()

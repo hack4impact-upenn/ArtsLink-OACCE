@@ -94,7 +94,7 @@
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}
-      <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar navbar-expand-md navbar-light bg-dark">
         <div class="container">
           {{ constantly_visible_items() }}
           {{ mobile_nav(current_user, dropdown=dropdown) }}

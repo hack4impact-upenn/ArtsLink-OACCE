@@ -137,6 +137,7 @@ def unapproved_users():
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
 
+
 @admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required

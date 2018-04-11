@@ -1,17 +1,42 @@
 {% extends 'layouts/base.html' %}
 {% import 'macros/dashboard_option.html' as d %}
-
+{% macro dashboard_option(title, endpoint, args={}, description=None, icon=None) %}
+<div class="card" onclick="location.href='{{ url_for(endpoint, **args) }}'">
+  <div class="card-body">
+    <h5 class="card-title">
+      {% if icon is not none %}
+      <i class="{{ icon }}"></i>
+      {% endif %}
+      <a href='{{ url_for(endpoint, **args) }}'>
+      {{ title }}
+      </a>
+    </h5>
+    {% if description is not none %}
+    <p class="card-text">
+    {{ description }}
+    </p>
+    {% endif %}
+  </div>
+</div>
+<br>
+{% endmacro %}
 {% block content %}
-<div class="ui stackable centered grid container">
-  <div class="twelve wide column">
-    <h2 class="ui header">
-      Organization Dashboard
-    </h2>
-    <div class="ui two column stackable grid">
-      {{ d.dashboard_option('Create/Edit Organization Details', 'org.edit_profile',
-      description='Edit and preview your organization information', icon='info icon') }}
-      {% if current_user.organizations | length > 0 %}
-      {{ d.dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organizations[0].id},
+<div class="container">
+  <h2>
+    Organization Dashboard
+  </h2>
+  <div class="row"> <div class="col-md-6">
+      {% if current_user.organization == None %}
+      {{ d.dashboard_option('Create Organization Details', 'org.edit_profile',
+      description='Create your organization', icon='info icon') }}
+      {% else %}
+      {{ d.dashboard_option('Edit Organization Details', 'org.edit_profile',
+      description='Edit your organization information', icon='info icon') }}
+      {% endif %}
+    </div>
+    <div class="col-md-6">
+      {% if current_user.organization  %}
+      {{ dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organization.id},
       description='Edit and preview your organization information', icon='info icon') }}
       {% endif %}
     </div>
