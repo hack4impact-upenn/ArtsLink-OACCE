@@ -52,28 +52,23 @@ class Organization(db.Model):
             curr_user_id = users[usr_id].id
             # choose what tag values to append to the org,
             # make TagAssociations for each
+            tag_list = Tag.query.all()
+            tags = random.sample(
+                tag_list,
+                7)
             org = Organization(
                 name=fake.name(),
                 email=fake.email(),
                 phone=fake.phone_number(),
                 address=fake.address(),
-                user_id=curr_user_id)
+                user_id=curr_user_id, 
+                tags =tags)
             db.session.add(org)
             try:
                 db.session.commit()
             except IntegrityError:
                 db.session.rollback()
-            tag_list = Tag.query.all()
-            tags = random.sample(
-                tag_list,
-                7)  # make an association bt this resource and these tags
-            for tag in tags:
-                tag_assoc = tag_association(organization_id=i, tag_id=tag.id)
-                db.session.add(tag_assoc)
-                try:
-                    db.session.commit()
-                except IntegrityError:
-                    db.session.rollback()
+             # make an association bt this resource and these tags
             usr_id += 1
 
 
