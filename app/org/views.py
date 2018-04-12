@@ -4,7 +4,7 @@ from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
 from wtforms.fields import SelectMultipleField
-from ..models import Organization, TagType, Tag
+from ..models import Organization, TagType, Tag, User
 from .. import db
 
 
@@ -17,6 +17,9 @@ def index():
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
     pics = []
+    user = User.query.filter_by(id=organization.user_id).first()
+    if user.approved is False:
+        flash('The admin has not approved your organization', 'error') 
     if (organization.picture_urls is not None) and (len(
             organization.picture_urls) > 0):
         pics = organization.picture_urls.split(",")
