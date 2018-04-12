@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import (login_required, current_user)
 from . import org
+from .. import db
 from ..decorators import organization_required
 from .forms import OrganizationForm
 from wtforms.fields import SelectMultipleField
