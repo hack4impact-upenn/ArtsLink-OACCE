@@ -3,12 +3,8 @@ from flask_login import (login_required, current_user)
 from . import org
 from ..decorators import organization_required
 from .forms import OrganizationForm
-<<<<<<< HEAD
-from ..models import Organization, User
-=======
 from wtforms.fields import SelectMultipleField
 from ..models import Organization, TagType, Tag
->>>>>>> e2db6862077bef92282d0be4805d61dfc4d0360e
 from .. import db
 
 
