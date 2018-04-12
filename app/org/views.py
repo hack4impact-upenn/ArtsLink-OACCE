@@ -1,15 +1,11 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import (login_required, current_user)
 from . import org
+from .. import db
 from ..decorators import organization_required
 from .forms import OrganizationForm
-<<<<<<< HEAD
-from ..models import Organization, User
-=======
+from ..models import Organization, User, TagType, Tag
 from wtforms.fields import SelectMultipleField
-from ..models import Organization, TagType, Tag
->>>>>>> e2db6862077bef92282d0be4805d61dfc4d0360e
-from .. import db
 
 
 @org.route('/')
