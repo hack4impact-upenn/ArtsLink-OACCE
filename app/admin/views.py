@@ -93,47 +93,6 @@ def unapproved_users():
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
 
-
-@admin.route('/add-tags')
-@login_required
-@admin_required
-def add_tags():
-    """View all tags."""
-    age_group = TagType(tag_type_name="Age Group")
-    service = TagType(tag_type_name="Service")
-    disability_programming = TagType(tag_type_name="Disability Programming")
-    db.session.add(age_group)
-    db.session.add(service)
-    db.session.add(disability_programming)
-    db.session.commit()
-    tags = Tag.query.all()
-    return render_template('admin/add_tags.html', tags=tags)
-
-
-@admin.route('/add-tags', methods=['GET', 'POST'])
-@login_required
-@admin_required
-def add_new_tags(tag_type):
-    """View all tags."""
-    age_group = TagType(
-        tag_type_name="Age Group"
-        )
-    service = TagType(
-        tag_type_name="Service"
-        )
-    disability_programming = TagType(
-        tag_type_name="Disability Programming"
-        )
-    db.session.add(age_group)
-    db.session.add(service)
-    db.session.add(disability_programming)
-    db.session.commit()
-    tags = Tag.query.all()
-    return render_template(
-        'admin/add_tags.html', tags=tags, age_group=age_group, service=service,
-        disability_programming=disability_programming)
-
-
 @admin.route('/unapproved-users/<int:user_id>', methods=['GET', 'POST'])
 @login_required
 @admin_required
