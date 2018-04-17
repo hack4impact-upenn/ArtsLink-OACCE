@@ -48,7 +48,7 @@
                             {% for o in orgs | sort(attribute='name') %}
                                 <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
                                 {% for tag in  o.tags %}
-                                      <input type="hidden" name="country" value="Norway" class="{{ tags[tag.tag_id - 1].tag_name }}">
+                                      <input type="hidden" class="{{ tags[tag.id - 1].tag_name }}">
                                 {% endfor %}
                                 <td>{{ o.name }}</td>
                                 <td>{{ o.email }}</td>
@@ -66,10 +66,16 @@
 
     </style>
         <script type="text/javascript">
-            $('tr').each(function() {
+            $(document).ready(function() {
+                $('#chooseTags').each(function() {
+                    $(this).multiselect();
+                });
+            });
+
+            $('tbody tr').each(function() {
                 $(this).attr('data-search-match', true);
                 $(this).attr('data-tag-match', true);
-            })
+            });
 
             $('#search-orgs').keyup(function () {
 {#                var searchText = $(this).val();#}
@@ -84,6 +90,7 @@
 {#                        $('tr.hidden').removeClass('hidden')#}
 {#                    }#}
 {#                }#}
+
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
                     $('tbody tr:icontains(' + searchText + ')').attr('data-search-match', true);
@@ -91,31 +98,54 @@
                 } else {
                     $('tbody tr').attr('data-search-match', true);
                 }
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    // console.log(tag, search);
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                    } else {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                    }
+                })
             });
             $('#chooseTags').change(function () {
                 var searchText = $(this).val();
                 var currTag;
-                console.log(searchText);
                 if(searchText) {
 
                     $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
+                    $('tbody tr').each(function() {
+                        $(this).attr('data-tag-match', false);
+                        // console.log('hello');
+                    });
 
                     for(tag in searchText) {
                         currTag = '.' + searchText[tag];
-                        $(currTag).closest('tr').attr('data-tag-match', true);
+                        $(currTag).closest('tbody tr').attr('data-tag-match', true);
                     }
                 } else {
-                    $('tr').each(function() {
+                    $('tbody tr').each(function() {
                         $(this).attr('data-tag-match', true);
                     })
                 }
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    // console.log(tag, search);
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                    } else {
+                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                    }
+                })
             });
 
             setTimeout(function resolver() {
-                $('tr').each(function() {
+                $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    console.log(tag, search);
+                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
                         $(this).removeClass('hidden').removeClass('positive').addClass('positive');
                     } else {

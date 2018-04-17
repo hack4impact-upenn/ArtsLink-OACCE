@@ -6,7 +6,7 @@ import boto3
 import json
 import time
 import os
-from ..models import Organization, Tag, TagAssociation
+from ..models import Organization, Tag
 
 
 
@@ -32,10 +32,9 @@ def search():
     # Search function
     orgs = Organization.query.all()
     tags = Tag.query.all()
-    assoc = TagAssociation.query.all()
     classes = ""
     return render_template(
-        'main/search_orgs.html', orgs=orgs, tags=tags, assoc=assoc, classes=classes)
+        'main/search_orgs.html', orgs=orgs, tags=tags, classes=classes)
 
 
 @main.route('/search/<string:tags>')
