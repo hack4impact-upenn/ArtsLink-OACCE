@@ -5,7 +5,7 @@ from .. import db
 from ..decorators import organization_required
 from .forms import OrganizationForm
 from wtforms.fields import SelectMultipleField
-from ..models import Organization, TagType, Tag
+from ..models import Organization, TagType, Tag, User
 from .. import db
 
 
