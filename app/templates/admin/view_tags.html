@@ -1,0 +1,82 @@
+{% extends 'layouts/base.html' %}
+{% import 'macros/form_macros.html' as f %}
+
+{% block content %}
+    <div class="ui stackable grid container">
+        <div class="sixteen wide tablet twelve wide computer centered column">
+            <a class="ui basic compact button" href="{{ url_for('admin.index') }}">
+                <i class="caret left icon"></i>
+                Back to dashboard
+            </a>
+            <h2 class="ui header">
+                Tags
+            </h2>
+
+          <div class="row">
+            <div class="col-md-4">
+              <select class="custom-select" id="select-role">
+                <option  class="item" value="">All tag types</option>
+                {% for r in tag_types %}
+                <option  class="item" value="{{ r.tag_type_name }}">{{ r.tag_type_name }}</option>
+                {% endfor %}
+              </select>
+            </div>
+            <div class="col-md-8">
+              <div class="form-group search item">
+                <input id="search-users" class="form-control" type="text" placeholder="Search tags or tag types…">
+              </div>
+            </div>
+          </div>
+
+            {# Use overflow-x: scroll so that mobile views don't freak out
+             # when the table is too wide #}
+            <button style="margin-bottom:20px;" onclick="window.location.href = '{{ url_for('admin.add_new_tag') }}';" 
+                                class="btn btn-primary"> Add a new Tag </button>
+             <div style="overflow-x: scroll;">
+                <table class="ui searchable sortable unstackable selectable celled table">
+                    <thead>
+                        <tr>
+                            <th>Tag Name</th>
+                            <th>Tag Type</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {% for r in tag_types %}
+                        {% for t in tags %}
+                            {% if t.tag_type == r %}
+                                <tr>
+                                    <td>{{ t.tag_name }}</td>
+                                    <td class="user role">{{t.tag_type.tag_type_name}}</td>
+                                </tr>
+                            {% endif %}
+                        {% endfor %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#search-users').keyup(function () {
+                var searchText = $(this).val();
+                if (searchText.length > 0) {
+                    $('tbody td:icontains(' + searchText + ')').addClass('positive');
+                    $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
+                    $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
+                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+                } else {
+                    $('td.positive').removeClass('positive');
+                    $('tr.hidden').removeClass('hidden').show();
+                }
+            });
+
+            $('#select-role').dropdown({
+                onChange: function (value, text, $selectedItem) {
+                    $('td.user.role:contains(' + value + ')').closest('tr').removeClass('hidden').show();
+                    $('td.user.role').not(':contains(' + value + ')').closest('tr').addClass('hidden').hide();
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,6 +1,7 @@
 from flask import render_template, flash, redirect, url_for
 from flask_login import (login_required, current_user)
 from . import org
+from .. import db
 from ..decorators import organization_required
 from .forms import OrganizationForm
 from wtforms.fields import SelectMultipleField
@@ -16,6 +17,7 @@ def index():
 @org.route('/<int:org_id>')
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
+    user = User.query.filter_by(id=organization.user_id).first()  
     pics = []
     if (organization.picture_urls is not None) and (len(
             organization.picture_urls) > 0):
