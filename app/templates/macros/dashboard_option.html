@@ -1,0 +1,20 @@
+{% macro dashboard_option(title, endpoint, description=None, icon=None) %}
+<div class="card" onclick="location.href='{{ url_for(endpoint) }}'">
+  <div class="card-body">
+    <h5 class="card-title">
+      {% if icon is not none %}
+      <i class="{{ icon }}"></i>
+      {% endif %}
+      <a href='{{ url_for(endpoint) }}'>
+      {{ title }}
+      </a>
+    </h5>
+    {% if description is not none %}
+    <p class="card-text">
+    {{ description }}
+    </p>
+    {% endif %}
+  </div>
+</div>
+<br>
+{% endmacro %}

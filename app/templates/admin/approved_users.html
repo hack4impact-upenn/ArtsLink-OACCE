@@ -1,0 +1,86 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col back-button">
+      <a class="btn btn-outline-primary" href="{{ url_for('admin.index') }}">
+        Back to dashboard
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col">
+      <h2>
+        Approved Users
+      </h2>
+        <p >
+          View and manage currently approved users.
+        </p>
+    </div>
+  </div>
+
+      <div class="row">
+        <div class="col-md-4">
+          <select class="custom-select" id="select-role">
+            <option  value="">All account types</option>
+            {% for r in roles %}
+            <option  value="{{ r.name }}">{{ r.name }}s</option>
+            {% endfor %}
+          </select>
+        </div>
+        <div class="col-md-8">
+          <div class="form-group search item">
+            <input id="search-users" class="form-control" type="text" placeholder="Search users…">
+          </div>
+        </div>
+      </div>
+
+      <div style="overflow-x: scroll;">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Email address</th>
+              <th>Account type</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for u in users | sort(attribute='last_name') %}
+            <tr onclick="window.location.href = '{{ url_for('admin.user_info', user_id=u.id) }}';">
+
+              <td>{{ u.first_name }}</td>
+              <td>{{ u.last_name }}</td>
+              <td>{{ u.email }}</td>
+              <td class="user role">{{ u.role.name }}</td>
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <script type="text/javascript">
+$(document).ready(function () {
+  $('#search-users').keyup(function () {
+  var searchText = $(this).val();
+  if (searchText.length > 0) {
+  $('tbody td:icontains(' + searchText + ')').addClass('positive');
+  $('td.positive').not(':icontains(' + searchText + ')').removeClass('positive');
+  $('tbody td').not(':icontains(' + searchText + ')').closest('tr').addClass('hidden').hide();
+  $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden').show();
+} else {
+  $('td.positive').removeClass('positive');
+  $('tr.hidden').removeClass('hidden').show();
+}
+});
+
+  $('#select-role').change(function () {
+  $('td.user.role:contains(' + this.value + ')').closest('tr').removeClass('hidden').show();
+  $('td.user.role').not(':contains(' + this.value + ')').closest('tr').addClass('hidden').hide();
+});
+});
+    </script>
+    {%  endblock %}

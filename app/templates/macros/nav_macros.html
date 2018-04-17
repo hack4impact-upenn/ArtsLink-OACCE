@@ -4,15 +4,22 @@
 
 {% macro render_menu_items(endpoints) %}
     {% for endpoint, name, icon in endpoints %}
-        <a class="item {% if request.endpoint == endpoint %}active{% endif %}" href="{{ url_for(endpoint) }}">
-            {% if icon %}
-                <i class="{{ icon }} icon"></i>
-            {% endif %}
-            {{ name | safe }}
+      <li class="nav-item {% if request.endpoint == endpoint %}active{% endif %}">
+        <a class="nav-link" href="{{ url_for(endpoint) }}">
+              {% if icon %}
+                  <span class="{{ icon }}-icon"></span>
+              {% endif %}
+              {{ name | safe }}
         </a>
+      </li>
     {% endfor %}
 {% endmacro %}
 
+{% macro constantly_visible_items() %}
+  <a class="navbar-brand" href="{{ url_for('main.index') }}">
+    {{ config.APP_NAME }}
+  </a>
+{% endmacro %}
 {# This is called for all users (including anonymous users). It renders the basic left side of the 
    navigation bar. In the default case, the left hand side will read 'Flask-Base'. In the logged in
    admin case, there will also be an item that links to admin/ route. I have added an example use of
@@ -21,13 +28,12 @@
 
 {% macro header_items(current_user) %}
     {% set endpoints = [
-      ('main.index', config.APP_NAME, 'home'),
       ('main.about', 'About', 'info')
     ]%}
     {% set user = [] %}
     {% if current_user.is_authenticated %}
       {% set user = ([(current_user.role.index + '.index', current_user.role.name + ' Dashboard', 'user')]) %}
-    {% endif %} 
+    {% endif %}
     {{ render_menu_items( endpoints +  user ) }}
 {% endmacro %}
 
@@ -51,20 +57,10 @@
 {% endmacro %}
 
 {% macro mobile_nav(current_user, dropdown=None) %}
-    <div class="mobile only row">
-        <div class="ui fixed inverted black main menu">
-            {{ header_items(current_user) }}
-            <div class="right menu">
-                <a class="icon item" id="open-nav"><i class="sidebar icon"></i></a>
-            </div>
-        </div>
-
-        {# The menu items which will be shown when open-nav is clicked #}
-        <div class="ui fixed vertical fluid menu">
-          {{ account_items(current_user) }}
-          {{ create_dropdown(dropdown) }}
-        </div>
-    </div>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+                                aria-controls="navbarCollapse" aria-label="Toggle Navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
 {% endmacro %}
 
 {% macro create_dropdown(dropdown) %}
@@ -72,32 +68,37 @@
     {% if item | length == 3 %}
       {{ render_menu_items([item]) }}
     {% elif item | length == 2 %}
-      <div class="ui dropdown item" onClick="changeMenu(this)">{{ item[0] }} <i class="dropdown icon"></i>
-        <div class="inverted black menu">
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown-{{ item[0] }}"
+          role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          {{ item[0] }}
+        </a>
+        <div class="dropdown-menu" aria-labeledby="navbarDropdown-{{ item[0] }}">
           {{ create_dropdown(item[1]) }}
         </div>
-      </div>
+      </li>
     {% endif %}
   {% endfor %}
 {% endmacro %}
 
 {% macro desktop_nav(current_user, dropdown=None) %}
-    <div class="computer tablet only row">
-        <div class="ui fixed inverted black main menu">
-            <div class="ui container">
-                {{ header_items(current_user) }}
-                {{ create_dropdown(dropdown) }}
-                <div class="right menu">
-                    {{ account_items(current_user) }}
-                </div>
-            </div>
-        </div>
-    </div>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+      {{ header_items(current_user) }}
+      {{ create_dropdown(dropdown) }}
+    </ul>
+    <ul class="navbar-nav my-2 my-lg-0">
+      {{ account_items(current_user) }}
+    </ul>
+  </div>
 {% endmacro %}
 
 {% macro render_nav(current_user, dropdown=[]) %}
-    <nav class="ui navigation grid {% if endpoints %}has-submenu{% endif %}">
-        {{ mobile_nav(current_user, dropdown=dropdown) }}
-        {{ desktop_nav(current_user, dropdown=dropdown) }}
-    </nav>
+      <nav class="navbar navbar-expand-md navbar-light bg-dark">
+        <div class="container">
+          {{ constantly_visible_items() }}
+          {{ mobile_nav(current_user, dropdown=dropdown) }}
+          {{ desktop_nav(current_user, dropdown=dropdown) }}
+        </div>
+      </nav>
 {% endmacro %}

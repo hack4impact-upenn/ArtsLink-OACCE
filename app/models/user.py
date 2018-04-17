@@ -8,7 +8,6 @@ from .. import db, login_manager
 
 
 class Permission:
-    EDUCATOR = 0x01
     ORGANIZATION = 0x02
     ADMINISTER = 0xff
 
@@ -20,12 +19,11 @@ class Role(db.Model):
     index = db.Column(db.String(64))
     default = db.Column(db.Boolean, default=False, index=True)
     permissions = db.Column(db.Integer)
-    users = db.relationship('User', backref='role', lazy='dynamic')
+    user = db.relationship('User', backref='role', lazy='dynamic')
 
     @staticmethod
     def insert_roles():
         roles = {
-            'Educator': (Permission.EDUCATOR, 'main', True),
             'Organization': (Permission.ORGANIZATION, 'org', True),
             'Administrator': (
                 Permission.ADMINISTER,
@@ -51,12 +49,14 @@ class User(UserMixin, db.Model):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     confirmed = db.Column(db.Boolean, default=False)
+    approved = db.Column(db.Boolean, default=False)
     first_name = db.Column(db.String(64), index=True)
     last_name = db.Column(db.String(64), index=True)
     email = db.Column(db.String(64), unique=True, index=True)
     password_hash = db.Column(db.String(128))
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    organizations = db.relationship('Organization', backref='users')
+    organization = db.relationship(
+        'Organization', uselist=False, backref='users')
 
     def __init__(self, **kwargs):
         super(User, self).__init__(**kwargs)

@@ -1,25 +1,190 @@
-@media -sass-debug-info{filename{}line{font-family:\000037}}
-nav {
-  margin-bottom: 40px !important;
+@media -sass-debug-info{filename{}line{font-family:\000036}}
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Oswald";
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000312}}
+@media -sass-debug-info{filename{}line{font-family:\0000310}}
+p {
+  font-family: 'Open Sans';
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000313}}
+.navbar.bg-dark {
+  background-color: white !important;
+  z-index: 2000;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000319}}
 .ui.fixed.main.menu .right.menu > .item:last-of-type {
-  border-right: 1px solid rgba(34, 36, 38, 0.09804);
+  border-right: 1px solid rgba(34, 36, 38, 0.0980392);
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000318}}
+@media -sass-debug-info{filename{}line{font-family:\0000325}}
 nav .mobile.only.row .ui.vertical.menu {
   margin-top: 40px;
   display: none;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000325}}
+@media -sass-debug-info{filename{}line{font-family:\0000332}}
 .flashes > .ui.message:last-of-type {
   margin-bottom: 2rem;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000330}}
+@media -sass-debug-info{filename{}line{font-family:\0000337}}
 table.selectable tr:hover {
   cursor: pointer !important;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000341}}
+.back-button {
+  padding-bottom: 30px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000345}}
+.positive {
+  background-color: rgba(0, 230, 0, 0.3);
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000349}}
+.container-fluid {
+  padding-left: 0px !important;
+  padding-right: 0px !important;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000353}}
+.bgimage h1 {
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000362}}
+.bgimage-footer h1 {
+  margin-top: 10vh;
+  font-size: 72px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color: white;
+}
+@media -sass-debug-info{filename{}line{font-family:\0000371}}
+.bgimage-footer p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  color: white;
+  padding-top: 20px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000379}}
+.bgimage p {
+  font-family: 'Open Sans', sans-serif;
+  font-size: 24px;
+  color: white;
+  padding-top: 20px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000385}}
+.tag {
+  font-family: 'Oswald', sans-serif;
+  display: inline-block;
+  font-size: 20px;
+  padding: 15px 30px;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: white;
+  border: 2px solid white;
+  transition: all 200ms;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000399}}
+.tag:hover {
+  background-color: #FFF;
+  color: blue;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003104}}
+h3 {
+  font-family: 'Oswald', sans-serif;
+  text-transform: uppercase;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  font-size: 24px;
+  border-bottom: 4px solid #2F80ED;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003113}}
+h4 {
+  font-size: 18px;
+  font-weight: 600;
+  font-family: 'Open Sans', sans-serif;
+  margin-top: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #F2994A;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003122}}
+.edit {
+  float: right;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003125}}
+.edit > a {
+  margin-top: 10vh;
+  color: white;
+  font-size: 20px;
+  text-align: center;
+  display: inline-block;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003133}}
+.frontpage-search {
+  background-color: transparent !important;
+  border: none;
+  border-bottom: 1px solid #FFF;
+  border-radius: 0px;
+  box-shadow: none;
+  color: #FFF !important;
+  font-family: 'Open Sans';
+  font-size: 24px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003145}}
+.img-contain {
+  position: relative;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003148}}
+.img {
+  height: 500px !important;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003152}}
+section .col-md-6 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003159}}
+.content-tile {
+  padding-top: 10%;
+}
+@media -sass-debug-info{filename{}line{font-family:\00003161}}
+.content-tile p {
+  line-height: 36px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003166}}
+.overlay {
+  color: #FFF;
+  text-align: center;
+  height: 100%;
+  position: absolute;
+  padding-top: 20%;
+  top: 0;
+  width: 100%;
 }
