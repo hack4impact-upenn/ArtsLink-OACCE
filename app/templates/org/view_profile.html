@@ -67,7 +67,7 @@
           <p>{{ org.address.replace('\r\n', '<br/>') | safe  }}</p>
         </div>
         {% endif %}
-        {% if org.website %}
+        {% if org.website_link %}
         <div>
           <h4>Website</h4>
           <a href="{{ org.website_link }}">{{ org.website_link }}</a>
