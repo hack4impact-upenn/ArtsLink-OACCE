@@ -17,10 +17,11 @@ class Organization(db.Model):
     name = db.Column(db.String(128), unique=True)
     email = db.Column(db.String(128), nullable=False)
     phone = db.Column(db.String(64), nullable=False)
-    address = db.Column(db.String(500))
+    address = db.Column(db.Text)
     website_link = db.Column(db.String(120))
     hours = db.Column(db.Text)
     description = db.Column(db.Text)
+    services = db.Column(db.Text)
     tags = db.relationship(
         "Tag", secondary=tag_association, back_populates="organizations")
     picture_urls = db.Column(db.Text)
@@ -31,11 +32,13 @@ class Organization(db.Model):
         usr_id = 0
         fake = Faker()
 
+        tag_types = ['Discipline', 'Program Activity', 'Program Time',
+                     'Age Group', 'Additional Consideration']
         num_tag_types = 5
         num_tags = 3  # num tags per tag type
         tags = []
         for i in range(num_tag_types):
-            currTagType = TagType(tag_type_name=fake.word(), )
+            currTagType = TagType(tag_type_name=tag_types[i], )
             for j in range(num_tags):
                 tag = Tag(
                     tag_name=fake.word(),
@@ -61,7 +64,7 @@ class Organization(db.Model):
                 email=fake.email(),
                 phone=fake.phone_number(),
                 address=fake.address(),
-                user_id=curr_user_id, 
+                user_id=curr_user_id,
                 tags =tags)
             db.session.add(org)
             try:
@@ -92,10 +95,12 @@ class TagType(db.Model):
     def generate_fake(count=20):
         fake = Faker()
 
+        tag_types = ['Discipline', 'Program Activity', 'Program Time',
+                     'Age Group', 'Additional Consideration']
         num_tag_types = 5
         num_tags = 3  # num tags per tag type
         for i in range(num_tag_types):
-            currTagType = TagType(tag_type_name=fake.word(), )
+            currTagType = TagType(tag_type_name=tag_types[i], )
             for j in range(num_tags):
                 tag = Tag(
                     tag_name=fake.word(),

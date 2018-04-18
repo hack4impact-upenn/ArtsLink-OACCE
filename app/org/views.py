@@ -17,7 +17,7 @@ def index():
 @org.route('/<int:org_id>')
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
-    user = User.query.filter_by(id=organization.user_id).first()  
+    user = User.query.filter_by(id=organization.user_id).first()
     pics = []
     if (organization.picture_urls is not None) and (len(
             organization.picture_urls) > 0):
@@ -64,6 +64,7 @@ def edit_profile():
         organization.hours = form.hours.data
         organization.description = form.description.data
         organization.picture_urls = form.picture_urls.data
+        organization.services = form.services.data
         ts = []
         for f in form:
             if f.name.find('tag_') > -1:
@@ -84,6 +85,7 @@ def edit_profile():
         form.website_link.data = organization.website_link
         form.hours.data = organization.hours
         form.description.data = organization.description
+        form.services.data = organization.services
         for tt in TagType.query.all():
             matches = [
                 str(x.id) for x in Tag.query.filter(
