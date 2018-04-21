@@ -18,10 +18,12 @@ def index():
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
     user = User.query.filter_by(id=organization.user_id).first()  
-    pics = []
-    user = User.query.filter_by(id=organization.user_id).first()
+    pics = [] 
     if user.approved is False:
-        flash('The admin has not approved your organization', 'error') 
+        if current_user == user:
+            flash('The admin has not approved your profile. Your organization will not be visible publicly until you receive approval', 'error')
+        if current_user != user:
+            return redirect('errors/404.html')
     if (organization.picture_urls is not None) and (len(
             organization.picture_urls) > 0):
         pics = organization.picture_urls.split(",")
@@ -55,6 +57,8 @@ def edit_profile():
     form = moddedOrgForm()
     organization = Organization.query.filter_by(user_id=current_user.id)\
                                .first()
+    if current_user.approved is False:
+            flash('The admin has not approved your profile. Your organization will not be visible publicly until you receive approval', 'error')
     if form.validate_on_submit():
         if organization is None:
             organization = Organization()
