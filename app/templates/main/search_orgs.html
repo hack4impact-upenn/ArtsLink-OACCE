@@ -73,19 +73,6 @@
             });
 
             $('#search-orgs').keyup(function () {
-{#                var searchText = $(this).val();#}
-{#                if (searchText.length > 0) {#}
-{#                    $('tbody tr:icontains(' + searchText + ')').removeClass('positive').addClass('positive');#}
-{#                    $('tr.positive').not(':icontains(' + searchText + ')').removeClass('positive');#}
-{#                    $('tbody tr').not(':icontains(' + searchText + ')').closest('tr').removeClass('hidden').addClass('hidden')#}
-{#                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden')#}
-{#                } else {#}
-{#                    if (!$('#chooseTags').val()) {#}
-{#                        $('tr.positive').removeClass('positive');#}
-{#                        $('tr.hidden').removeClass('hidden')#}
-{#                    }#}
-{#                }#}
-
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
                     $('tbody tr:icontains(' + searchText + ')').attr('data-search-match', true);
