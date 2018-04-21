@@ -1,0 +1,135 @@
+{% extends 'layouts/base.html' %}
+
+{% block content %}
+    <div class="ui stackable grid container">
+        <div class="sixteen wide tablet twelve wide computer centered column">
+            <a class="ui basic compact button" href="{{ url_for('main.index') }}">
+                <i class="caret left icon"></i>
+                Back to dashboard
+            </a>
+            <h2 class="ui header">
+                Search Within Registered Organizations
+                <div class="sub header">
+                    Tag or Text Search
+                </div>
+            </h2>
+            <div class="ui menu">
+                 <div class="ui search item">
+                    <div class="ui transparent icon input">
+                        <input id="search-orgs" type="text" placeholder="Search orgs…">
+                        <i class="search icon"></i>
+                    </div>
+                </div>
+            </div>
+                <div class="ui item">
+                <select id="chooseTags" class="ui fluid search dropdown" multiple="">
+                    {% for t in tags %}
+                         <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
+                    {% endfor %}
+                </select>
+                </div>
+
+            {# Use overflow-x: scroll so that mobile views don't freak out
+             # when the table is too wide #}
+            <div style="overflow-x: scroll;">
+                <table class="ui searchable sortable unstackable selectable celled table">
+                    <thead>
+                        <tr>
+                            <th class="sorted ascending">Name</th>
+                            <th>Email address</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                            {% for o in orgs | sort(attribute='name') %}
+                                <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
+                                {% for tag in  o.tags %}
+                                      <input type="hidden" class="{{ tags[tag.id - 1].tag_name }}">
+                                {% endfor %}
+                                <td>{{ o.name }}</td>
+                                <td>{{ o.email }}</td>
+                                </tr>
+                            {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <style>
+        .hidden {
+            display:none;
+        }
+
+    </style>
+        <script type="text/javascript">
+            $(document).ready(function() {
+                $('#chooseTags').each(function() {
+                    $(this).multiselect();
+                });
+            });
+
+            $('tbody tr').each(function() {
+                $(this).attr('data-search-match', true);
+                $(this).attr('data-tag-match', true);
+            });
+
+            $('#search-orgs').keyup(function () {
+                var searchText = $(this).val();
+                if (searchText.length > 0) {
+                    $('tbody tr:icontains(' + searchText + ')').attr('data-search-match', true);
+                    $('tbody tr').not(':icontains(' + searchText + ')').closest('tr').attr('data-search-match', false);
+                } else {
+                    $('tbody tr').attr('data-search-match', true);
+                }
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden');
+                    } else {
+                        $(this).removeClass('hidden').addClass('hidden');
+                    }
+                })
+            });
+            $('#chooseTags').change(function () {
+                var searchText = $(this).val();
+                var currTag;
+                if(searchText.length > 0) {
+
+                    $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
+                    $('tbody tr').each(function() {
+                        $(this).attr('data-tag-match', false);
+                    });
+
+                    for(tag in searchText) {
+                        currTag = '.' + searchText[tag];
+                        $(currTag).closest('tbody tr').attr('data-tag-match', true);
+                    }
+                } else {
+                    $('tbody tr').each(function() {
+                        $(this).attr('data-tag-match', true);
+                    })
+                }
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden');
+                    } else {
+                        $(this).removeClass('hidden').addClass('hidden');
+                    }
+                })
+            });
+
+            setTimeout(function resolver() {
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden');
+                    } else {
+                        $(this).removeClass('hidden').addClass('hidden');
+                    }
+                })
+            }, 1000);
+        </script>
+{% endblock %}

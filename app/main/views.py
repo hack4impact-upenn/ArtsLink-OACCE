@@ -6,6 +6,7 @@ import boto3
 import json
 import time
 import os
+from ..models import Organization, Tag
 
 
 @main.route('/')
@@ -23,6 +24,25 @@ def about():
 @main.route('/list-orgs')
 def list_orgs():
     return render_template('main/list-orgs.html')
+
+@main.route('/search')
+def search():
+    # Search function
+    orgs = Organization.query.all()
+    tags = Tag.query.all()
+    classes = ""
+    return render_template(
+        'main/search_orgs.html', orgs=orgs, tags=tags, classes=classes)
+
+
+@main.route('/search/<string:tags>')
+def search_tag(tags):
+    all_tags = tags.split("_")
+    send_orgs = []
+    for t in all_tags:
+        send_orgs.extend(Organization.query.join(Organization.tags).filter_by(tag_name=t).all())
+    return render_template(
+        'main/search_orgs.html', orgs=send_orgs, tags=tags, checked=all_tags)
 
 
 # generates all signed URL for AWS upload
