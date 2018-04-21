@@ -40,7 +40,7 @@
         {% if org.description %}
         <p>{{ org.description.split('.')[0]}}...</p>
         {% endif %}
-        {% for t in org.tags if t.tag_type_id == 1 or t.tag_type_id == 2 %}
+        {% for t in org.tags if t.tag_type.tag_type_name == 'Discipline' or t.tag_type.tag_type_name == 'Program Activity' %}
         <div class="tag">{{ t.tag_name }}</div>
         {% endfor %}
        </div>
