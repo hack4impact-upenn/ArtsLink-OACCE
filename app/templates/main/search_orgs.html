@@ -34,19 +34,31 @@
             <div style="overflow-x: scroll;">
                 <table class="ui searchable sortable unstackable selectable celled table">
                     <thead>
-                        <tr>
+                        <tr class="hidden">
+                            <th>Image</th>
                             <th class="sorted ascending">Name</th>
-                            <th>Email address</th>
                         </tr>
                     </thead>
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
                                 <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
-                                {% for tag in  o.tags %}
-                                      <input type="hidden" class="{{ tags[tag.id - 1].tag_name }}">
+                                <td>
+                                  {% if o.pictures_url %}
+                                  {% set pic_url = o.picture_urls.split(",")[0] %}
+                                  <img src="{{ pic_url }}">
+                                  {% else %}
+                                  <img src="/static/images/No_image_available.png">
+                                  {% endif %}
+                                </td>
+                                <td>
+                                <h2>{{ o.name }}</h2>
+                                {% for tag in o.tags %}
+                                    <span class="badge badge-warning">{{tag.tag_name}}</span>
+                                    <input type="hidden" class="{{ tags[tag.id - 1].tag_name }}">
                                 {% endfor %}
-                                <td>{{ o.name }}</td>
-                                <td>{{ o.email }}</td>
+                                <br>
+                                <p>{{o.description}}</p>
+                                </td>
                                 </tr>
                             {% endfor %}
                     </tbody>
