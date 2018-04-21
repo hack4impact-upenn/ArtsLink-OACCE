@@ -21,17 +21,17 @@
                     </div>
                 </div>
             </div>
+                {% for types in tag_types %}
                 <div class="ui item">
-                <select id="chooseTags" class="ui fluid search dropdown" multiple="">
-                    {% for t in tags %}
-                        {%print(t)%}
-                            <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
-                    {% endfor %}
-                </select>
+                    <label> {{ types.type_name }}</label>
+                    <select id="chooseTags" class="ui fluid search dropdown" multiple="">
+                        {% for t in types.tags %}
+                            {%print(t)%}
+                                <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
+                        {% endfor %}
+                    </select>
                 </div>
-                <div class ="ui right item">
-                    <button class="ui button" id="search">Filter by Tag</button>
-                </div>
+                {% endfor %}
 
 
             {# Use overflow-x: scroll so that mobile views don't freak out
@@ -67,7 +67,8 @@
     </style>
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#chooseTags').each(function() {
+                $(".dropdown").each(function(){
+                    console.log(this);
                     $(this).multiselect();
                 });
             });
@@ -109,35 +110,38 @@
                     }
                 })
             });
-            $('#chooseTags').change(function () {
-                var searchText = $(this).val();
-                var currTag;
-                if(searchText) {
-
-                    $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
-                    $('tbody tr').each(function() {
-                        $(this).attr('data-tag-match', false);
-                        // console.log('hello');
-                    });
-
-                    for(tag in searchText) {
-                        currTag = '.' + searchText[tag];
-                        $(currTag).closest('tbody tr').attr('data-tag-match', true);
-                    }
-                } else {
-                    $('tbody tr').each(function() {
-                        $(this).attr('data-tag-match', true);
+            $(".dropdown").each(function() {
+                $(this).change(function () {
+                    var searchText = [];
+                    $(".dropdown").each(function(){
+                        searchText = searchText.concat($(this).val());
                     })
-                }
-                $('tbody tr').each(function() {
-                    var tag = $(this).attr('data-tag-match');
-                    var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
-                    if ((tag === "true") && (search === "true")) {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                    var currTag;
+                    if(searchText.length > 0) {
+
+                        $('tbody tr').each(function() {
+                            $(this).attr('data-tag-match', false);
+                        });
+
+                        for(tag in searchText) {
+                            currTag = '.' + searchText[tag];
+                            $(currTag).closest('tbody tr').attr('data-tag-match', true);
+                        }
                     } else {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                        $('tbody tr').each(function() {
+                            $(this).attr('data-tag-match', true);
+                        })
                     }
+                    $('tbody tr').each(function() {
+                        var tag = $(this).attr('data-tag-match');
+                        var search = $(this).attr('data-search-match');
+                        // console.log(tag, search);
+                        if ((tag === "true") && (search === "true")) {
+                            $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                        } else {
+                            $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                        }
+                    })
                 })
             });
 
