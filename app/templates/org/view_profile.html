@@ -100,10 +100,18 @@
         </div>
       </div>
 
-      <div class="col-md-8">
+        <h3>About Us</h3>
+        {% if org.description %}
+        <p> {{ org.description.replace('\r\n', '<br/>') | safe }} </p>
+        {% endif %}
+        {% if org.services %}
+        <h3>Services Offered</h3>
+        <p> {{ org.services.replace('\r\n', '<br/>') | safe }} </p>
+        {% endif %}
+        <div class="col-md-8">
         {% if pics | length > 0 %}
         <h3>Gallery</h3>
-        <p>Click on images to see  their full size. And scroll for more images.</p>
+        <p>Click on images to see their full size. Scroll for more images.</p>
         <div class="row justify-content-center">
           <div class="col-md-12">
             <div class="row" style="height: 300px; overflow-y: scroll">
@@ -118,14 +126,6 @@
             </div>
           </div>
         </div>
-        {% endif %}
-        <h3>About Us</h3>
-        {% if org.description %}
-        <p> {{ org.description.replace('\r\n', '<br/>') | safe }} </p>
-        {% endif %}
-        {% if org.services %}
-        <h3>Services Offered</h3>
-        <p> {{ org.services.replace('\r\n', '<br/>') | safe }} </p>
         {% endif %}
       </div>
     </div>
