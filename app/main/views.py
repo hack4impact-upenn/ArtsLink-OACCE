@@ -6,8 +6,7 @@ import boto3
 import json
 import time
 import os
-from ..models import Organization, Tag, TagType
-
+from ..models import Organization, Tag, TagType, User
 
 @main.route('/')
 def index():
@@ -28,7 +27,7 @@ def list_orgs():
 @main.route('/search')
 def search():
     # Search function
-    orgs = Organization.query.all()
+    orgs = [x for x in Organization.query.all() if User.query.get(x.user_id).approved == True]
     tags = Tag.query.all()
     classes = ""
     tag_types = TagType.query.all()
