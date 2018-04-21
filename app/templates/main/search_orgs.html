@@ -83,7 +83,6 @@
                 $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
                         $(this).removeClass('hidden');
                     } else {
@@ -99,7 +98,6 @@
                     $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
                     $('tbody tr').each(function() {
                         $(this).attr('data-tag-match', false);
-                        // console.log('hello');
                     });
 
                     for(tag in searchText) {
@@ -114,7 +112,6 @@
                 $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
                         $(this).removeClass('hidden');
                     } else {
@@ -127,7 +124,6 @@
                 $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
                         $(this).removeClass('hidden');
                     } else {
