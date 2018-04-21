@@ -32,8 +32,12 @@
                     </select>
                 </div>
                 {% endfor %}
-
-
+             <select id="chooseTags" class="ui fluid search dropdown" multiple="">
+                    {% for t in tags %}
+                         <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
+                    {% endfor %}
+                </select>
+                </div>
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
             <div style="overflow-x: scroll;">
@@ -79,19 +83,6 @@
             });
 
             $('#search-orgs').keyup(function () {
-{#                var searchText = $(this).val();#}
-{#                if (searchText.length > 0) {#}
-{#                    $('tbody tr:icontains(' + searchText + ')').removeClass('positive').addClass('positive');#}
-{#                    $('tr.positive').not(':icontains(' + searchText + ')').removeClass('positive');#}
-{#                    $('tbody tr').not(':icontains(' + searchText + ')').closest('tr').removeClass('hidden').addClass('hidden')#}
-{#                    $('tr.hidden:icontains(' + searchText + ')').removeClass('hidden')#}
-{#                } else {#}
-{#                    if (!$('#chooseTags').val()) {#}
-{#                        $('tr.positive').removeClass('positive');#}
-{#                        $('tr.hidden').removeClass('hidden')#}
-{#                    }#}
-{#                }#}
-
                 var searchText = $(this).val();
                 if (searchText.length > 0) {
                     $('tbody tr:icontains(' + searchText + ')').attr('data-search-match', true);
@@ -102,14 +93,14 @@
                 $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                        $(this).removeClass('hidden');
                     } else {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                        $(this).removeClass('hidden').addClass('hidden');
                     }
                 })
             });
+<<<<<<< HEAD
             $(".dropdown").each(function() {
                 $(this).change(function () {
                     var searchText = [];
@@ -122,6 +113,17 @@
                         $('tbody tr').each(function() {
                             $(this).attr('data-tag-match', false);
                         });
+=======
+            $('#chooseTags').change(function () {
+                var searchText = $(this).val();
+                var currTag;
+                if(searchText.length > 0) {
+
+                    $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
+                    $('tbody tr').each(function() {
+                        $(this).attr('data-tag-match', false);
+                    });
+>>>>>>> 4a56f707b677045094288f0d81bed23afe2e2321
 
                         for(tag in searchText) {
                             currTag = '.' + searchText[tag];
@@ -142,6 +144,18 @@
                             $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
                         }
                     })
+<<<<<<< HEAD
+=======
+                }
+                $('tbody tr').each(function() {
+                    var tag = $(this).attr('data-tag-match');
+                    var search = $(this).attr('data-search-match');
+                    if ((tag === "true") && (search === "true")) {
+                        $(this).removeClass('hidden');
+                    } else {
+                        $(this).removeClass('hidden').addClass('hidden');
+                    }
+>>>>>>> 4a56f707b677045094288f0d81bed23afe2e2321
                 })
             });
 
@@ -149,11 +163,10 @@
                 $('tbody tr').each(function() {
                     var tag = $(this).attr('data-tag-match');
                     var search = $(this).attr('data-search-match');
-                    // console.log(tag, search);
                     if ((tag === "true") && (search === "true")) {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('positive');
+                        $(this).removeClass('hidden');
                     } else {
-                        $(this).removeClass('hidden').removeClass('positive').addClass('hidden');
+                        $(this).removeClass('hidden').addClass('hidden');
                     }
                 })
             }, 1000);

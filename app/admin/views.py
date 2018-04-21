@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from flask_rq import get_queue
 
 from .forms import (ChangeAccountTypeForm, ChangeUserEmailForm, InviteUserForm,
-                    NewUserForm)
+                    NewUserForm, AddTagForm)
 from . import admin
 from .. import db
 from ..decorators import admin_required
@@ -81,6 +81,50 @@ def approved_users():
     roles = Role.query.all()
     return render_template(
         'admin/approved_users.html', users=users, roles=roles)
+
+
+@admin.route('/view-tags', methods=['GET'])
+@login_required
+@admin_required
+def view_tags():
+    """View and manage all tags."""
+    Tags = Tag.query.all()
+    tag_types = TagType.query.all()
+    form = AddTagForm()
+    form.tag_type.choices = [(t.id, t.tag_type_name) for t in TagType.query.all()]
+    return render_template(
+        'admin/view_tags.html',tags=Tags, form=form, tag_types=tag_types)
+
+
+@admin.route('/add-new-tag', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def add_new_tag():
+    """Add a new tag."""
+    form = AddTagForm()
+    form.tag_type.choices = [(t.id, t.tag_type_name) for t in TagType.query.all()]
+    if form.validate_on_submit():
+        for t in TagType.query.all():
+            if form.tag_type.data == t.id:
+                tag = Tag.query.filter_by(tag_name=form.tag_name.data, 
+                    tag_type=t).first()
+                if tag is None:
+                    tag = Tag(
+                    tag_name=form.tag_name.data,
+                    tag_type=t,
+                    tag_type_id=t.id
+                    )
+                    db.session.add(tag)
+                    try:
+                        db.session.commit()
+                        flash('Tag {} created successfully.'.format(
+                        tag.tag_name), 'form-success') 
+                    except IntegrityError:
+                        db.session.rollback()
+                else:
+                    flash('The tag of this type already exists', 'error')   
+    return render_template(
+        'admin/add_tag.html',form=form)
 
 
 @admin.route('/unapproved-users')

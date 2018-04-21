@@ -9,8 +9,6 @@ import os
 from ..models import Organization, Tag, TagType
 
 
-
-
 @main.route('/')
 def index():
     return render_template('main/index.html')

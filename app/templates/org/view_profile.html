@@ -12,7 +12,7 @@
   width:100%;
   min-height:500px;
   padding-bottom: 80px;
-  background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%), 
+  background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%),
     {% if pics | length > 0 %} url("{{ pics[0] }}") {% else %} url(http://creativephl.org/wp-content/uploads/2018/03/pytf-825x380.jpg) {% endif %};
   background-repeat: no-repeat;
   background-position: center;
@@ -40,7 +40,7 @@
         {% if org.description %}
         <p>{{ org.description.split('.')[0]}}...</p>
         {% endif %}
-        {% for t in org.tags %}
+        {% for t in org.tags if t.tag_type.tag_type_name == 'Discipline' or t.tag_type.tag_type_name == 'Program Activity' %}
         <div class="tag">{{ t.tag_name }}</div>
         {% endfor %}
        </div>
@@ -54,33 +54,33 @@
       <div class="col-md-4">
         <h3>General Information</h3>
         <div>
-          <h4>Email</h4> 
+          <h4>Email</h4>
           <p>{{ org.email }}</p>
         </div>
         <div>
-          <h4>Phone</h4> 
+          <h4>Phone</h4>
           <p>{{ org.phone }}</p>
         </div>
         {% if org.address %}
         <div>
-          <h4>Address</h4> 
-          <p>{{ org.address }}</p>
+          <h4>Address</h4>
+          <p>{{ org.address.replace('\r\n', '<br/>') | safe  }}</p>
         </div>
         {% endif %}
-        {% if org.website %}
+        {% if org.website_link %}
         <div>
-          <h4>Website</h4> 
+          <h4>Website</h4>
           <a href="{{ org.website_link }}">{{ org.website_link }}</a>
         </div>
         {% endif %}
         {% if org.hours %}
         <div>
-          <h4>Hours</h4> 
+          <h4>Hours</h4>
           <p>{{ org.hours.replace('\r\n', '<br/>') | safe }}</p>
         </div>
         {% endif %}
         <div>
-          <h3>Tags</h3> 
+          <h3>Tags</h3>
           {% for tt in tag_types %}
             {% set tag_set = [] %}
             {% for t in org.tags %}
@@ -101,6 +101,14 @@
       </div>
 
       <div class="col-md-8">
+        <h3>About Us</h3>
+        {% if org.description %}
+        <p> {{ org.description.replace('\r\n', '<br/>') | safe }} </p>
+        {% endif %}
+        {% if org.services %}
+        <h3>Services Offered</h3>
+        <p> {{ org.services.replace('\r\n', '<br/>') | safe }} </p>
+        {% endif %}
         {% if pics | length > 0 %}
         <h3>Gallery</h3>
         <p>Click on images to see  their full size. And scroll for more images.</p>
@@ -108,7 +116,7 @@
           <div class="col-md-12">
             <div class="row" style="height: 300px; overflow-y: scroll">
               {% for p in pics %}
-              <a href="{{ p }}" data-toggle="lightbox" 
+              <a href="{{ p }}" data-toggle="lightbox"
                 data-gallery="example-gallery" class="col-6 text-center" >
                 <div style="max-height: 250px; overflow: hidden; ">
                   <img src="{{ p }}" class="img-fluid ">
@@ -118,10 +126,6 @@
             </div>
           </div>
         </div>
-        {% endif %}
-        <h3>Description</h3>
-        {% if org.description %}
-        <p> {{ org.description.replace('\r\n', '<br/>') | safe }} </p>
         {% endif %}
       </div>
     </div>

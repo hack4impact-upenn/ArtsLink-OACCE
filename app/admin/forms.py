@@ -1,7 +1,7 @@
 from flask_wtf import Form
 from wtforms import ValidationError
 from wtforms.ext.sqlalchemy.fields import QuerySelectField
-from wtforms.fields import PasswordField, StringField, SubmitField
+from wtforms.fields import PasswordField, StringField, SubmitField, SelectField
 from wtforms.fields.html5 import EmailField
 from wtforms.validators import Email, EqualTo, InputRequired, Length
 
@@ -19,6 +19,14 @@ class ChangeUserEmailForm(Form):
     def validate_email(self, field):
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('Email already registered.')
+
+
+class AddTagForm(Form):
+    tag_name = StringField(
+        'Tag name', validators=[InputRequired(),
+                                  Length(1, 64)])
+    tag_type = SelectField(u'Tag Type', coerce=int)
+    submit = SubmitField('Add Tag')
 
 
 class ChangeAccountTypeForm(Form):
