@@ -112,7 +112,7 @@
             $('#chooseTags').change(function () {
                 var searchText = $(this).val();
                 var currTag;
-                if(searchText) {
+                if(searchText.length > 0) {
 
                     $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
                     $('tbody tr').each(function() {
