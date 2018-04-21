@@ -21,22 +21,19 @@ class OrganizationForm(Form):
     email = EmailField(
         'Organization Contact Email', validators=[InputRequired(),
                                                   Email()])
-    # TODO(steven): see if there is a better validator.
-    # Also, might want to change to a StringField.
     phone = StringField(
-        'Phone number (eg 2108619271)', validators=[InputRequired()])
-    address = StringField(
-        'Organization Address', validators=[InputRequired(),
-                                            Length(1, 500)])
+        'Phone number (eg. 215-686-8446)')
+    address = TextAreaField(
+        'Organization Address', validators=[InputRequired()])
     website_link = URLField(
         'Organization website address \
-        (eg http://hack4impact.org)',
-        validators=[InputRequired(), Length(1, 120)])
+        (eg http://hack4impact.org)')
     hours = TextAreaField(
-        'Organization Hours of Operation',
-        validators=[InputRequired(), Length(1, 64)])
+        'Organization Hours of Operation')
     description = TextAreaField(
-        'Description of your organization', validators=[InputRequired()])
+        'Description of your Organization', validators=[InputRequired()])
+    services = TextAreaField(
+        'Description of the services offered by your organization')
     # TODO: tag type separation based on a DB query
 
     picture_urls = MultipleFileUploadField('Upload Photos')
