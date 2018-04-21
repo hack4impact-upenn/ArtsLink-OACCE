@@ -22,7 +22,7 @@ class OrganizationForm(Form):
         'Organization Contact Email', validators=[InputRequired(),
                                                   Email()])
     phone = StringField(
-        'Phone number (eg 2108619271)')
+        'Phone number (eg. 215-686-8446)')
     address = TextAreaField(
         'Organization Address', validators=[InputRequired()])
     website_link = URLField(
@@ -31,7 +31,7 @@ class OrganizationForm(Form):
     hours = TextAreaField(
         'Organization Hours of Operation')
     description = TextAreaField(
-        'Description of your organization', validators=[InputRequired()])
+        'Description of your Organization', validators=[InputRequired()])
     services = TextAreaField(
         'Description of the services offered by your organization')
     # TODO: tag type separation based on a DB query
