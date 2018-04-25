@@ -15,6 +15,16 @@ p {
   z-index: 2000;
 }
 
+// img cropping for search
+.crop {
+    width: 300px;
+    height: 300px;
+    overflow: hidden;
+}
+
+.crop img {
+    height: 325px;
+}
 // Desktop nav
 .ui.fixed.main.menu .right.menu > .item:last-of-type {
   border-right: 1px solid rgba(34, 36, 38, 0.0980392);
