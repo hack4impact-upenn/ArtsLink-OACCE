@@ -1,0 +1,32 @@
+<style>
+.bgimage-footer {
+  width:100%;
+  min-height:20vh;
+  margin-bottom: 40px;
+  padding:20px;
+  background: linear-gradient(78.43deg, rgba(242, 153, 74, 0.8) 95.73%, rgba(173, 93, 21, 0.8) 2.63%),
+     url(/static/images/shakespeare.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+}
+</style>
+<section class="bgimage-footer">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-8 offset-md-1 " style="height: 100%">
+        <br>
+        <br>
+        <br>
+        {% if current_user.is_anonymous %}
+        <div class="tag" onclick="location.href='{{ url_for('account.register') }}'">Sign Up</a></div>
+        {% endif %}
+        <div class="tag" onclick="location.href='mailto:lindsay.so@phila.gov';">Contact Us</a></div>
+      </div>
+      <div class="col-md-3" style="float: right">
+        <img width="100%"  src="/static/images/oacce.png">
+      </div>
+    </div>
+  </div>
+</section>
