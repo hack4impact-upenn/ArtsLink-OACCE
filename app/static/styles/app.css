@@ -16,14 +16,15 @@ p {
 
 @media -sass-debug-info{filename{}line{font-family:\0000319}}
 .crop {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 200px;
   overflow: hidden;
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000325}}
 .crop img {
-  height: 325px;
+  width: 200px;
+  height: 200px;
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000329}}
