@@ -55,7 +55,7 @@
                                       {% endif %}
                                 </td>
                                 <td>
-                                <h2>{{ o.name }}</h2>
+                                <h1>{{ o.name }}</h1>
                                 {% for tag in o.tags %}
                                     <span class="badge badge-warning">{{tag.tag_name}}</span>
                                     <input type="hidden" class="{{ tags[tag.id - 1].tag_name }}">
