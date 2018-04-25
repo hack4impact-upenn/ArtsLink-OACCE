@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from flask_rq import get_queue
 
 from .forms import (ChangeAccountTypeForm, ChangeUserEmailForm, InviteUserForm,
-                    NewUserForm, AddTagForm)
+                    NewUserForm, AddTagForm, EditTagForm)
 from . import admin
 from .. import db
 from ..decorators import admin_required
@@ -95,6 +95,34 @@ def view_tags():
     return render_template(
         'admin/view_tags.html',tags=Tags, form=form, tag_types=tag_types)
 
+
+@admin.route('/delete-tag/<int:tag_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def delete_tag(tag_id):
+    """ delete tag """
+    Tag.query.filterby(id=tag_id).delete()
+    db.session.commit()
+
+
+@admin.route('/edit-tag/<int:tag_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_tag(tag_id):
+    """ edit tag """
+    form = EditTagForm()
+    tag = Tag.query.filterby(id=tag_id)
+    if tag is None:
+        render_template('/errors/404.html')
+    else:
+        form.tag_name = tag.name
+        if form.validate_on_submit():
+            tag.tag_name = form.tag_name
+        db.session.add(tag)
+        db.session.commit()
+        flash('Tag {} edited successfully.'.format(
+                        tag.tag_name), 'form-success')
+    return render_template('admin/edit_tag.html',form=form, tag_id=tag_id)
 
 @admin.route('/add-new-tag', methods=['GET', 'POST'])
 @login_required

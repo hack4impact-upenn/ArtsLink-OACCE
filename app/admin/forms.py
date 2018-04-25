@@ -28,6 +28,13 @@ class AddTagForm(Form):
     tag_type = SelectField(u'Tag Type', coerce=int)
     submit = SubmitField('Add Tag')
 
+class EditTagForm(Form):
+    tag_name = StringField(
+        'Tag name', validators=[InputRequired(),
+                                  Length(1, 64)])
+    submit = SubmitField('Edit Tag')
+
+
 
 class ChangeAccountTypeForm(Form):
     role = QuerySelectField(

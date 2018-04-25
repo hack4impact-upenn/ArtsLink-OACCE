@@ -145,7 +145,7 @@ h4 {
 .frontpage-search {
   background-color: transparent !important;
   border: none;
-  border-bottom: 1px solid #FFF;
+  border-bottom: 2px solid #FFF;
   border-radius: 0px;
   box-shadow: none;
   color: #FFF !important;
@@ -153,32 +153,37 @@ h4 {
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003145}}
+@media -sass-debug-info{filename{}line{font-family:\00003144}}
+.frontpage-search::placeholder {
+  color: #FFF !important;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003149}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003148}}
+@media -sass-debug-info{filename{}line{font-family:\00003152}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003152}}
+@media -sass-debug-info{filename{}line{font-family:\00003156}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003159}}
+@media -sass-debug-info{filename{}line{font-family:\00003163}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003161}}
+@media -sass-debug-info{filename{}line{font-family:\00003165}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003166}}
+@media -sass-debug-info{filename{}line{font-family:\00003170}}
 .overlay {
   color: #FFF;
   text-align: center;
@@ -187,5 +192,4 @@ section .col-md-6 {
   padding-top: 20%;
   top: 0;
   width: 100%;
-  font-size: 20px;
 }
