@@ -107,7 +107,8 @@ def delete_tag(tag_id):
     form = DeleteTagForm()
     form.tag_name.data = tag.tag_name
     if form.validate_on_submit():
-        Tag.query.filter_by(id=tag_id).delete()
+        # Tag.query.filter_by(id=tag_id).delete()
+        db.session.delete(tag)
         db.session.commit()
         return redirect(url_for('admin.view_tags'))
     return render_template(
