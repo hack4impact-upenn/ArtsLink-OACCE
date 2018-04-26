@@ -109,8 +109,10 @@ def add_new_tag():
                 tag = Tag.query.filter_by(tag_name=form.tag_name.data, 
                     tag_type=t).first()
                 if tag is None:
+                    tag_class_name = form.tag_name.data.replace(' ', '_')
                     tag = Tag(
                     tag_name=form.tag_name.data,
+                    tag_class_name=tag_class_name,
                     tag_type=t,
                     tag_type_id=t.id
                     )

@@ -15,6 +15,31 @@ p {
   z-index: 2000;
 }
 
+.tag-select {
+    padding-top:20px;
+    padding-bottom:20px;
+}
+
+.chooseTags {
+    background-color: transparent !important;
+}
+
+.badge-info {
+    font-size: 16px;
+    padding:6px;
+}
+
+.badge-warning {
+    font-size: 13px;
+    padding:6px;
+}
+
+.search-block  {
+    position: relative;
+    top: 50%;
+    transform: translateY(25%);
+}
+
 // img cropping for search
 .crop {
     width: 200px;
@@ -138,6 +163,10 @@ h4 {
   font-size: 20px;
   text-align: center;
   display: inline-block;
+}
+
+.frontpage-search::placeholder{
+    color: white
 }
 
 .frontpage-search  {

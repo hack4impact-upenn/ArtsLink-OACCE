@@ -14,56 +14,86 @@ p {
   z-index: 2000;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000319}}
+@media -sass-debug-info{filename{}line{font-family:\0000318}}
+.tag-select {
+  padding-top: 20px;
+  padding-bottom: 20px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000323}}
+.chooseTags {
+  background-color: transparent !important;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000327}}
+.badge-info {
+  font-size: 16px;
+  padding: 6px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000332}}
+.badge-warning {
+  font-size: 13px;
+  padding: 6px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000337}}
+.search-block {
+  position: relative;
+  top: 50%;
+  transform: translateY(25%);
+}
+
+@media -sass-debug-info{filename{}line{font-family:\0000344}}
 .crop {
   width: 200px;
   height: 200px;
   overflow: hidden;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000325}}
+@media -sass-debug-info{filename{}line{font-family:\0000350}}
 .crop img {
   height: 200px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000329}}
+@media -sass-debug-info{filename{}line{font-family:\0000354}}
 .ui.fixed.main.menu .right.menu > .item:last-of-type {
   border-right: 1px solid rgba(34, 36, 38, 0.0980392);
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000335}}
+@media -sass-debug-info{filename{}line{font-family:\0000360}}
 nav .mobile.only.row .ui.vertical.menu {
   margin-top: 40px;
   display: none;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000342}}
+@media -sass-debug-info{filename{}line{font-family:\0000367}}
 .flashes > .ui.message:last-of-type {
   margin-bottom: 2rem;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000347}}
+@media -sass-debug-info{filename{}line{font-family:\0000372}}
 table.selectable tr:hover {
   cursor: pointer !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000351}}
+@media -sass-debug-info{filename{}line{font-family:\0000376}}
 .back-button {
   padding-bottom: 30px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000355}}
+@media -sass-debug-info{filename{}line{font-family:\0000380}}
 .positive {
   background-color: rgba(0, 230, 0, 0.3);
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000359}}
+@media -sass-debug-info{filename{}line{font-family:\0000384}}
 .container-fluid {
   padding-left: 0px !important;
   padding-right: 0px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000363}}
+@media -sass-debug-info{filename{}line{font-family:\0000388}}
 .bgimage h1 {
   margin-top: 10vh;
   font-size: 72px;
@@ -73,7 +103,7 @@ table.selectable tr:hover {
   color: white;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000372}}
+@media -sass-debug-info{filename{}line{font-family:\0000397}}
 .bgimage-footer h1 {
   margin-top: 10vh;
   font-size: 72px;
@@ -82,7 +112,7 @@ table.selectable tr:hover {
   font-family: 'Oswald', sans-serif;
   color: white;
 }
-@media -sass-debug-info{filename{}line{font-family:\0000381}}
+@media -sass-debug-info{filename{}line{font-family:\00003106}}
 .bgimage-footer p {
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
@@ -90,7 +120,7 @@ table.selectable tr:hover {
   padding-top: 20px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000389}}
+@media -sass-debug-info{filename{}line{font-family:\00003114}}
 .bgimage p {
   font-family: 'Open Sans', sans-serif;
   font-size: 24px;
@@ -98,7 +128,7 @@ table.selectable tr:hover {
   padding-top: 20px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\0000395}}
+@media -sass-debug-info{filename{}line{font-family:\00003120}}
 .tag {
   font-family: 'Oswald', sans-serif;
   display: inline-block;
@@ -113,13 +143,13 @@ table.selectable tr:hover {
   transition: all 200ms;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003109}}
+@media -sass-debug-info{filename{}line{font-family:\00003134}}
 .tag:hover {
   background-color: #FFF;
   color: blue;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003114}}
+@media -sass-debug-info{filename{}line{font-family:\00003139}}
 h3 {
   font-family: 'Oswald', sans-serif;
   text-transform: uppercase;
@@ -129,7 +159,7 @@ h3 {
   border-bottom: 4px solid #2F80ED;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003123}}
+@media -sass-debug-info{filename{}line{font-family:\00003148}}
 h4 {
   font-size: 18px;
   font-weight: 600;
@@ -139,12 +169,12 @@ h4 {
   border-bottom: 1px solid #F2994A;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003132}}
+@media -sass-debug-info{filename{}line{font-family:\00003157}}
 .edit {
   float: right;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003135}}
+@media -sass-debug-info{filename{}line{font-family:\00003160}}
 .edit > a {
   margin-top: 10vh;
   color: white;
@@ -153,7 +183,12 @@ h4 {
   display: inline-block;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003143}}
+@media -sass-debug-info{filename{}line{font-family:\00003168}}
+.frontpage-search::placeholder {
+  color: white;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003172}}
 .frontpage-search {
   background-color: transparent !important;
   border: none;
@@ -165,32 +200,32 @@ h4 {
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003155}}
+@media -sass-debug-info{filename{}line{font-family:\00003184}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003158}}
+@media -sass-debug-info{filename{}line{font-family:\00003187}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003162}}
+@media -sass-debug-info{filename{}line{font-family:\00003191}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003169}}
+@media -sass-debug-info{filename{}line{font-family:\00003198}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003171}}
+@media -sass-debug-info{filename{}line{font-family:\00003200}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003176}}
+@media -sass-debug-info{filename{}line{font-family:\00003205}}
 .overlay {
   color: #FFF;
   text-align: center;
