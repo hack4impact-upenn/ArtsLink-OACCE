@@ -21,23 +21,16 @@
                     </div>
                 </div>
             </div>
-                {% for types in tag_types %}
-                <div class="ui item">
-                    <label> {{ types.type_name }}</label>
-                    <select id="chooseTags" class="ui fluid search dropdown" multiple="">
-                        {% for t in types.tags %}
-                            {%print(t)%}
-                                <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% endfor %}
-             <select id="chooseTags" class="ui fluid search dropdown" multiple="">
-                    {% for t in tags %}
-                         <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
+            {% for types in tag_types %}
+            <div class="ui item">
+                <label> {{ types.type_name }}</label>
+                <select id="chooseTags" class="ui fluid search dropdown" multiple="">
+                    {% for t in types.tags %}
+                        <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
                     {% endfor %}
                 </select>
-                </div>
+            </div>
+            {% endfor %}
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
             <div style="overflow-x: scroll;">
