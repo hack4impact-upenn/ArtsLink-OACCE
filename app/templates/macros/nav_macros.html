@@ -16,7 +16,7 @@
 {% endmacro %}
 
 {% macro constantly_visible_items() %}
-  <a class="navbar-brand" href="{{ url_for('main.index') }}">
+  <a class="navbar-brand" style="font-size:25px" href="{{ url_for('main.index') }}">
     {{ config.APP_NAME }}
   </a>
 {% endmacro %}
@@ -83,7 +83,7 @@
 
 {% macro desktop_nav(current_user, dropdown=None) %}
   <div class="collapse navbar-collapse" id="navbarCollapse">
-    <ul class="navbar-nav mr-auto mt-2 mt-md-0">
+    <ul class="navbar-nav mr-auto mt-2 mt-md-0" style="font-size:20px" >
       {{ header_items(current_user) }}
       {{ create_dropdown(dropdown) }}
     </ul>
@@ -95,7 +95,7 @@
 
 {% macro render_nav(current_user, dropdown=[]) %}
       <nav class="navbar navbar-expand-md navbar-light bg-dark">
-        <div class="container">
+        <div class="container" style="font-size:20px">
           {{ constantly_visible_items() }}
           {{ mobile_nav(current_user, dropdown=dropdown) }}
           {{ desktop_nav(current_user, dropdown=dropdown) }}
