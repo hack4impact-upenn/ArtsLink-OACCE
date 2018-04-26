@@ -1,9 +1,9 @@
 from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 from flask_rq import get_queue
-
+from sqlalchemy.exc import IntegrityError
 from .forms import (ChangeAccountTypeForm, ChangeUserEmailForm, InviteUserForm,
-                    NewUserForm, AddTagForm)
+                    NewUserForm, AddTagForm, EditTagForm, DeleteTagForm)
 from . import admin
 from .. import db
 from ..decorators import admin_required
@@ -96,6 +96,44 @@ def view_tags():
         'admin/view_tags.html',tags=Tags, form=form, tag_types=tag_types)
 
 
+@admin.route('/delete-tag/<int:tag_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def delete_tag(tag_id):
+    """ delete tag """
+    tag = Tag.query.filter_by(id=tag_id).first()
+    if tag is None:
+        return render_template('errors/404.html')
+    form = DeleteTagForm()
+    form.tag_name.data = tag.tag_name
+    if form.validate_on_submit():
+        db.session.delete(tag)
+        db.session.commit()
+        return redirect(url_for('admin.view_tags'))
+    return render_template(
+             'admin/edit_tag.html',form=form, tag_id=tag_id)
+
+
+@admin.route('/edit-tag/<int:tag_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def edit_tag(tag_id):
+    """ edit tag """
+    tag = Tag.query.filter_by(id=tag_id).first()
+    if tag is None:
+        return render_template('/errors/404.html')
+    else:
+        form = EditTagForm(tag_name=tag.tag_name)
+        if form.validate_on_submit():
+            tag.tag_name = form.tag_name.data
+            db.session.add(tag)
+            db.session.commit()
+            flash('Tag {} edited successfully.'.format(
+                tag.tag_name), 'form-success')
+            return redirect(url_for('admin.view_tags'))
+    return render_template('admin/edit_tag.html', form=form, tag_id=tag_id)
+
+
 @admin.route('/add-new-tag', methods=['GET', 'POST'])
 @login_required
 @admin_required
@@ -106,23 +144,23 @@ def add_new_tag():
     if form.validate_on_submit():
         for t in TagType.query.all():
             if form.tag_type.data == t.id:
-                tag = Tag.query.filter_by(tag_name=form.tag_name.data, 
+                tag = Tag.query.filter_by(tag_name=form.tag_name.data,
                     tag_type=t).first()
                 if tag is None:
                     tag = Tag(
-                    tag_name=form.tag_name.data,
-                    tag_type=t,
-                    tag_type_id=t.id
-                    )
+                        tag_name=form.tag_name.data,
+                        tag_type=t,
+                        tag_type_id=t.id
+                        )
                     db.session.add(tag)
                     try:
                         db.session.commit()
                         flash('Tag {} created successfully.'.format(
-                        tag.tag_name), 'form-success') 
+                        tag.tag_name), 'form-success')
                     except IntegrityError:
                         db.session.rollback()
                 else:
-                    flash('The tag of this type already exists', 'error')   
+                    flash('The tag of this type already exists', 'error')
     return render_template(
         'admin/add_tag.html',form=form)
 

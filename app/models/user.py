@@ -165,15 +165,27 @@ class User(UserMixin, db.Model):
 
         seed()
         for i in range(count):
-            u = User(
-                first_name=fake.first_name(),
-                last_name=fake.last_name(),
-                email=fake.email(),
-                password='password',
-                confirmed=True,
-                approved=False,
-                role=choice(roles),
-                **kwargs)
+            role = choice(roles)
+            if role == 2:
+                u = User(
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    email=fake.email(),
+                    password='password',
+                    confirmed=True,
+                    approved=True,
+                    role=role,
+                    **kwargs)
+            else:
+                u = User(
+                    first_name=fake.first_name(),
+                    last_name=fake.last_name(),
+                    email=fake.email(),
+                    password='password',
+                    confirmed=True,
+                    approved=False,
+                    role=role,
+                    **kwargs)
             db.session.add(u)
             try:
                 db.session.commit()

@@ -143,12 +143,16 @@ h4 {
 .frontpage-search  {
   background-color: transparent !important;
   border: none;
-  border-bottom: 1px solid #FFF;
+  border-bottom: 2px solid #FFF;
   border-radius: 0px;
   box-shadow: none;
   color: #FFF !important;
   font-family: 'Open Sans';
   font-size: 24px;
+}
+
+.frontpage-search::placeholder{
+  color: #FFF !important;
 }
 
 
