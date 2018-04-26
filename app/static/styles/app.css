@@ -83,6 +83,7 @@ table.selectable tr:hover {
   font-family: 'Oswald', sans-serif;
   color: white;
 }
+
 @media -sass-debug-info{filename{}line{font-family:\0000381}}
 .bgimage-footer p {
   font-family: 'Open Sans', sans-serif;
@@ -182,7 +183,12 @@ section .col-md-6 {
   padding-right: 0px;
 }
 
+<<<<<<< HEAD
 @media -sass-debug-info{filename{}line{font-family:\00003169}}
+=======
+
+@media -sass-debug-info{filename{}line{font-family:\00003159}}
+>>>>>>> 87efdb06cf5d445524c716b0fd465231c9355eb4
 .content-tile {
   padding-top: 10%;
 }
@@ -197,7 +203,18 @@ section .col-md-6 {
   text-align: center;
   height: 100%;
   position: absolute;
-  padding-top: 20%;
+  padding-top: 10%;
   top: 0;
   width: 100%;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003166}}
+.overlay h1 {
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 90px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color: white;
 }
