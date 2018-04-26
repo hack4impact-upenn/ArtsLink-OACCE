@@ -28,16 +28,16 @@
   <div class="row"> <div class="col-md-6">
       {% if current_user.organization == None %}
       {{ d.dashboard_option('Create Organization Details', 'org.edit_profile',
-      description='Create your organization', icon='info icon') }}
+      description='Create your organization\'s profile', icon='info icon') }}
       {% else %}
       {{ d.dashboard_option('Edit Organization Details', 'org.edit_profile',
-      description='Edit your organization information', icon='info icon') }}
+      description='Edit your organization\'s information', icon='info icon') }}
       {% endif %}
     </div>
     <div class="col-md-6">
       {% if current_user.organization  %}
       {{ dashboard_option('View Organization Page', 'org.view_org', {'org_id': current_user.organization.id},
-      description='Edit and preview your organization information', icon='info icon') }}
+      description='Edit and preview your organization\'s page', icon='info icon') }}
       {% endif %}
     </div>
   </div>
