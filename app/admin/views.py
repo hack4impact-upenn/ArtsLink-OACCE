@@ -1,7 +1,7 @@
 from flask import abort, flash, redirect, render_template, url_for, request
 from flask_login import current_user, login_required
 from flask_rq import get_queue
-
+from sqlalchemy.exc import IntegrityError
 from .forms import (ChangeAccountTypeForm, ChangeUserEmailForm, InviteUserForm,
                     NewUserForm, AddTagForm, EditTagForm, DeleteTagForm)
 from . import admin
@@ -129,12 +129,10 @@ def edit_tag(tag_id):
             tag.tag_name = form.tag_name.data
             db.session.add(tag)
             db.session.commit()
-            return redirect(url_for('admin.view_tags'))
             flash('Tag {} edited successfully.'.format(
                 tag.tag_name), 'form-success')
-
-    return render_template('admin/edit_tag.html',form=form, tag_id=tag_id)
-
+            return redirect(url_for('admin.view_tags'))
+    return render_template('admin/edit_tag.html', form=form, tag_id=tag_id)
 
 
 @admin.route('/add-new-tag', methods=['GET', 'POST'])
@@ -151,10 +149,10 @@ def add_new_tag():
                     tag_type=t).first()
                 if tag is None:
                     tag = Tag(
-                    tag_name=form.tag_name.data,
-                    tag_type=t,
-                    tag_type_id=t.id
-                    )
+                        tag_name=form.tag_name.data,
+                        tag_type=t,
+                        tag_type_id=t.id
+                        )
                     db.session.add(tag)
                     try:
                         db.session.commit()
