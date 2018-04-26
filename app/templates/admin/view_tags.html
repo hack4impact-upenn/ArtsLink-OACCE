@@ -49,7 +49,7 @@
                                     <td>{{ t.tag_name }}</td>
                                     <td class="user role">{{t.tag_type.tag_type_name}}</td>
                                     <td>
-                                        <button onclick="window.location.href = '{{ url_for('admin.delete_tag', tag_id=t.id) }}';" class="btn btn-primary delete-tag"> Delete Tag </button>
+                                        <button onclick="window.location.href = '{{ url_for('admin.delete_tag', tag_id=t.id) }}';" class="btn btn-danger delete-tag"> Delete Tag </button>
                                         <button onclick="window.location.href = '{{ url_for('admin.edit_tag', tag_id=t.id) }}';" class="btn btn-primary delete-tag"> Edit Tag </button>
                                     </td>
                                 </tr>
@@ -81,8 +81,6 @@
                     $('td.user.role').not(':contains(' + value + ')').closest('tr').addClass('hidden').hide();
                 }
             });
-            $('#delete-tag').click(
-                )
         });
     </script>
 {% endblock %}
