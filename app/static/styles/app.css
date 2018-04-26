@@ -70,6 +70,7 @@ table.selectable tr:hover {
   font-family: 'Oswald', sans-serif;
   color: white;
 }
+
 @media -sass-debug-info{filename{}line{font-family:\0000371}}
 .bgimage-footer p {
   font-family: 'Open Sans', sans-serif;
@@ -145,7 +146,7 @@ h4 {
 .frontpage-search {
   background-color: transparent !important;
   border: none;
-  border-bottom: 2px solid #FFF;
+  border-bottom: 1px solid #FFF;
   border-radius: 0px;
   box-shadow: none;
   color: #FFF !important;
@@ -153,43 +154,51 @@ h4 {
   font-size: 24px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003144}}
-.frontpage-search::placeholder {
-  color: #FFF !important;
-}
-
-@media -sass-debug-info{filename{}line{font-family:\00003149}}
+@media -sass-debug-info{filename{}line{font-family:\00003145}}
 .img-contain {
   position: relative;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003152}}
+@media -sass-debug-info{filename{}line{font-family:\00003148}}
 .img {
   height: 500px !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003156}}
+@media -sass-debug-info{filename{}line{font-family:\00003152}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003163}}
+
+@media -sass-debug-info{filename{}line{font-family:\00003159}}
 .content-tile {
   padding-top: 10%;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003165}}
+@media -sass-debug-info{filename{}line{font-family:\00003161}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003170}}
+@media -sass-debug-info{filename{}line{font-family:\00003166}}
 .overlay {
   color: #FFF;
   text-align: center;
   height: 100%;
   position: absolute;
-  padding-top: 20%;
+  padding-top: 10%;
   top: 0;
   width: 100%;
+  font-size: 20px;
+}
+
+@media -sass-debug-info{filename{}line{font-family:\00003166}}
+.overlay h1 {
+  margin-top: 10vh;
+  text-align: center;
+  font-size: 90px;
+  text-transform: uppercase;
+  display: inline-block;
+  font-family: 'Oswald', sans-serif;
+  color: white;
 }
