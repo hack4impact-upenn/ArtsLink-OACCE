@@ -16,15 +16,14 @@ p {
 
 @media -sass-debug-info{filename{}line{font-family:\0000319}}
 .crop {
-  width: 200px;
-  height: 200px;
+  width: 300px;
+  height: 300px;
   overflow: hidden;
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000325}}
 .crop img {
-  width: 200px;
-  height: 200px;
+  height: 325px;
 }
 
 @media -sass-debug-info{filename{}line{font-family:\0000329}}
@@ -183,12 +182,8 @@ section .col-md-6 {
   padding-right: 0px;
 }
 
-<<<<<<< HEAD
-@media -sass-debug-info{filename{}line{font-family:\00003169}}
-=======
 
 @media -sass-debug-info{filename{}line{font-family:\00003159}}
->>>>>>> 87efdb06cf5d445524c716b0fd465231c9355eb4
 .content-tile {
   padding-top: 10%;
 }
