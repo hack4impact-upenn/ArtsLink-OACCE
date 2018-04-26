@@ -16,22 +16,22 @@ class MultipleFileUploadField(StringField):
 
 class OrganizationForm(Form):
     name = StringField(
-        'Organization Name', validators=[InputRequired(),
+        'Organization Name (Required)', validators=[InputRequired(),
                                          Length(1, 64)])
     email = EmailField(
-        'Organization Contact Email', validators=[InputRequired(),
+        'Organization Contact Email (Required)', validators=[InputRequired(),
                                                   Email()])
     phone = StringField(
         'Phone number (eg. 215-686-8446)')
     address = TextAreaField(
-        'Organization Address', validators=[InputRequired()])
+        'Organization Address')
     website_link = URLField(
         'Organization website address \
         (eg http://hack4impact.org)')
     hours = TextAreaField(
         'Organization Hours of Operation')
     description = TextAreaField(
-        'Description of your Organization', validators=[InputRequired()])
+        'Description of your Organization (Required)', validators=[InputRequired()])
     services = TextAreaField(
         'Description of the services offered by your organization')
     # TODO: tag type separation based on a DB query

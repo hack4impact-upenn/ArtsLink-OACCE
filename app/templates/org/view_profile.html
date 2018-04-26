@@ -57,10 +57,12 @@
           <h4>Email</h4>
           <p>{{ org.email }}</p>
         </div>
+        {% if org.phone %}
         <div>
           <h4>Phone</h4>
           <p>{{ org.phone }}</p>
         </div>
+        {% endif %}
         {% if org.address %}
         <div>
           <h4>Address</h4>
