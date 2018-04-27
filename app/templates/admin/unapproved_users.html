@@ -47,7 +47,7 @@
                             <th class="sorted ascending">Last name</th>
                             <th>Email address</th>
                             <th>Account type</th>
-                            <th>Approve</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +58,7 @@
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.email }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';" class="user role">{{ u.role.name }}</td>
                             <td><button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';" 
-                                class="btn btn-primary"> Yes </button> </td>
+                                class="btn btn-primary"> Approve </button> </td>
                         </tr>
                     {% endfor %}
                     </tbody>
@@ -82,12 +82,10 @@
                 }
             });
 
-            $('#select-role').dropdown({
-                onChange: function (value, text, $selectedItem) {
-                    $('td.user.role:contains(' + value + ')').closest('tr').removeClass('hidden').show();
-                    $('td.user.role').not(':contains(' + value + ')').closest('tr').addClass('hidden').hide();
-                }
+          $('#select-role').change(function () {
+              $('td.user.role:contains(' + this.value + ')').closest('tr').removeClass('hidden').show();
+              $('td.user.role').not(':contains(' + this.value + ')').closest('tr').addClass('hidden').hide();
             });
-        });
+      });
     </script>
 {% endblock %}
