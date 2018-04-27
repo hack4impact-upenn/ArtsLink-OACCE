@@ -20,6 +20,7 @@
   background-position: center;
   background-size:cover;
   background-attachment: fixed;
+  margin-bottom:5px
 }
 
 </style>
@@ -30,15 +31,19 @@
         <h1 class="search-header">SEARCH</h1>
         <div class="form-group">
           <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
-            <div class="tag-select">
-            {% for types in tag_types %}
-                <label class="badge badge-warning"> {{ types.tag_type_name }}</label>
-                <select id="chooseTags" class="fluid search dropdown" multiple="">
-                    {% for t in types.tags %}
-                        <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
-                    {% endfor %}
-                </select>
-            {% endfor %}
+            <div class="row">
+                {% for types in tag_types %}
+                <div class="tag-select form-group col-xs-2 col-md-2">
+                    <div class="badge badge-info"> {{ types.tag_type_name }}</div>
+                    <select id="chooseTags" class="fluid search dropdown" multiple="">
+                        {% for t in types.tags %}
+                            <div>
+                            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                            </div>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
             </div>
         </div>
       </div>
@@ -92,7 +97,6 @@
         <script type="text/javascript">
             $(document).ready(function() {
                 $(".dropdown").each(function(){
-                    console.log(this);
                     $(this).multiselect();
                 });
             });
@@ -144,7 +148,6 @@
                     $('tbody tr').each(function() {
                         var tag = $(this).attr('data-tag-match');
                         var search = $(this).attr('data-search-match');
-                        // console.log(tag, search);
                         if ((tag === "true") && (search === "true")) {
                             $(this).removeClass('hidden');
                         } else {

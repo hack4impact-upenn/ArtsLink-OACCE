@@ -40,7 +40,7 @@ class Organization(db.Model):
             currTagType = TagType(tag_type_name=tag_types[i], )
             for j in range(num_tags):
                 name = fake.word()+'_' + fake.word();
-                print_name = name.split('_')
+                print_name = name.replace('_',' ')
                 tag = Tag(
                     tag_name=print_name,
                     tag_class_name=name,
