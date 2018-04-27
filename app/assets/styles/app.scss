@@ -10,9 +10,43 @@ h1, h2, h3, h4, h5, h6  {
 p {
   font-family: 'Open Sans';
 }
+
 .navbar.bg-dark {
   background-color: rgba(255, 255, 255, 1) !important;
   z-index: 2000;
+}
+
+
+.tag-select {
+    padding-top:20px;
+    padding-bottom:20px;
+
+}
+
+.chooseTags {
+    background-color: transparent !important;
+    padding:1px;
+}
+
+.badge-info {
+    font-size: 16px;
+    padding:6px;
+    padding-bottom:6px;
+    font-family: 'Open Sans';
+    margin-bottom: 4px;
+    background-color: #f67547;
+}
+
+.badge-warning {
+    font-size: 13px;
+    padding:6px;
+    font-family: 'Open Sans';
+}
+
+.search-block  {
+    position: relative;
+    top: 50%;
+    transform: translateY(25%);
 }
 
 // img cropping for search
@@ -138,6 +172,10 @@ h4 {
   font-size: 20px;
   text-align: center;
   display: inline-block;
+}
+
+.frontpage-search::placeholder{
+    color: white
 }
 
 .frontpage-search  {

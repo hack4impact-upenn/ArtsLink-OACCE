@@ -36,12 +36,14 @@ class Organization(db.Model):
                      'Age Group', 'Additional Consideration']
         num_tag_types = 5
         num_tags = 3  # num tags per tag type
-        tags = []
         for i in range(num_tag_types):
             currTagType = TagType(tag_type_name=tag_types[i], )
             for j in range(num_tags):
+                name = fake.word()+'_' + fake.word();
+                print_name = name.replace('_',' ')
                 tag = Tag(
-                    tag_name=fake.word(),
+                    tag_name=print_name,
+                    tag_class_name=name,
                     tag_type=currTagType,
                     tag_type_id=currTagType.id)
                 db.session.add(tag)
@@ -71,7 +73,6 @@ class Organization(db.Model):
                 db.session.commit()
             except IntegrityError:
                 db.session.rollback()
-             # make an association bt this resource and these tags
             usr_id += 1
 
 
@@ -79,6 +80,7 @@ class Tag(db.Model):
     __tablename__ = 'tags'
     id = db.Column(db.Integer, primary_key=True)
     tag_name = db.Column(db.String(64), nullable=False)
+    tag_class_name = db.Column(db.String(64), nullable=False) # tag name no spaces for classname in HTML
     tag_type_id = db.Column(db.Integer, db.ForeignKey('tag_type.id'))
     tag_type = db.relationship("TagType", back_populates="tags")
     organizations = db.relationship(
@@ -102,8 +104,11 @@ class TagType(db.Model):
         for i in range(num_tag_types):
             currTagType = TagType(tag_type_name=tag_types[i], )
             for j in range(num_tags):
+                name = fake.word()+'_' + fake.word();
+                print_name = name.split('_')
                 tag = Tag(
-                    tag_name=fake.word(),
+                    tag_name=print_name,
+                    tag_class_name=name,
                     tag_type=currTagType,
                     tag_type_id=currTagType.id)
                 db.session.add(tag)

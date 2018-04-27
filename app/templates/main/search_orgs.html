@@ -1,44 +1,61 @@
+{% import 'macros/page_macros.html' as page %}
+
 {% extends 'layouts/base.html' %}
-
+{% block custom_head_tags %}
+<link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600|Oswald:300,400,500,700" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/ekko-lightbox/5.3.0/ekko-lightbox.js"></script>
+{% endblock %}
 {% block content %}
-    <div class="ui stackable grid container">
-        <div class="sixteen wide tablet twelve wide computer centered column">
-            <a class="ui basic compact button" href="{{ url_for('main.index') }}">
-                <i class="caret left icon"></i>
-                Back to dashboard
-            </a>
-            <h2 class="ui header">
-                Search Within Registered Organizations
-                <div class="sub header">
-                    Tag or Text Search
-                </div>
-            </h2>
-            <div class="ui menu">
-                 <div class="ui search item">
-                    <div class="ui transparent icon input">
-                        <input id="search-orgs" type="text" placeholder="Search orgs…">
-                        <i class="search icon"></i>
-                    </div>
-                </div>
-            </div>
-                <div class="ui item">
-                <select id="chooseTags" class="ui fluid search dropdown" multiple="">
-                    {% for t in tags %}
-                         <option value="{{ t.tag_name }}">{{ t.tag_name}} </option>
-                    {% endfor %}
-                </select>
-                </div>
+<style>
 
+.bgimage {
+  margin-top: -60px;
+  width:100%;
+  min-height:400px;
+  padding-bottom: 80px;
+  background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%),
+   url(/static/images/hiphop.jpg);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size:cover;
+  background-attachment: fixed;
+  margin-bottom:5px
+}
+
+</style>
+<section class="bgimage">
+  <div class="container">
+    <div class="row">
+      <div class="search-block" style="height: 100%">
+        <h1 class="search-header">SEARCH</h1>
+        <div class="form-group">
+          <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
+            <div class="row">
+                {% for types in tag_types %}
+                <div class="tag-select form-group col-xs-2 col-md-2">
+                    <div class="badge badge-info"> {{ types.tag_type_name }}</div>
+                    <select id="chooseTags" class="fluid search dropdown" multiple="">
+                        {% for t in types.tags %}
+                            <div>
+                            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                            </div>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+    <div class="ui stackable grid container">
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
             <div style="overflow-x: scroll;">
                 <table class="ui searchable sortable unstackable selectable celled table">
-                    <thead>
-                        <tr class="hidden">
-                            <th>Image</th>
-                            <th class="sorted ascending">Name</th>
-                        </tr>
-                    </thead>
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
                                 <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
@@ -50,7 +67,7 @@
                                         </div>
                                       {% else %}
                                       <div class="crop">
-                                        <img src="/static/images/No_image_available.png" >
+                                        <img src="/static/images/square2.jpg" >
                                        </div>
                                       {% endif %}
                                 </td>
@@ -58,7 +75,7 @@
                                 <h1>{{ o.name }}</h1>
                                 {% for tag in o.tags %}
                                     <span class="badge badge-warning">{{tag.tag_name}}</span>
-                                    <input type="hidden" class="{{ tag.tag_name }}">
+                                    <input type="hidden" class="{{ tag.tag_class_name }}">
                                 {% endfor %}
                                 <br>
                                 {% if o.description %}
@@ -70,7 +87,6 @@
                     </tbody>
                 </table>
             </div>
-        </div>
     </div>
     <style>
         .hidden {
@@ -80,7 +96,7 @@
     </style>
         <script type="text/javascript">
             $(document).ready(function() {
-                $('#chooseTags').each(function() {
+                $(".dropdown").each(function(){
                     $(this).multiselect();
                 });
             });
@@ -108,33 +124,36 @@
                     }
                 })
             });
-            $('#chooseTags').change(function () {
-                var searchText = $(this).val();
-                var currTag;
-                if(searchText.length > 0) {
-
-                    $('tbody tr:icontains(' + currTag + ')').attr('data-tag-match', false);
-                    $('tbody tr').each(function() {
-                        $(this).attr('data-tag-match', false);
-                    });
-
-                    for(tag in searchText) {
-                        currTag = '.' + searchText[tag];
-                        $(currTag).closest('tbody tr').attr('data-tag-match', true);
-                    }
-                } else {
-                    $('tbody tr').each(function() {
-                        $(this).attr('data-tag-match', true);
+            $(".dropdown").each(function() {
+                $(this).change(function () {
+                    var searchText = [];
+                    $(".dropdown").each(function(){
+                        searchText = searchText.concat($(this).val());
                     })
-                }
-                $('tbody tr').each(function() {
-                    var tag = $(this).attr('data-tag-match');
-                    var search = $(this).attr('data-search-match');
-                    if ((tag === "true") && (search === "true")) {
-                        $(this).removeClass('hidden');
+                    var currTag;
+                    if(searchText.length > 0) {
+
+                        $('tbody tr').each(function() {
+                            $(this).attr('data-tag-match', false);
+                        });
+                        for(tag in searchText) {
+                            currTag = '.' + searchText[tag];
+                            $(currTag).closest('tbody tr').attr('data-tag-match', true);
+                        }
                     } else {
-                        $(this).removeClass('hidden').addClass('hidden');
+                        $('tbody tr').each(function() {
+                            $(this).attr('data-tag-match', true);
+                        })
                     }
+                    $('tbody tr').each(function() {
+                        var tag = $(this).attr('data-tag-match');
+                        var search = $(this).attr('data-search-match');
+                        if ((tag === "true") && (search === "true")) {
+                            $(this).removeClass('hidden');
+                        } else {
+                            $(this).removeClass('hidden').addClass('hidden');
+                        }
+                    })
                 })
             });
 

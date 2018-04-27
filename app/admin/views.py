@@ -136,6 +136,7 @@ def edit_tag(tag_id):
         form = EditTagForm(tag_name=tag.tag_name)
         if form.validate_on_submit():
             tag.tag_name = form.tag_name.data
+            tag.tag_class_name= form.tag_name.data.replace(' ', '_')
             db.session.add(tag)
             db.session.commit()
             flash('Tag {} edited successfully.'.format(
@@ -155,14 +156,15 @@ def add_new_tag():
         for t in TagType.query.all():
             if form.tag_type.data == t.id:
                 tag = Tag.query.filter_by(tag_name=form.tag_name.data,
-                    tag_type=t).first()
+                            tag_type=t).first()
                 if tag is None:
+                    tag_class_name = form.tag_name.data.replace(' ', '_')
                     tag = Tag(
                         tag_name=form.tag_name.data,
+                        tag_class_name=tag_class_name,
                         tag_type=t,
                         tag_type_id=t.id
-                        )
-                    db.session.add(tag)
+                    )
                     try:
                         db.session.commit()
                         flash('Tag {} created successfully.'.format(
