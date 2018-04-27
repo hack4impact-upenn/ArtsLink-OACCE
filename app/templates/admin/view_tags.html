@@ -2,16 +2,25 @@
 {% import 'macros/form_macros.html' as f %}
 
 {% block content %}
-    <div class="ui stackable grid container">
-        <div class="sixteen wide tablet twelve wide computer centered column">
-            <a class="ui basic compact button" href="{{ url_for('admin.index') }}">
-                <i class="caret left icon"></i>
+        <div class="container">
+          <div class="row">
+            <div class="col back-button">
+              <a class="btn btn-outline-primary" href="{{ url_for('admin.index') }}">
                 Back to dashboard
-            </a>
-            <h2 class="ui header">
-                Tags
-            </h2>
+              </a>
+            </div>
+          </div>
 
+          <div class="row">
+            <div class="col">
+              <h2>
+                Manage Tags
+              </h2>
+              <p class="sub header">
+              View and manage Tags.
+              </p>
+            </div>
+          </div>
           <div class="row">
             <div class="col-md-4">
               <select class="custom-select" id="select-role">
@@ -75,11 +84,9 @@
                     $('tr.hidden').removeClass('hidden').show();
                 }
             });
-            $('#select-role').dropdown({
-                onChange: function (value, text, $selectedItem) {
-                    $('td.user.role:contains(' + value + ')').closest('tr').removeClass('hidden').show();
-                    $('td.user.role').not(':contains(' + value + ')').closest('tr').addClass('hidden').hide();
-                }
+          $('#select-role').change(function () {
+              $('td.user.role:contains(' + this.value + ')').closest('tr').removeClass('hidden').show();
+              $('td.user.role').not(':contains(' + this.value + ')').closest('tr').addClass('hidden').hide();
             });
         });
     </script>
