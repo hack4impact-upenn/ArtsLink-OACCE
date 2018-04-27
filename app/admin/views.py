@@ -26,11 +26,16 @@ def new_user():
     """Create a new user."""
     form = NewUserForm()
     if form.validate_on_submit():
+        if form.role.data.name == 'Administrator':
+            approved_val = True
+        else:
+            approved_val = False
         user = User(
             role=form.role.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
             email=form.email.data,
+            approved=approved_val,
             password=form.password.data)
         db.session.add(user)
         db.session.commit()
@@ -46,10 +51,15 @@ def invite_user():
     """Invites a new user to create an account and set their own password."""
     form = InviteUserForm()
     if form.validate_on_submit():
+        if form.role.data.name == 'Administrator':
+            approved_val = True
+        else:
+            approved_val = False
         user = User(
             role=form.role.data,
             first_name=form.first_name.data,
             last_name=form.last_name.data,
+            approved=approved_val,
             email=form.email.data)
         db.session.add(user)
         db.session.commit()
