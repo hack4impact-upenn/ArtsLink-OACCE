@@ -24,9 +24,7 @@
       <div class="col-md-12 " style="height: 100%">
         <h1>ArtsLink</h1>
         <p>Connecting children and families with quality arts experiences through their neighborhoods.</p>
-        <div class="form-group">
-          <input type="text" class="form-control frontpage-search" value="BROWSE PROGRAMS">
-        </div>
+            <div class="tag" onclick="window.location.href = '{{ url_for('main.search') }}';">Click Here To Browse or Search for Programs</div>
         <p style="font-size: 16px" class="text-white">Are you a Philadelphia-based arts and culture institution, arts education program, or teaching artist?  <a class="text-white" style="border-bottom: 1px dashed #FFF" href="{{ url_for('account.register') }}">Register</a></p>
       </div>
     </div>

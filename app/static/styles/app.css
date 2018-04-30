@@ -152,7 +152,8 @@ table.selectable tr:hover {
 @media -sass-debug-info{filename{}line{font-family:\00003143}}
 .tag:hover {
   background-color: #FFF;
-  color: blue;
+  color: rgb(32, 123, 245);
+  opacity: 0.85;
 }
 
 @media -sass-debug-info{filename{}line{font-family:\00003148}}
