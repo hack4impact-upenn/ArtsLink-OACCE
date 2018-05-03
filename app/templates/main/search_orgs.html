@@ -138,7 +138,7 @@
                         tags.push($(this).text() )
                     })
                   tags = tags.toString().replace(/,/g,';')
-                  data.push({ name: name, desc: desc, tags: tags })
+                  data.push({ name: name, description: "\"" + desc + "\"", tags: tags })
             }) });
             function downloadCSV(args) {
                     var filename, link;
