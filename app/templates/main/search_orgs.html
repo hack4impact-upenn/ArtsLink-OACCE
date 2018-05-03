@@ -28,7 +28,7 @@
   <div class="container">
     <div class="row">
       <div class="search-block" style="height: 100%">
-        <h1 class="search-header">SEARCH</h1>
+          <h1 class="search-header">SEARCH</h1>
         <div class="form-group">
           <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
             <div class="row">
@@ -44,6 +44,9 @@
                     </select>
                 </div>
                 {% endfor %}
+                <div class="tag-select csv col-xs-2 col-md-2">
+                    <a href="#"  onclick='downloadCSV({ filename: "results.csv" });' class="btn btn-outline-light">Download Results</a>
+                </div>
             </div>
         </div>
       </div>
@@ -72,14 +75,14 @@
                                       {% endif %}
                                 </td>
                                 <td>
-                                <h1>{{ o.name }}</h1>
+                                <h1 id="name">{{ o.name }}</h1>
                                 {% for tag in o.tags %}
-                                    <span class="badge badge-warning">{{tag.tag_name}}</span>
+                                    <span id ='tag'class="badge badge-warning">{{tag.tag_name}}</span>
                                     <input type="hidden" class="{{ tag.tag_class_name }}">
                                 {% endfor %}
                                 <br>
                                 {% if o.description %}
-                                <p>{{o.description.split('.')[0]}}....</p>
+                                <p id="description">{{o.description.split('.')[0]}}</p>
                                 {% endif %}
                                 </td>
                                 </tr>
@@ -95,7 +98,69 @@
 
     </style>
         <script type="text/javascript">
-            $(document).ready(function() {
+            function convertArrayOfObjectsToCSV(args) {
+                    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+                    data = args.data || null;
+                    if (data == null || !data.length) {
+                        return null;
+                    }
+
+                    columnDelimiter = args.columnDelimiter || ',';
+                    lineDelimiter = args.lineDelimiter || '\n';
+
+                    keys = Object.keys(data[0]);
+
+                    result = '';
+                    result += keys.join(columnDelimiter);
+                    result += lineDelimiter;
+
+                    data.forEach(function(item) {
+                        ctr = 0;
+                        keys.forEach(function(key) {
+                            if (ctr > 0) result += columnDelimiter;
+
+                            result += item[key];
+                            ctr++;
+                        });
+                        result += lineDelimiter;
+                    });
+
+                    return result;
+                }
+            var data = []
+            $(document).ready(function(){
+              $('table').find('tr').each(function() {
+                  var desc = $(this).find('#description').text()
+                  var name = $(this).find('#name').text()
+                  var tags = []
+                  $(this).find('#tag').each( function() {
+                        tags.push($(this).text() )
+                    })
+                  tags = tags.toString().replace(/,/g,';')
+                  data.push({ name: name, desc: desc, tags: tags })
+            }) });
+            function downloadCSV(args) {
+                    var filename, link;
+                     console.log(data)
+                     var csv = convertArrayOfObjectsToCSV({
+                        data: data
+                    });
+                    if (csv == null) return;
+
+                    filename = args.filename || 'export.csv';
+
+                    if (!csv.match(/^data:text\/csv/i)) {
+                        csv = 'data:text/csv;charset=utf-8,' + csv;
+                    }
+                    data = encodeURI(csv);
+
+                    link = document.createElement('a');
+                    link.setAttribute('href', data);
+                    link.setAttribute('download', filename);
+                    link.click();
+                }
+                $(document).ready(function() {
                 $(".dropdown").each(function(){
                     $(this).multiselect();
                 });
