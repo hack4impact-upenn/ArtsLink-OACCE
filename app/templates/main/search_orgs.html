@@ -10,9 +10,7 @@
 <style>
 
 .bgimage {
-  margin-top: -60px;
   width:100%;
-  min-height:400px;
   padding-bottom: 80px;
   background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%),
    url(/static/images/hiphop.jpg);
@@ -27,28 +25,37 @@
 <section class="bgimage">
   <div class="container">
     <div class="row">
-      <div class="search-block" style="height: 100%">
-          <h1 class="search-header">SEARCH</h1>
-        <div class="form-group">
-          <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
-            <div class="row">
-                {% for types in tag_types %}
-                <div class="tag-select form-group col-xs-2 col-md-2">
-                    <div class="badge badge-info"> {{ types.tag_type_name }}</div>
-                    <select id="chooseTags" class="fluid search dropdown" multiple="">
-                        {% for t in types.tags %}
-                            <div>
-                            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
-                            </div>
-                        {% endfor %}
-                    </select>
-                </div>
-                {% endfor %}
-                <div class="tag-select csv col-xs-2 col-md-2">
-                    <a href="#"  onclick='downloadCSV({ filename: "results.csv" });' class="btn btn-outline-light">Download Results</a>
-                </div>
-            </div>
-        </div>
+      <div class="col">
+        <h1 class="search-header">SEARCH</h1>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <h1 style="font-size: 30px" class="search-header">Filter Results</h1>
+      </div>
+    </div>
+    <div class="row">
+      {% for types in tag_types %}
+      <div class="tag-select form-group col-5">
+        <label style="color: #FFF; font-weight: 500"> {{ types.tag_type_name }}</label>
+        <select id="chooseTags" class="fluid search dropdown" multiple="">
+          {% for t in types.tags %}
+          <div>
+            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+          </div>
+          {% endfor %}
+        </select>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="row">
+      <div class="tag-select csv col">
+        <a href="#"  onclick='downloadCSV({ filename: "results.csv" });' class="tag">Download Results</a>
       </div>
     </div>
   </div>
@@ -61,7 +68,7 @@
                 <table class="ui searchable sortable unstackable selectable celled table">
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
-                                <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
+                              <tr data-idx={{ loop.index0 }} onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
                                 <td>
                                       {% if o.picture_urls %}
                                         {% set pic_url = o.picture_urls.split(",")[0] %}
@@ -77,7 +84,7 @@
                                 <td>
                                 <h1 id="name">{{ o.name }}</h1>
                                 {% for tag in o.tags %}
-                                    <span id ='tag'class="badge badge-warning">{{tag.tag_name}}</span>
+                                    <span id ='tag' style="margin: 5px" class="btn btn-outline-primary">{{tag.tag_name}}</span>
                                     <input type="hidden" class="{{ tag.tag_class_name }}">
                                 {% endfor %}
                                 <br>
@@ -85,7 +92,7 @@
                                 <p id="description">{{o.description.split('.')[0]}}</p>
                                 {% endif %}
                                 </td>
-                                </tr>
+                              </tr>
                             {% endfor %}
                     </tbody>
                 </table>
@@ -98,6 +105,8 @@
 
     </style>
         <script type="text/javascript">
+
+            
             function convertArrayOfObjectsToCSV(args) {
                     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
@@ -128,23 +137,32 @@
 
                     return result;
                 }
+
             var data = []
-            $(document).ready(function(){
-              $('table').find('tr').each(function() {
-                  var desc = $(this).find('#description').text()
-                  var name = $(this).find('#name').text()
-                  var tags = []
-                  $(this).find('#tag').each( function() {
-                        tags.push($(this).text() )
-                    })
-                  tags = tags.toString().replace(/,/g,';')
-                  data.push({ name: name, description: "\"" + desc + "\"", tags: tags })
-            }) });
+            {% for o in orgs %}
+              data.push({ 
+                        'name': "\"{{ o.name }}\"", 
+                        'description': "\"{{ o.description|striptags }}\"",
+                        'email': "\"{{ o.email|striptags }}\"",
+                        'phone': "\"{{ o.phone|striptags }}\"",
+                        'address': ("\"{{ o.address|striptags }}\""),
+                        'website': "\"{{ o.website }}\"",
+                        'hours': "\"{{ o.hours|striptags }}\"",
+                        'services': "\"{{ o.services|striptags }}\"",
+                        'tags': ("\""  + {% for t in o.tags %}  "{{ t.tag_name }}," + {% endfor %}"\"")
+              })
+            {% endfor %}
             function downloadCSV(args) {
                     var filename, link;
-                     console.log(data)
-                     var csv = convertArrayOfObjectsToCSV({
-                        data: data
+                    var csvdata = []
+                    $('tbody tr').each(function() {
+                      if (!$(this).hasClass('hidden')) {
+                        csvdata.push(data[$(this).data('idx')])
+                        console.log('added ' + $(this).data('idx'));
+                      }
+                    })
+                    var csv = convertArrayOfObjectsToCSV({
+                        data: csvdata
                     });
                     if (csv == null) return;
 
@@ -162,7 +180,10 @@
                 }
                 $(document).ready(function() {
                 $(".dropdown").each(function(){
-                    $(this).multiselect();
+                  $(this).multiselect({ 
+                    buttonClass: 'btn btn-outline-light',
+                    buttonWidth: '90%'
+                  });
                 });
             });
 
