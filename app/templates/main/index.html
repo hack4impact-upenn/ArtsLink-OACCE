@@ -17,6 +17,11 @@
   background-attachment: fixed;
 }
 
+.row {
+  margin-left:  0px;
+  margin-right: 0px;
+}
+
 </style>
 <section class="bgimage">
   <div class="container">
@@ -36,33 +41,29 @@
     <div class="row">
       <div class="col-md-6">
         <div class="img-contain">
-          <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(/static/images/square1.png) no-repeat; background-size: cover">
+          <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(/static/images/square1.png) no-repeat; background-size: cover; height: 100% !important">
           </div>
           <div class="overlay">
-            <h1 style="font-size: 80px">88%</h1>
+            <h1 class="align-middle" style="font-size: 80px">88%</h1>
             <p style="font-size: 20px">of Americans believe that the arts<br>are part of a well-rounded K-12 education</br></p>
           </div>
         </div>
       </div>
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>ABOUT</h1>
             <p>ArtsLink is free web tool that helps neighborhood programs and facilities discover high quality arts and cultural experiences for their communities. The goal of ArtsLink is to promote community connectivity and wellbeing through increased arts education and instruction opportunities in neighborhoods throughout Philadelphia.<p>
           </div>
-        </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain order-sm-2">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>FOR EDUCATORS</h1>
             <p style="font-size: 16px" class="text-black">ArtsLink is a tool to help you find the best arts education programming or arts and culture activities for your participants.  <a class="text-black" style="border-bottom: 1px dashed #000" href="{{ url_for('main.search') }}">Click to Search</a></p>
           </div>
-        </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 order-sm-1">
         <div class="img-contain">
           <div class="img" style="background: linear-gradient(0deg, rgba(133, 114, 173, 0.78), rgba(133, 114, 173, 0.78)), url(/static/images/square2.jpg) no-repeat; background-size: cover;">
           </div>
@@ -84,13 +85,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>FOR ARTS ORGANIZATIONS</h1>
             <p style="font-size: 16px" class="text-black">ArtsLink is a tool to promote your offerings to more programs and schools across Philadelphia. <a class="text-black" style="border-bottom: 1px dashed #000" href="{{ url_for('account.register') }}">Click to Register</a></p>
           </div>
-        </div>
       </div>
     </div>
   </div>

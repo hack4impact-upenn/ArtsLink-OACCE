@@ -64,7 +64,7 @@
     <div class="ui stackable grid container">
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
-            <div style="overflow-x: scroll;">
+            <div class="table-responsive">
                 <table class="table">
                     <tbody>
                             {% for o in orgs | sort(attribute='name') %}
@@ -114,9 +114,9 @@
           -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
         }
         .multiselect-group > a > label > b {
-          color: #000;
+          color: #FFF;
           padding: 5px;
-          background-color: #ffc107;
+          background-color: #DA6D37;
           border-radius: 5px;
           margin: 5px;
           font-weight: 700;

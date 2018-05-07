@@ -222,35 +222,45 @@ h4 {
 @media -sass-debug-info{filename{}line{font-family:\00003203}}
 .img-contain {
   position: relative;
+  min-height: 600px;
+  height: 100%;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003206}}
+@media -sass-debug-info{filename{}line{font-family:\00003208}}
 .img {
-  height: 500px !important;
+  height: 100% !important;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003210}}
+@media -sass-debug-info{filename{}line{font-family:\00003212}}
 section .col-md-6 {
   padding-left: 0px;
   padding-right: 0px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003217}}
-.content-tile {
-  padding-top: 10%;
+@media -sass-debug-info{filename{}line{font-family:\00003218}}
+.txt-contain {
+  position: relative;
+  min-height: 600px;
 }
-@media -sass-debug-info{filename{}line{font-family:\00003219}}
+
+@media -sass-debug-info{filename{}line{font-family:\00003223}}
+.content-tile {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+@media -sass-debug-info{filename{}line{font-family:\00003227}}
 .content-tile p {
   line-height: 36px;
 }
 
-@media -sass-debug-info{filename{}line{font-family:\00003224}}
+@media -sass-debug-info{filename{}line{font-family:\00003232}}
 .overlay {
   color: #FFF;
   text-align: center;
-  height: 100%;
   position: absolute;
-  padding-top: 20%;
-  top: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   width: 100%;
 }
