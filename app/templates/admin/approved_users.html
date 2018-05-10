@@ -46,7 +46,6 @@
               <th>Email address</th>
               <th>Account type</th>
               <th></th>
-              <th></th>
             </tr>
           </thead>
           <tbody>
@@ -55,12 +54,13 @@
               <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.last_name }}</td>
               <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.email }}</td>
               <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';" class="user role">{{ u.role.name }}</td>
+              <td><button onclick="window.location.href = '{{ url_for('admin.unapprove_user', user_id=u.id) }}';"
+                class="btn btn-danger"> Unapprove User </button>
               {% if u.role_id == 1 and u.organization != None %}
-                <td><button onclick="window.location.href = '{{ url_for('org.view_org', org_id=u.organization.id) }}';"
-                  class="btn btn-primary"> View Profile </button> </td>
-                <td><button onclick="window.location.href = '{{ url_for('admin.unapprove_user', user_id=u.id) }}';"
-                  class="btn btn-danger"> Unapprove User </button></td>
+                <button onclick="window.location.href = '{{ url_for('org.view_org', org_id=u.organization.id) }}';"
+                  class="btn btn-primary"> View Profile </button>
               {% endif %}
+              </td>
             </tr>
             {% endfor %}
           </tbody>
