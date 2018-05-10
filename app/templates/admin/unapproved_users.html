@@ -57,8 +57,10 @@
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.last_name }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.email }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';" class="user role">{{ u.role.name }}</td>
-                            <td><button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';" 
+                            <td><button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';"
                                 class="btn btn-primary"> Approve </button> </td>
+                            <td><button onclick="window.location.href = '{{ url_for('org.view_org', org_id=u.organization.id) }}';"
+                                class="btn btn-primary"> View Profile </button> </td>
                         </tr>
                     {% endfor %}
                     </tbody>
