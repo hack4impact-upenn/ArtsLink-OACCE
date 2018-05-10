@@ -7,7 +7,6 @@
 ('admin.user_info', 'User information'),
 ('admin.change_user_email', 'Change email address'),
 ('admin.change_account_type', 'Change account type'),
-('org.edit_profile', 'View Organization Profile'),
 (deletion_endpoint, 'Delete user')
 ] %}
 
@@ -57,9 +56,11 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      <a class="nav-link active" href="{{ url_for('org.view_org', org_id=user.organization.id) }}">
-        View Organization Profile
-      </a>
+      {% if user.role_id == 1 %}
+        <a class="nav-link active" href="{{ url_for('org.view_org', org_id=user.organization.id) }}">
+          View Organization Profile
+        </a>
+      {% endif %}
       {{ navigation(endpoints) }}
     </div>
     <div class="col-md-8">
