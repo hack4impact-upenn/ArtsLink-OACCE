@@ -8,7 +8,7 @@ from . import admin
 from .. import db
 from ..decorators import admin_required
 from ..email import send_email
-from ..models import Role, User, EditableHTML, Tag, TagType
+from ..models import Role, User, EditableHTML, Tag, TagType, Organization
 
 
 @admin.route('/')
@@ -281,7 +281,9 @@ def delete_user(user_id):
               'administrator to do this.', 'error')
     else:
         user = User.query.filter_by(id=user_id).first()
+        org = Organization.query.filter_by(user_id=user_id).first()
         db.session.delete(user)
+        db.session.delete(org)
         db.session.commit()
         flash('Successfully deleted user %s.' % user.full_name(), 'success')
     return redirect(url_for('admin.approved_users'))
