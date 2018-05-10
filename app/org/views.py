@@ -21,7 +21,7 @@ def view_org(org_id):
         return redirect('errors/404.html')
     user = User.query.filter_by(id=organization.user_id).first()
     pics = []
-    if user.approved is False:
+    if user.approved is False and not current_user.is_admin:
         if current_user == user:
             flash('The admin has not approved your profile. Your organization will not be visible publicly until you receive approval', 'error')
         if current_user != user:

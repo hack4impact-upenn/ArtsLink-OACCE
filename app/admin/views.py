@@ -205,6 +205,22 @@ def approve_user(user_id):
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
 
+@admin.route('/approved-users/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def unapprove_user(user_id):
+    """Unapprove a user's profile."""
+    user = User.query.filter_by(id=user_id).first()
+    user.approved = False
+    db.session.add(user)
+    db.session.commit()
+    users = User.query.filter_by(approved=True)
+    roles = Role.query.all()
+    if user is None:
+        abort(404)
+    flash('Successfully unapproved user %s.' % user.full_name(), 'success')
+    return render_template(
+        'admin/approved_users.html', users=users, roles=roles)
 
 @admin.route('/user/<int:user_id>')
 @admin.route('/user/<int:user_id>/info')
