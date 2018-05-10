@@ -56,7 +56,7 @@
   </div>
   <div class="row">
     <div class="col-md-4">
-      {% if user.role_id == 1 %}
+      {% if user.role_id == 1 and user.organization != None %}
         <a class="nav-link active" href="{{ url_for('org.view_org', org_id=user.organization.id) }}">
           View Organization Profile
         </a>
