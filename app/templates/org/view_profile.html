@@ -27,7 +27,7 @@
       <div class="col-md-12 " style="height: 100%">
         <h1>{{ org.name }}</h1>
         {% if current_user.organization  %}
-          {% if current_user.organization.id == org.id or current_user.is_admin() %}
+          {% if current_user.organization.id == org.id %}
             <div class="edit">
               <a href="{{ url_for('org.edit_profile') }}" class="btn btn-outline-light">Edit Page</a>
             </div>
