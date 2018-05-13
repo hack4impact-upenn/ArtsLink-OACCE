@@ -22,18 +22,21 @@ class OrganizationForm(Form):
         'Organization Contact Email (Required)', validators=[InputRequired(),
                                                   Email()])
     phone = StringField(
-        'Phone number (eg. 215-686-8446)')
+        'Phone number (eg. 215-686-8446) (Required)',
+        validators=[InputRequired(), Length(1, 40)])
     address = TextAreaField(
         'Organization Address')
     website_link = URLField(
         'Organization website address \
-        (eg http://hack4impact.org)')
+        (ex: http://hack4impact.org)')
     hours = TextAreaField(
         'Organization Hours of Operation')
     description = TextAreaField(
-        'Description of your Organization (Required)', validators=[InputRequired()])
+        'Description of your Organization (Required, max 500 characters)',
+        validators=[InputRequired(), Length(1, 500)])
     services = TextAreaField(
-        'Description of the services offered by your organization')
+        'Description of the services offered by your organization (max 500 characters)',
+        validators=[Length(0, 500)])
     # TODO: tag type separation based on a DB query
 
     picture_urls = MultipleFileUploadField('Upload Photos')
