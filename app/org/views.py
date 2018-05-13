@@ -17,9 +17,11 @@ def index():
 @org.route('/<int:org_id>')
 def view_org(org_id):
     organization = Organization.query.filter_by(id=org_id).first()
-    user = User.query.filter_by(id=organization.user_id).first()  
-    pics = [] 
-    if user.approved is False:
+    if organization is None:
+        return redirect('errors/404.html')
+    user = User.query.filter_by(id=organization.user_id).first()
+    pics = []
+    if user.approved is False and not current_user.is_admin:
         if current_user == user:
             flash('The admin has not approved your profile. Your organization will not be visible publicly until you receive approval', 'error')
         if current_user != user:

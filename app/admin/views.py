@@ -8,7 +8,7 @@ from . import admin
 from .. import db
 from ..decorators import admin_required
 from ..email import send_email
-from ..models import Role, User, EditableHTML, Tag, TagType
+from ..models import Role, User, EditableHTML, Tag, TagType, Organization
 
 
 @admin.route('/')
@@ -205,6 +205,22 @@ def approve_user(user_id):
     return render_template(
         'admin/unapproved_users.html', users=users, roles=roles)
 
+@admin.route('/approved-users/<int:user_id>', methods=['GET', 'POST'])
+@login_required
+@admin_required
+def unapprove_user(user_id):
+    """Unapprove a user's profile."""
+    user = User.query.filter_by(id=user_id).first()
+    user.approved = False
+    db.session.add(user)
+    db.session.commit()
+    users = User.query.filter_by(approved=True)
+    roles = Role.query.all()
+    if user is None:
+        abort(404)
+    flash('Successfully unapproved user %s.' % user.full_name(), 'success')
+    return render_template(
+        'admin/approved_users.html', users=users, roles=roles)
 
 @admin.route('/user/<int:user_id>')
 @admin.route('/user/<int:user_id>/info')
@@ -281,7 +297,9 @@ def delete_user(user_id):
               'administrator to do this.', 'error')
     else:
         user = User.query.filter_by(id=user_id).first()
+        org = Organization.query.filter_by(user_id=user_id).first()
         db.session.delete(user)
+        db.session.delete(org)
         db.session.commit()
         flash('Successfully deleted user %s.' % user.full_name(), 'success')
     return redirect(url_for('admin.approved_users'))
