@@ -16,7 +16,7 @@
                 Unapproved Users
             </h2>
         <p >
-          View and manage currently approved users.
+          View and manage currently unapproved users.
         </p>
     </div>
   </div>
@@ -44,9 +44,11 @@
           <thead>
             <tr>
                             <th>First name</th>
-                            <th class="sorted ascending">Last name</th>
+                            <th>Last name</th>
+                            <th class="sorted ascending">Organization Name</th>
                             <th>Email address</th>
                             <th>Account type</th>
+                            <th></th>
                             <th></th>
                         </tr>
                     </thead>
@@ -55,10 +57,15 @@
                     <tr>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.first_name }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.last_name }}</td>
+                            <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.organization.name }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';">{{ u.email }}</td>
                             <td onclick="window.location.href='{{url_for('admin.user_info', user_id=u.id) }}';" class="user role">{{ u.role.name }}</td>
-                            <td><button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';" 
+                            <td><button onclick="window.location.href = '{{ url_for('admin.approve_user', user_id=u.id) }}';"
                                 class="btn btn-primary"> Approve </button> </td>
+                            {% if u.role_id == 1 and u.organization != None %}
+                              <td><button onclick="window.location.href = '{{ url_for('org.view_org', org_id=u.organization.id) }}';"
+                                class="btn btn-primary"> View Profile </button> </td>
+                            {% endif %}
                         </tr>
                     {% endfor %}
                     </tbody>

@@ -172,7 +172,7 @@ class User(UserMixin, db.Model):
                 email=fake.email(),
                 password='password',
                 confirmed=True,
-                approved=True,
+                approved=False,
                 role=role,
                 **kwargs)
             db.session.add(u)
