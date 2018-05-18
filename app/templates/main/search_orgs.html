@@ -129,21 +129,21 @@
             function convertArrayOfObjectsToCSV(args) {
                     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
-                    data = args.data || null;
-                    if (data == null || !data.length) {
+                    var csvdata = args.data || null;
+                    if (csvdata == null || !csvdata.length) {
                         return null;
                     }
-
+                    console.log(csvdata);
                     columnDelimiter = args.columnDelimiter || ',';
                     lineDelimiter = args.lineDelimiter || '\n';
 
-                    keys = Object.keys(data[0]);
+                    keys = Object.keys(csvdata[0]);
 
                     result = '';
                     result += keys.join(columnDelimiter);
                     result += lineDelimiter;
 
-                    data.forEach(function(item) {
+                    csvdata.forEach(function(item) {
                         ctr = 0;
                         keys.forEach(function(key) {
                             if (ctr > 0) result += columnDelimiter;
@@ -157,9 +157,9 @@
                     return result;
                 }
 
-            var data = []
+            window.data = []
             {% for o in orgs %}
-              data.push({ 
+              window.data.push({ 
                         'name': "\"{{ o.name }}\"", 
                         'description': "\"{{ o.description|striptags }}\"",
                         'email': "\"{{ o.email|striptags }}\"",
@@ -176,10 +176,11 @@
                     var csvdata = []
                     $('tbody tr').each(function() {
                       if (!$(this).hasClass('hidden')) {
-                        csvdata.push(data[$(this).data('idx')])
+                        csvdata.push(window.data[$(this).data('idx')])
                         console.log('added ' + $(this).data('idx'));
                       }
                     })
+                    console.log(csvdata);
                     var csv = convertArrayOfObjectsToCSV({
                         data: csvdata
                     });
@@ -190,10 +191,10 @@
                     if (!csv.match(/^data:text\/csv/i)) {
                         csv = 'data:text/csv;charset=utf-8,' + csv;
                     }
-                    data = encodeURI(csv);
+                    csvdata = encodeURI(csv);
 
                     link = document.createElement('a');
-                    link.setAttribute('href', data);
+                    link.setAttribute('href', csvdata);
                     link.setAttribute('download', filename);
                     link.click();
                 }
