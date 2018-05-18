@@ -97,8 +97,8 @@ class TagType(db.Model):
     def generate_fake(count=20):
         fake = Faker()
 
-        tag_types = ['Discipline', 'Program Activity', 'Program Time',
-                     'Age Group', 'Additional Consideration']
+        tag_types = ['Art Type', 'Art Activity', 'Program Time',
+                     'Age Group', 'Other Needs']
         num_tag_types = 5
         num_tags = 3  # num tags per tag type
         for i in range(num_tag_types):

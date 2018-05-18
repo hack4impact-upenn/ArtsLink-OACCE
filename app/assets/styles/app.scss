@@ -16,6 +16,16 @@ p {
   z-index: 2000;
 }
 
+p > a.text-black {
+  text-decoration: none;
+  border-bottom: 1px dashed #000;
+  transition: all 0.15s
+}
+
+p > a.text-black:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #000;
+}
 .csv {
     margin-left: 4px;
     padding-top:0px;
@@ -206,7 +216,8 @@ h4 {
   height: 100%;
 }
 .img {
-  height: 100% !important;
+  min-height: 100%;
+  min-width: 100%;
 }
 section {
  .col-md-6 {

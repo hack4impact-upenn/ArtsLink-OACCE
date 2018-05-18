@@ -27,6 +27,7 @@
     <div class="row">
       <div class="col">
         <h1 class="search-header">SEARCH</h1>
+<<<<<<< HEAD
       </div>
     </div>
     <div class="row">
@@ -56,6 +57,25 @@
     <div class="row">
       <div class="tag-select csv col">
         <a href="#"  onclick='downloadCSV({ filename: "results.csv" });' class="tag">Download Results</a>
+=======
+        <div class="form-group">
+          <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="TYPE TO SEARCH">
+            <div class="row">
+                {% for types in tag_types %}
+                <div class="tag-select form-group col-xs-2 col-md-2">
+                    <div class="badge badge-info"> {{ types.tag_type_name }}</div>
+                    <select id="chooseTags" class="fluid search dropdown" multiple="">
+                        {% for t in types.tags %}
+                            <div>
+                            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                            </div>
+                        {% endfor %}
+                    </select>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+>>>>>>> 7e97e97466c412a52e5e6d774ae97869cc741937
       </div>
     </div>
   </div>
@@ -77,7 +97,7 @@
                                         </div>
                                       {% else %}
                                       <div class="crop">
-                                        <img src="/static/images/square2.jpg" >
+                                        <img src="/static/images/No_image_available.png" >
                                        </div>
                                       {% endif %}
                                 </td>
