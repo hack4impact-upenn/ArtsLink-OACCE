@@ -79,7 +79,7 @@
             <div style="overflow-x: scroll;">
                 <table class="table">
                     <tbody>
-                            {% for o in orgs | sort(attribute='name') %}
+                            {% for o in orgs  %}
                               <tr data-idx={{ loop.index0 }} onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
                                 <td>
                                       {% if o.picture_urls %}
