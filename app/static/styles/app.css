@@ -36,8 +36,8 @@ p > a.text-black:hover {
 
 @media -sass-debug-info{filename{}line{font-family:\0000335}}
 .tag-select {
-  padding-top: 20px;
-  padding-bottom: 25px;
+  padding-top: 10px;
+  padding-bottom: 15px;
   margin-right: 1px;
 }
 

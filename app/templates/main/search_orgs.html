@@ -11,7 +11,7 @@
 
 .bgimage {
   width:100%;
-  padding-bottom: 80px;
+  padding-bottom: 16px;
   background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.85) 100.19%, rgba(32, 123, 245, 0.85) 100.19%, rgba(32, 123, 245, 0.85) 100.19%),
    url(/static/images/hiphop.jpg);
   background-repeat: no-repeat;
@@ -29,29 +29,41 @@
         <h1 class="search-header">SEARCH</h1>
       </div>
     </div>
-    <div class="row">
-      <div class="col-md-12">
-        <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="BROWSE PROGRAMS">
-      </div>
-    </div>
-    <div class="row">
-      <div class="col">
-        <h1 style="font-size: 30px" class="search-header">Filter Results</h1>
-        <p style="font-size: 18px; font-weight: 600">Filter by organization activities, disciplines, times, age groups, and more</p>
-      </div>
-    </div>
-    <div class="row" id="filter-row">
-      <div class="tag-select form-group col-12">
-        <select id="chooseTags" class="fluid search dropdown" multiple="">
+      <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="TYPE TO SEARCH">
+    <div class="row large-filter">
         {% for types in tag_types %}
-        <optgroup label="{{ types.tag_type_name }}"> 
-            {% for t in types.tags %}
-            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
-            {% endfor %}
-        </optgroup>
+        <div class="tag-select form-group col-md-2 col-xs-1">
+            <div class="badge badge-info"> {{ types.tag_type_name }}</div>
+            <select id="chooseTags" class="fluid search dropdown" multiple="">
+                {% for t in types.tags %}
+                    <div>
+                    <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                    </div>
+                {% endfor %}
+            </select>
+        </div>
         {% endfor %}
-        </select>
-      </div>
+    </div>
+    <div class="mobile-filter">
+        <div class="row">
+          <div class="col">
+            <h1 style="font-size: 30px" class="search-header">Filter Results</h1>
+            <p style="font-size: 18px; font-weight: 600">Filter by organization activities, disciplines, times, age groups, and more</p>
+          </div>
+        </div>
+        <div class="row" id="filter-row">
+          <div class="tag-select form-group col-12">
+            <select id="chooseTags" class="fluid search dropdown" multiple="">
+            {% for types in tag_types %}
+            <optgroup label="{{ types.tag_type_name }}">
+                {% for t in types.tags %}
+                <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                {% endfor %}
+            </optgroup>
+            {% endfor %}
+            </select>
+          </div>
+        </div>
     </div>
     <div class="row">
       <div class="tag-select csv col">
@@ -124,8 +136,17 @@
         .multiselect-group { margin: 5px }
     </style>
         <script type="text/javascript">
-
-            
+            var breakpoint = 1000;
+            $(document).ready(function() {
+                if ($(window).width() <= breakpoint){
+                    $('.large-filter').addClass('hidden');
+                    $('.mobile-filter').removeClass('hidden');
+                }
+                else {
+                    $('.mobile-filter').addClass('hidden');
+                    $('.large-filter').removeClass('hidden');
+                }
+            });
             function convertArrayOfObjectsToCSV(args) {
                     var result, ctr, keys, columnDelimiter, lineDelimiter, data;
 
@@ -204,7 +225,7 @@
                     buttonClass: 'btn btn-outline-light',
                     buttonWidth: '100%',
                     maxHeight: 200,
-                    nonSelectedText: 'Click to select filters'
+                    nonSelectedText: 'Select filters'
                   });
                 });
             });
