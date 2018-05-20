@@ -299,7 +299,8 @@ def delete_user(user_id):
         user = User.query.filter_by(id=user_id).first()
         org = Organization.query.filter_by(user_id=user_id).first()
         db.session.delete(user)
-        db.session.delete(org)
+        if org is not None:
+            db.session.delete(org)
         db.session.commit()
         flash('Successfully deleted user %s.' % user.full_name(), 'success')
     return redirect(url_for('admin.approved_users'))
