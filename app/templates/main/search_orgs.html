@@ -101,7 +101,7 @@
                                 {% endfor %}
                                 <br>
                                 {% if o.description %}
-                                <p id="description">{{o.description.split('.')[0]}}</p>
+                                <p id="description">{{o.description.split('.')[0]}} </p> <a style="border-bottom: 1px dotted #000;" href="{{ url_for('org.view_org', org_id=o.id) }}">View organization profile</a>
                                 {% endif %}
                                 </td>
                               </tr>
