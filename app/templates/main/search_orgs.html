@@ -10,11 +10,9 @@
 <style>
 
 .bgimage {
-  margin-top: -60px;
   width:100%;
-  min-height:400px;
-  padding-bottom: 80px;
-  background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%, rgba(32, 123, 245, 0.75) 100.19%),
+  padding-bottom: 16px;
+  background: linear-gradient(105.95deg, rgba(32, 123, 245, 0.85) 100.19%, rgba(32, 123, 245, 0.85) 100.19%, rgba(32, 123, 245, 0.85) 100.19%),
    url(/static/images/hiphop.jpg);
   background-repeat: no-repeat;
   background-position: center;
@@ -27,25 +25,49 @@
 <section class="bgimage">
   <div class="container">
     <div class="row">
-      <div class="search-block" style="height: 100%">
+      <div class="col">
         <h1 class="search-header">SEARCH</h1>
-        <div class="form-group">
-          <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="TYPE TO SEARCH">
-            <div class="row">
-                {% for types in tag_types %}
-                <div class="tag-select form-group col-xs-2 col-md-2">
-                    <div class="badge badge-info"> {{ types.tag_type_name }}</div>
-                    <select id="chooseTags" class="fluid search dropdown" multiple="">
-                        {% for t in types.tags %}
-                            <div>
-                            <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
-                            </div>
-                        {% endfor %}
-                    </select>
-                </div>
+      </div>
+    </div>
+      <input type="text" class="form-control frontpage-search" id="search-orgs" type="text" placeholder="TYPE TO SEARCH">
+    <div class="row large-filter">
+        {% for types in tag_types %}
+        <div class="tag-select form-group col-md-2 col-xs-1">
+            <div class="badge badge-info"> {{ types.tag_type_name }}</div>
+            <select id="chooseTags" class="fluid search dropdown" multiple="">
+                {% for t in types.tags %}
+                    <div>
+                    <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                    </div>
                 {% endfor %}
-            </div>
+            </select>
         </div>
+        {% endfor %}
+    </div>
+    <div class="mobile-filter">
+        <div class="row">
+          <div class="col">
+            <h1 style="font-size: 30px" class="search-header">Filter Results</h1>
+            <p style="font-size: 18px; font-weight: 600">Filter by organization activities, disciplines, times, age groups, and more</p>
+          </div>
+        </div>
+        <div class="row" id="filter-row">
+          <div class="tag-select form-group col-12">
+            <select id="chooseTags" class="fluid search dropdown" multiple="">
+            {% for types in tag_types %}
+            <optgroup label="{{ types.tag_type_name }}">
+                {% for t in types.tags %}
+                <option value="{{ t.tag_class_name }}">{{ t.tag_name}} </option>
+                {% endfor %}
+            </optgroup>
+            {% endfor %}
+            </select>
+          </div>
+        </div>
+    </div>
+    <div class="row">
+      <div class="tag-select csv col">
+        <a href="#"  onclick='downloadCSV({ filename: "results.csv" });' class="tag">Download Results</a>
       </div>
     </div>
   </div>
@@ -55,10 +77,10 @@
             {# Use overflow-x: scroll so that mobile views don't freak out
              # when the table is too wide #}
             <div style="overflow-x: scroll;">
-                <table class="ui searchable sortable unstackable selectable celled table">
+                <table class="table">
                     <tbody>
-                            {% for o in orgs | sort(attribute='name') %}
-                                <tr onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
+                            {% for o in orgs  %}
+                              <tr data-idx={{ loop.index0 }} onclick="window.location.href = '{{ url_for('org.view_org', org_id=o.id) }}';">
                                 <td>
                                       {% if o.picture_urls %}
                                         {% set pic_url = o.picture_urls.split(",")[0] %}
@@ -72,17 +94,17 @@
                                       {% endif %}
                                 </td>
                                 <td>
-                                <h1>{{ o.name }}</h1>
+                                <h1 id="name">{{ o.name }}</h1>
                                 {% for tag in o.tags %}
-                                    <span class="badge badge-warning">{{tag.tag_name}}</span>
+                                    <span id ='tag' style="margin: 5px" class="badge badge-warning">{{tag.tag_name}}</span>
                                     <input type="hidden" class="{{ tag.tag_class_name }}">
                                 {% endfor %}
                                 <br>
                                 {% if o.description %}
-                                <p>{{o.description.split('.')[0]}}....</p>
+                                <p id="description">{{o.description.split('.')[0]}}</p>
                                 {% endif %}
                                 </td>
-                                </tr>
+                              </tr>
                             {% endfor %}
                     </tbody>
                 </table>
@@ -92,12 +114,119 @@
         .hidden {
             display:none;
         }
-
+        .multiselect-container { width: 100%; }
+        .multiselect-container::-webkit-scrollbar {
+          -webkit-appearance: none;
+          background-color: #FFF;
+          width: 7px;
+        }
+        .multiselect-container::-webkit-scrollbar-thumb {
+          border-radius: 4px;
+          background-color: rgba(0, 0, 0, .5);
+          -webkit-box-shadow: 0 0 1px rgba(255, 255, 255, .5);
+        }
+        .multiselect-group > a > label > b {
+          color: #000;
+          padding: 5px;
+          background-color: #ffc107;
+          border-radius: 5px;
+          margin: 5px;
+          font-weight: 700;
+        }
+        .multiselect-group { margin: 5px }
     </style>
         <script type="text/javascript">
+            var breakpoint = 1000;
             $(document).ready(function() {
+                if ($(window).width() <= breakpoint){
+                    $('.large-filter').addClass('hidden');
+                    $('.mobile-filter').removeClass('hidden');
+                }
+                else {
+                    $('.mobile-filter').addClass('hidden');
+                    $('.large-filter').removeClass('hidden');
+                }
+            });
+            function convertArrayOfObjectsToCSV(args) {
+                    var result, ctr, keys, columnDelimiter, lineDelimiter, data;
+
+                    var csvdata = args.data || null;
+                    if (csvdata == null || !csvdata.length) {
+                        return null;
+                    }
+                    console.log(csvdata);
+                    columnDelimiter = args.columnDelimiter || ',';
+                    lineDelimiter = args.lineDelimiter || '\n';
+
+                    keys = Object.keys(csvdata[0]);
+
+                    result = '';
+                    result += keys.join(columnDelimiter);
+                    result += lineDelimiter;
+
+                    csvdata.forEach(function(item) {
+                        ctr = 0;
+                        keys.forEach(function(key) {
+                            if (ctr > 0) result += columnDelimiter;
+
+                            result += item[key];
+                            ctr++;
+                        });
+                        result += lineDelimiter;
+                    });
+
+                    return result;
+                }
+
+            window.data = []
+            {% for o in orgs %}
+              window.data.push({ 
+                        'name': "\"{{ o.name }}\"", 
+                        'description': "\"{{ o.description|striptags }}\"",
+                        'email': "\"{{ o.email|striptags }}\"",
+                        'phone': "\"{{ o.phone|striptags }}\"",
+                        'address': ("\"{{ o.address|striptags }}\""),
+                        'website': "\"{{ o.website }}\"",
+                        'hours': "\"{{ o.hours|striptags }}\"",
+                        'services': "\"{{ o.services|striptags }}\"",
+                        'tags': ("\""  + {% for t in o.tags %}  "{{ t.tag_name }}," + {% endfor %}"\"")
+              })
+            {% endfor %}
+            function downloadCSV(args) {
+                    var filename, link;
+                    var csvdata = []
+                    $('tbody tr').each(function() {
+                      if (!$(this).hasClass('hidden')) {
+                        csvdata.push(window.data[$(this).data('idx')])
+                        console.log('added ' + $(this).data('idx'));
+                      }
+                    })
+                    console.log(csvdata);
+                    var csv = convertArrayOfObjectsToCSV({
+                        data: csvdata
+                    });
+                    if (csv == null) return;
+
+                    filename = args.filename || 'export.csv';
+
+                    if (!csv.match(/^data:text\/csv/i)) {
+                        csv = 'data:text/csv;charset=utf-8,' + csv;
+                    }
+                    csvdata = encodeURI(csv);
+
+                    link = document.createElement('a');
+                    link.setAttribute('href', csvdata);
+                    link.setAttribute('download', filename);
+                    link.click();
+                }
+                $(document).ready(function() {
                 $(".dropdown").each(function(){
-                    $(this).multiselect();
+                  $(this).multiselect({ 
+                    buttonClass: 'btn btn-outline-light',
+                    buttonWidth: '100%',
+                    maxHeight: 200,
+                    nonSelectedText: 'Select filters'
+                  });
                 });
             });
 
