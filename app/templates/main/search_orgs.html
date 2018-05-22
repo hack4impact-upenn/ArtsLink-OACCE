@@ -137,14 +137,22 @@
     </style>
         <script type="text/javascript">
             var breakpoint = 1000;
+            var mobileBreakpoint = 640;
             $(document).ready(function() {
                 if ($(window).width() <= breakpoint){
                     $('.large-filter').addClass('hidden');
                     $('.mobile-filter').removeClass('hidden');
+                    if ($(window).width() <= mobileBreakpoint){
+                        $('.csv').addClass('hidden');
+                    }
+                    else{
+                        $('.csv').removeClass('hidden');
+                    }
                 }
                 else {
                     $('.mobile-filter').addClass('hidden');
                     $('.large-filter').removeClass('hidden');
+                    $('.csv').removeClass('hidden');
                 }
             });
             function convertArrayOfObjectsToCSV(args) {
