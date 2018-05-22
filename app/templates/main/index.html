@@ -17,6 +17,11 @@
   background-attachment: fixed;
 }
 
+.row {
+  margin-left:  0px;
+  margin-right: 0px;
+}
+
 </style>
 <section class="bgimage">
   <div class="container">
@@ -35,29 +40,25 @@
     <div class="row">
       <div class="col-md-6">
         <div class="img-contain">
-          <div class="img" style="background: url(/static/images/square1.png) no-repeat; background-size: cover">
+          <div class="img" style="background: url(/static/images/square1.png) no-repeat; background-position: center right; background-size: cover">
           </div>
         </div>
       </div>
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>Who Is It For?</h1>
             <p>ArtsLink is a free resource for Philadelphians to discover arts programs from local organizations that best fit their needs or the needs of their community.<p>
-          </div>
         </div>
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain order-sm-2 order-md-1">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>How to Find an Arts Program</h1>
-            <p style="font-size: 16px" class="text-black"><a class="text-black" style="border-bottom: 1px dashed #000" href="{{ url_for('main.search') }}">Click to browse.</a> Looking for opportunities for a specific art type (e.g. theater/drama, dance, music performance, etc.), art activity (e.g. art making, field trips, etc.), or time (e.g. in school, after school, summer, etc.)? Filter to find the arts program(s) that best fit your needs.</p>
+            <p style="font-size: 16px" class="text-black"><a class="text-black"  href="{{ url_for('main.search') }}">Click to browse.</a> Looking for opportunities for a specific art type (e.g. theater/drama, dance, music performance, etc.), art activity (e.g. art making, field trips, etc.), or time (e.g. in school, after school, summer, etc.)? Filter to find the arts program(s) that best fit your needs.</p>
           </div>
-        </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-md-6 order-sm-1 order-md-2">
         <div class="img-contain">
           <div class="img" style="background: url(/static/images/square2.jpg) no-repeat; background-size: cover;">
           </div>
@@ -71,13 +72,11 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6 content-tile">
-        <div class="row">
-          <div class="col-md-8 offset-md-1">
+      <div class="col-md-6 txt-contain">
+          <div class="col-md-8 offset-md-1 content-tile">
             <h1>How to Submit Your Arts Program</h1>
-            <p style="font-size: 16px" class="text-black"> <a class="text-black" style="border-bottom: 1px dashed #000" href="{{ url_for('account.register') }}">Click to register.</a> Create an account to promote your organization and the arts programs you offer!</p>
+            <p style="font-size: 16px" class="text-black"> <a class="text-black"  href="{{ url_for('account.register') }}">Click to register.</a> Create an account to promote your organization and the arts programs you offer!</p>
           </div>
-        </div>
       </div>
     </div>
   </div>

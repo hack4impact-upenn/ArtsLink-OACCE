@@ -10,6 +10,14 @@
   background-size:cover;
   background-attachment: fixed;
 }
+.footer-img-g {
+  display: block;
+  width: 100%;
+  max-width: 250px;
+  margin-top: 10vh;
+  float: right;
+}
+
 </style>
 <head>
   <meta charset='utf-8'>
@@ -21,58 +29,20 @@
 <section class="bgimage-footer">
   <div class="container">
     <div class="row">
-      <div class="column" style="height: 100%">
+      <div class="col-sm-12 col-md-8" >
         <h1>READY TO Connect?</h1>
         <br></br>
         {% if current_user.is_anonymous %}
         <div class="tag" onclick="location.href='{{ url_for('account.register') }}'">Sign Up</a></div>
         {% endif %}
         <div class="tag" onclick="location.href='mailto:arts@phila.gov?subject=ArtsLink';">Contact Us</a></div>
-        <p style="font-size:14px" >ArtsLink is managed by the City of Philadelphia Office of Arts, Culture, and the Creative Economy,<br> and one of its initiatives is to help close the gap in access to quality arts education, creative </br> opportunities, and cultural experiences.</p>
+        <p style="font-size:14px" >ArtsLink is managed by the City of Philadelphia Office of Arts, Culture, and the Creative Economy, and one of its initiatives is to help close the gap in access to quality arts education, creative opportunities, and cultural experiences.</p>
         <p style="font-size:14px">Made with <i class="fas fa-heart"></i> by <a style="border-bottom: 1px dashed #FFF; color: rgb(255, 255, 255)" href="http://hack4impact.org/" target="_blank">Hack4Impact</a></p>
 
       </div>
-      <div class="column" style="float:right" width="500px">
-        <br></br>
-        <br></br>
-        <img width="70%" style="float:right" onclick="location.href='http://creativephl.org';" src="/static/images/oacce.png">
+      <div class="col-sm-12 col-md-4" >
+        <img  class="footer-img-g" onclick="location.href='http://creativephl.org';" src="/static/images/oacce.png">
       </div>
     </div>
   </div>
 </section>
-
-<!-- LEAVING THIS COMMENTED OUT: REMOVE LATER @STEVEN -->
-
-<!-- <style>
-.bgimage-footer {
-  width:100%;
-  min-height:20vh;
-  padding-bottom: 80px;
-  background: linear-gradient(78.43deg, rgba(242, 153, 74, 0.8) 95.73%, rgba(173, 93, 21, 0.8) 2.63%),
-     url(/static/images/shakespeare.jpg);
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size:cover;
-  background-attachment: fixed;
-}
-</style>
-<section class="bgimage-footer">
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12 " style="height: 100%">
-        <h1>READY TO Connect?</h1>
-        <br>
-        <br>
-        <br>
-        {% if current_user.is_anonymous %}
-        <div class="tag" onclick="location.href='{{ url_for('account.register') }}'">Sign Up</a></div>
-        {% endif %}
-        <div class="tag" onclick="location.href='mailto:lindsay.so@phila.gov';">Contact Us</a></div>
-      </div>
-      <div class="col-md-3 offset-md-9" style="float: right">
-        <img width="100%"  src="/static/images/oacce.png">
-      </div>
-    </div>
-  </div>
-</section>
- -->
