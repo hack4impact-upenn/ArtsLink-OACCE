@@ -2,15 +2,20 @@ Dear {{ user.full_name() }},
 
 You are invited to join {{ config.APP_NAME }}!
 
-To set your password, please click on the following link:
+What’s ArtsLink?
+ArtsLink is a free resource for Philadelphians to discover arts programs from local organizations like yours that best fit their needs or the needs of their community.
+
+To register and set your password, please click on the following link:
 
 {{ invite_link }}
 
-Once completed, please log in as {{ user.email }} with the password you set.
+Once completed, please log in as {{ user.email }} with the password you set, and create an account to promote your organization and the arts programs you offer!
 
 Sincerely,
 
 The {{ config.APP_NAME }} Team
 
 Note: replies to this email address are not monitored.
+
+ArtsLink is managed by the City of Philadelphia Office of Arts, Culture and the Creative Economy and one of its initiatives to help close the gap in access to quality arts education, creative opportunities, and cultural experiences.
 

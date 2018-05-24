@@ -9,3 +9,5 @@ Sincerely,
 The {{ config.APP_NAME }} Team
 
 Note: replies to this email address are not monitored.
+
+ArtsLink is managed by the City of Philadelphia Office of Arts, Culture and the Creative Economy, and one of its initiatives to help close the gap in access to quality arts education, creative opportunities, and cultural experiences.
