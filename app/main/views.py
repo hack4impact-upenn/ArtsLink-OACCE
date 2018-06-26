@@ -83,8 +83,8 @@ def sign_s3():
         'data':
         presigned_post,
         'url_upload':
-        'https://%s.%s.amazonaws.com' % (S3_BUCKET, S3_REGION),
+        'https://s3.%s.amazonaws.com/%s/' % (S3_REGION, S3_BUCKET),
         'url':
-        'https://%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
+        'https://s3.%s.amazonaws.com/%s/json/%s' % (S3_REGION, S3_BUCKET,
                                                  file_name)
     })
