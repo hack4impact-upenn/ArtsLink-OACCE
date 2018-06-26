@@ -28,9 +28,7 @@ function uploadFile(file, s3Data, url, urlUpload, fieldName) {
   xhr.open('POST', urlUpload);
   xhr.setRequestHeader('x-amz-acl', 'public-read');
   var postData = new FormData();
-  for(key in s3Data.fields){
-    postData.append(key, s3Data.fields[key]);
-  }
+  postData.append('key', s3Data.fields.key);
   postData.append('file', file);
   console.log(file);
   $('.modal')
